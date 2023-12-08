@@ -3,14 +3,16 @@ import { IcRoundSearch } from "./icons/SearchIcon";
 import DefinitionCard from "./components/DefinitionCard";
 import LoadingData from "./components/LoadingData";
 import ErrorMessage from "./components/ErrorMessage";
-import { CaretDown } from "./icons/CaretDown";
-import { CaretUp } from "./icons/CaretUp";
-import { CancelIcon } from "./icons/CancelIcon";
 import Introduction from "./components/Introduction";
 import { DictionaryItem } from "./types";
 import { Definition } from "./types";
 import { Meaning } from "./types";
 import InputAF from "./components/InputAF";
+
+// ICONS
+import { CaretDown } from "./icons/CaretDown";
+import { CaretUp } from "./icons/CaretUp";
+import { CleanIcon } from "./icons/CleanIcon";
 
 function App() {
   const [data, setData] = useState<DictionaryItem | null>(null);
@@ -152,7 +154,7 @@ function App() {
               className="absolute h-full right-11"
               onClick={handleCleanResults}
             >
-              <CancelIcon />
+              <CleanIcon />
             </button>
           )}
         </form>

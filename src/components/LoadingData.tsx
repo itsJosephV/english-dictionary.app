@@ -1,5 +1,3 @@
-import React from "react";
-
 const LoadingData = () => {
   return (
     <div className="flex justify-center mt-10">
