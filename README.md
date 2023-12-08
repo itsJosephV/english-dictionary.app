@@ -10,9 +10,9 @@ Todo List
 - [x] Input and data cleaner
 - [x] More and less data
 - [x] Input Auto-focus toggle
-- [ ] Improve API
+- [ ] Disable input autofocus when select copy/paste
 - [ ] Syno and Anto
 - [ ] Favorites words
 - [ ] Copy word/meanings
 - [ ] rethink structure to display favorites
-and more stuff..
+- [ ] Improve API (Wordnik!)
