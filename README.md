@@ -10,7 +10,7 @@ Todo List
 - [x] Input and data cleaner
 - [x] More and less data
 - [x] Input Auto-focus toggle
-- [ ] Disable input autofocus when select copy/paste
+- [x] Disable input autofocus when select copy/paste
 - [ ] Syno and Anto
 - [ ] Favorites words
 - [ ] Copy word/meanings

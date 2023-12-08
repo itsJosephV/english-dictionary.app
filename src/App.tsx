@@ -94,6 +94,11 @@ function App() {
     const handleKeyDown = (e: KeyboardEvent) => {
       const regex = /^[a-zA-Z0-9]$/;
       const inputValue = form.current?.word.value;
+
+      if (e.metaKey || e.ctrlKey) {
+        return;
+      }
+
       if (autofocus) {
         if (
           regex.test(e.key) ||
@@ -112,6 +117,9 @@ function App() {
   }, [autofocus]);
 
   // console.log(data);
+
+  // const isMac = navigator.userAgent.indexOf("Mac") != -1;
+  // const isWin = navigator.userAgent.indexOf("Win") != -1;
 
   return (
     <main className="min-h-screen mx-auto pb-3">
