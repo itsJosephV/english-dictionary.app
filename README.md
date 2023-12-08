@@ -11,8 +11,10 @@ Todo List
 - [x] More and less data
 - [x] Input Auto-focus toggle
 - [x] Disable input autofocus when select copy/paste
+- [x] Key shorcuts
 - [ ] Syno and Anto
 - [ ] Favorites words
 - [ ] Copy word/meanings
 - [ ] rethink structure to display favorites
+- [ ] Search when user stops typing (debounce)
 - [ ] Improve API (Wordnik!)

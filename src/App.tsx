@@ -23,13 +23,15 @@ function App() {
   const [autofocus, SetAutoFocus] = useState<boolean>(true);
 
   const form = useRef<HTMLFormElement>(null);
+  const MoreData = useRef<HTMLButtonElement>(null);
+  const LessData = useRef<HTMLButtonElement>(null);
 
   const fetchDictionary = async (word: string): Promise<void> => {
     const regex = /^[a-zA-Z\s][a-zA-Z\s]*$/;
     const spaceRegex = /^ *$/;
 
     if (spaceRegex.test(word)) {
-      throw new Error("Spaces are allowed in the context, e.g., 'look after.'");
+      throw new Error("Spaces are allowed in the context, e.g., 'look after'.");
     }
 
     if (!regex.test(word)) {
@@ -92,10 +94,10 @@ function App() {
 
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
-      const regex = /^[a-zA-Z0-9]$/;
+      const regex = /^[a-zA-Z]$/;
       const inputValue = form.current?.word.value;
 
-      if (e.metaKey || e.ctrlKey) {
+      if (e.metaKey || e.ctrlKey || e.shiftKey) {
         return;
       }
 
@@ -121,19 +123,87 @@ function App() {
   // const isMac = navigator.userAgent.indexOf("Mac") != -1;
   // const isWin = navigator.userAgent.indexOf("Win") != -1;
 
+  useEffect(() => {
+    const handleWhipeKeys = (e: KeyboardEvent) => {
+      if (e.shiftKey && e.key === "C") {
+        e.preventDefault();
+        console.log("data whiped");
+        form.current?.reset();
+        setData(null);
+        setError("");
+        setLimit(null);
+        setCleaner(false);
+      }
+    };
+    document.addEventListener("keydown", handleWhipeKeys);
+
+    return () => {
+      document.removeEventListener("keydown", handleWhipeKeys);
+    };
+  }, []);
+
+  useEffect(() => {
+    const HandleMoreDataKey = (e: KeyboardEvent) => {
+      if (e.shiftKey && e.key === "M") {
+        e.preventDefault();
+        console.log("more data");
+        MoreData.current?.click();
+      }
+    };
+    document.addEventListener("keydown", HandleMoreDataKey);
+
+    return () => {
+      document.removeEventListener("keydown", HandleMoreDataKey);
+    };
+  }, []);
+
+  useEffect(() => {
+    const HandleLessDataKey = (e: KeyboardEvent) => {
+      if (e.shiftKey && e.key === "L") {
+        e.preventDefault();
+        console.log("more less");
+        LessData.current?.click();
+      }
+    };
+    document.addEventListener("keydown", HandleLessDataKey);
+
+    return () => {
+      document.removeEventListener("keydown", HandleLessDataKey);
+    };
+  }, []);
+
   return (
     <main className="min-h-screen mx-auto pb-3">
-      <header className="mb-10 pt-14 border-b bg-neutral-900 border-neutral-600/60 pb-7">
+      <header className="mb-10 pt-14 border-b bg-neutral-900 border-neutral-600/60 pb-4">
         <div className="max-w-[850px] mx-auto px-5">
           <div className="text-orange-300 bg-orange-500/10 border border-orange-300 py-1 px-2 w-fit rounded-md mb-8">
             Dictionary App - Underwork 🚧{" "}
           </div>
+          <div className="mb-8">
+            <p className="text-4xl font-bold mb-1">Dictionary</p>
+            <p className="text-neutral-400">
+              Your personal app to search, save and learn about your favorite
+              words.
+            </p>
+          </div>
+          {/* <p>ShorCuts</p> */}
+          <div className="flex items-center justify-between">
+          <div className="bg-neutral-950 p-1.5 rounded-sm inline-flex gap-3 items-center">
+            <div className="flex gap-1">
+              <span className="font-mono text-sm text-neutral-300">Clear</span>
+              <kbd className="inline-flex items-center rounded-sm px-1 text-sm font-sans bg-neutral-700 font-medium text-white">
+                ⇧C
+              </kbd>
+            </div>
+            <div className="flex gap-1">
+              <span className="font-mono text-sm text-neutral-300">More/Less</span>
+              <kbd className="inline-flex items-center rounded-sm px-1 text-sm font-sans bg-neutral-700 font-medium text-white">
+                ⇧M or L
+              </kbd>
+            </div>
+          </div>
           <InputAF autofocus={autofocus} SetAutoFocus={SetAutoFocus} />
-          <p className="text-4xl font-bold mb-3">Dictionary</p>
-          <p className="text-neutral-400">
-            Your personal app to search, save and learn about your favorite
-            words.
-          </p>
+          </div>
         </div>
       </header>
       <article className="max-w-[850px] mx-auto px-5">
@@ -194,6 +264,7 @@ function App() {
                   {wordObject.length > 5 ? (
                     limit ? (
                       <button
+                        ref={MoreData}
                         className="flex items-center text-neutral-400 hover:text-white duration-200"
                         onClick={() => setLimit(null)}
                       >
@@ -204,6 +275,7 @@ function App() {
                       </button>
                     ) : (
                       <button
+                        ref={LessData}
                         className="flex items-center text-neutral-400 hover:text-white duration-200"
                         onClick={() => setLimit(5)}
                       >
