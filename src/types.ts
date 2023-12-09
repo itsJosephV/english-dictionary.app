@@ -13,9 +13,7 @@ export interface DictionaryItem {
 
 export interface Definition {
   definition: string;
-  example: string
-  synonyms?: string[];
-  antonyms?: string[];
+  example?: string
   partOfSpeech: string;
 }
 
@@ -25,4 +23,9 @@ export interface Meaning {
   example?:string
   antonyms?: string[];
   partOfSpeech: string;
+}
+
+export interface SynAndAntItems {
+  synonyms: string[];
+  antonyms: string[];
 }

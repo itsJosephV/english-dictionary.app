@@ -12,7 +12,8 @@ Todo List
 - [x] Input Auto-focus toggle
 - [x] Disable input autofocus when select copy/paste
 - [x] Key shorcuts
-- [ ] Syno and Anto
+- [x] Syno and Anto
+- [ ] S&A fetch buttons
 - [ ] Favorites words
 - [ ] Copy word/meanings
 - [ ] rethink structure to display favorites

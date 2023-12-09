@@ -1,15 +1,18 @@
 import { useEffect, useRef, useState } from "react";
-import { IcRoundSearch } from "./icons/SearchIcon";
+// Components
 import DefinitionCard from "./components/DefinitionCard";
 import LoadingData from "./components/LoadingData";
 import ErrorMessage from "./components/ErrorMessage";
 import Introduction from "./components/Introduction";
+import InputAF from "./components/InputAF";
+// Types
 import { DictionaryItem } from "./types";
 import { Definition } from "./types";
 import { Meaning } from "./types";
-import InputAF from "./components/InputAF";
+import { SynAndAntItems } from "./types";
 
 // ICONS
+import { IcRoundSearch } from "./icons/SearchIcon";
 import { CaretDown } from "./icons/CaretDown";
 import { CaretUp } from "./icons/CaretUp";
 import { CleanIcon } from "./icons/CleanIcon";
@@ -75,13 +78,33 @@ function App() {
       meaning.definitions.map((definition) => ({
         definition: definition.definition,
         example: definition.example,
-        antonyms: meaning.antonyms,
-        synonyms: meaning.synonyms,
         partOfSpeech: meaning.partOfSpeech,
       }))
     ) ?? [];
 
-  // console.log(wordObject);
+  const synAndAnt: SynAndAntItems = (data?.meanings ?? []).reduce(
+    (result, item) => {
+      const synonyms = item.synonyms ?? [];
+      const antonyms = item.antonyms ?? [];
+
+      if (synonyms.length > 0 || antonyms.length > 0) {
+        result.synonyms.push(...synonyms);
+        result.antonyms.push(...antonyms);
+      }
+
+      return result;
+    },
+    { synonyms: [] as string[], antonyms: [] as string[] }
+  );
+
+  const sanitizedSynAndAnt = synAndAnt
+    ? {
+        synonyms: synAndAnt.synonyms?.filter(Boolean),
+        antonyms: synAndAnt.antonyms?.filter(Boolean),
+      }
+    : {};
+
+  // console.log(sanitizedSynAndAnt);
 
   const handleCleanResults = (e: React.FormEvent) => {
     e.preventDefault();
@@ -161,7 +184,7 @@ function App() {
     const HandleLessDataKey = (e: KeyboardEvent) => {
       if (e.shiftKey && e.key === "L") {
         e.preventDefault();
-        console.log("more less");
+        console.log("less data");
         LessData.current?.click();
       }
     };
@@ -187,22 +210,22 @@ function App() {
             </p>
           </div>
           {/* <p>ShorCuts</p> */}
-          <div className="flex items-center justify-between">
-          <div className="bg-neutral-950 p-1.5 rounded-sm inline-flex gap-3 items-center">
-            <div className="flex gap-1">
-              <span className="font-mono text-sm text-neutral-300">Clear</span>
-              <kbd className="inline-flex items-center rounded-sm px-1 text-sm font-sans bg-neutral-700 font-medium text-white">
-                ⇧C
-              </kbd>
+          <div className="md:items-center gap-2 flex flex-col md:flex-row justify-between w-fit md:w-[100%]">
+            <div className="border border-neutral-700 p-1.5 rounded-sm inline-flex gap-3 items-center justify-between">
+              <div className="flex gap-1">
+                <span className="text-sm text-neutral-300">Clear</span>
+                <kbd className="inline-flex items-center rounded-sm px-1 text-sm font-sans bg-neutral-700 font-medium text-white">
+                  ⇧C
+                </kbd>
+              </div>
+              <div className="flex gap-1">
+                <span className="text-sm text-neutral-300">More/Less</span>
+                <kbd className="inline-flex items-center rounded-sm px-1 text-sm font-sans bg-neutral-700 font-medium text-white">
+                  ⇧M or L
+                </kbd>
+              </div>
             </div>
-            <div className="flex gap-1">
-              <span className="font-mono text-sm text-neutral-300">More/Less</span>
-              <kbd className="inline-flex items-center rounded-sm px-1 text-sm font-sans bg-neutral-700 font-medium text-white">
-                ⇧M or L
-              </kbd>
-            </div>
-          </div>
-          <InputAF autofocus={autofocus} SetAutoFocus={SetAutoFocus} />
+            <InputAF autofocus={autofocus} SetAutoFocus={SetAutoFocus} />
           </div>
         </div>
       </header>
@@ -210,7 +233,7 @@ function App() {
         <form
           ref={form}
           onSubmit={handleFormSubmit}
-          className="flex justify-center gap-2 mb-10 relative"
+          className="flex justify-center gap-2 mb-3 relative"
           action=""
         >
           <input
@@ -236,6 +259,43 @@ function App() {
             </button>
           )}
         </form>
+
+        <div className="mb-4">
+          {sanitizedSynAndAnt.synonyms &&
+            sanitizedSynAndAnt.synonyms.length > 0 && (
+              <div className="flex flex-col gap-1.5 mb-3">
+                <p className="text-sm text-neutral-400">Synonyms</p>
+                <ul className="flex flex-row gap-2 flex-wrap">
+                  {sanitizedSynAndAnt.synonyms &&
+                    sanitizedSynAndAnt.synonyms.map((el, i) => (
+                      <li
+                        className="bg-neutral-700 rounded-sm px-1.5 text-xs"
+                        key={i}
+                      >
+                        {el}
+                      </li>
+                    ))}
+                </ul>
+              </div>
+            )}
+          {sanitizedSynAndAnt.antonyms &&
+            sanitizedSynAndAnt.antonyms.length > 0 && (
+              <div className="flex flex-col gap-1.5">
+                <p className="text-sm text-neutral-400">Antonyms</p>
+                <ul className="flex flex-row gap-2 flex-wrap">
+                  {sanitizedSynAndAnt.antonyms &&
+                    sanitizedSynAndAnt.antonyms.map((el, i) => (
+                      <li
+                        className="bg-neutral-700 rounded-sm px-1.5 text-xs"
+                        key={i}
+                      >
+                        {el}
+                      </li>
+                    ))}
+                </ul>
+              </div>
+            )}
+        </div>
 
         <section>
           {loading && <LoadingData />}
