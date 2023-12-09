@@ -5,6 +5,7 @@ import LoadingData from "./components/LoadingData";
 import ErrorMessage from "./components/ErrorMessage";
 import Introduction from "./components/Introduction";
 import InputAF from "./components/InputAF";
+import SynAndAntToggle from "./components/SynAndAntToggle";
 // Types
 import { DictionaryItem } from "./types";
 import { Definition } from "./types";
@@ -24,6 +25,7 @@ function App() {
   const [limit, setLimit] = useState<number | null>(5);
   const [cleaner, setCleaner] = useState<boolean>(false);
   const [autofocus, SetAutoFocus] = useState<boolean>(true);
+  const [isSynAndAntActive, SetIsSynAndAntActive] = useState<boolean>(false);
 
   const form = useRef<HTMLFormElement>(null);
   const MoreData = useRef<HTMLButtonElement>(null);
@@ -105,6 +107,17 @@ function App() {
     : {};
 
   // console.log(sanitizedSynAndAnt);
+  // console.log(
+  //   sanitizedSynAndAnt.antonyms?.length && sanitizedSynAndAnt.synonyms.length
+  //     ? "TRUE"
+  //     : "FALSE"
+  // );
+
+  const synAndAntData: boolean = Boolean(
+    sanitizedSynAndAnt.antonyms?.length || sanitizedSynAndAnt.synonyms?.length
+  );
+
+  // console.log(synAndAntData);
 
   const handleCleanResults = (e: React.FormEvent) => {
     e.preventDefault();
@@ -113,6 +126,13 @@ function App() {
     setError("");
     setLimit(null);
     setCleaner(false);
+  };
+
+  const handleSynAndAntButton = () => {
+    if (!data) {
+      return;
+    }
+    SetIsSynAndAntActive(!isSynAndAntActive);
   };
 
   useEffect(() => {
@@ -197,7 +217,7 @@ function App() {
 
   return (
     <main className="min-h-screen mx-auto pb-3">
-      <header className="mb-10 pt-14 border-b bg-neutral-900 border-neutral-600/60 pb-4">
+      <header className="mb-2 pt-14 border-b bg-neutral-900 border-neutral-600/60 pb-4">
         <div className="max-w-[850px] mx-auto px-5">
           <div className="text-orange-300 bg-orange-500/10 border border-orange-300 py-1 px-2 w-fit rounded-md mb-8">
             Dictionary App - Underwork 🚧{" "}
@@ -230,10 +250,17 @@ function App() {
         </div>
       </header>
       <article className="max-w-[850px] mx-auto px-5">
+        <div className="mb-3 flex justify-end">
+          <SynAndAntToggle
+            handleSynAndAntButton={handleSynAndAntButton}
+            synAndAntData={synAndAntData}
+            isSynAndAntActive={isSynAndAntActive}
+          />
+        </div>
         <form
           ref={form}
           onSubmit={handleFormSubmit}
-          className="flex justify-center gap-2 mb-3 relative"
+          className="flex justify-center gap-2 mb-5 relative"
           action=""
         >
           <input
@@ -260,42 +287,44 @@ function App() {
           )}
         </form>
 
-        <div className="mb-4">
-          {sanitizedSynAndAnt.synonyms &&
-            sanitizedSynAndAnt.synonyms.length > 0 && (
-              <div className="flex flex-col gap-1.5 mb-3">
-                <p className="text-sm text-neutral-400">Synonyms</p>
-                <ul className="flex flex-row gap-2 flex-wrap">
-                  {sanitizedSynAndAnt.synonyms &&
-                    sanitizedSynAndAnt.synonyms.map((el, i) => (
-                      <li
-                        className="bg-neutral-700 rounded-sm px-1.5 text-xs"
-                        key={i}
-                      >
-                        {el}
-                      </li>
-                    ))}
-                </ul>
-              </div>
-            )}
-          {sanitizedSynAndAnt.antonyms &&
-            sanitizedSynAndAnt.antonyms.length > 0 && (
-              <div className="flex flex-col gap-1.5">
-                <p className="text-sm text-neutral-400">Antonyms</p>
-                <ul className="flex flex-row gap-2 flex-wrap">
-                  {sanitizedSynAndAnt.antonyms &&
-                    sanitizedSynAndAnt.antonyms.map((el, i) => (
-                      <li
-                        className="bg-neutral-700 rounded-sm px-1.5 text-xs"
-                        key={i}
-                      >
-                        {el}
-                      </li>
-                    ))}
-                </ul>
-              </div>
-            )}
-        </div>
+        {isSynAndAntActive && (
+          <div className="">
+            {sanitizedSynAndAnt.synonyms &&
+              sanitizedSynAndAnt.synonyms.length > 0 && (
+                <div className="flex flex-col gap-1.5 mb-3">
+                  <p className="text-sm text-neutral-400">Synonyms</p>
+                  <ul className="flex flex-row gap-2 flex-wrap">
+                    {sanitizedSynAndAnt.synonyms &&
+                      sanitizedSynAndAnt.synonyms.map((el, i) => (
+                        <li
+                          className="bg-neutral-700 rounded-sm px-1.5 text-xs"
+                          key={i}
+                        >
+                          {el}
+                        </li>
+                      ))}
+                  </ul>
+                </div>
+              )}
+            {sanitizedSynAndAnt.antonyms &&
+              sanitizedSynAndAnt.antonyms.length > 0 && (
+                <div className="flex flex-col gap-1.5">
+                  <p className="text-sm text-neutral-400">Antonyms</p>
+                  <ul className="flex flex-row gap-2 flex-wrap">
+                    {sanitizedSynAndAnt.antonyms &&
+                      sanitizedSynAndAnt.antonyms.map((el, i) => (
+                        <li
+                          className="bg-neutral-700 rounded-sm px-1.5 text-xs"
+                          key={i}
+                        >
+                          {el}
+                        </li>
+                      ))}
+                  </ul>
+                </div>
+              )}
+          </div>
+        )}
 
         <section>
           {loading && <LoadingData />}
@@ -303,7 +332,7 @@ function App() {
           {data
             ? data && (
                 <>
-                  <div className="mb-4 flex items-center justify-between">
+                  <div className="flex items-center justify-between mb-2 mt-4">
                     <p className="text-3xl inline-flex font-bold">
                       {data?.word}
                       <span className="ml-3 text-[18px] font-normal text-neutral-400">
