@@ -14,7 +14,7 @@ import { Definition } from "./types";
 import { Meaning } from "./types";
 import { SynAndAntItems } from "./types";
 
-// ICONS
+// Icons
 import { IcRoundSearch } from "./icons/SearchIcon";
 import { CaretDown } from "./icons/CaretDown";
 import { CaretUp } from "./icons/CaretUp";
@@ -25,11 +25,13 @@ import { handleSynAndAntKey } from "./utils/keyboardutils/handleSynAndAntKey";
 import { handleLessDataKey } from "./utils/keyboardutils/handleLessDataKey";
 import { handleMoreDataKey } from "./utils/keyboardutils/handleMoreDataKey";
 
+// Hooks
 import { useFetchDictionary } from "./utils/data/useFetchDictionary";
 
 function App() {
   const [limit, setLimit] = useState<number | null>(5);
   const [autofocus, SetAutoFocus] = useState<boolean>(true);
+  const [cleaner, setCleaner] = useState<boolean>(false);
   const [isSynAndAntActive, SetIsSynAndAntActive] = useState<boolean>(false);
 
   const form = useRef<HTMLFormElement>(null);
@@ -41,10 +43,8 @@ function App() {
     data,
     error,
     isLoading,
-    cleaner,
     setData,
     setError,
-    setCleaner,
     fetchDictionary,
   } = useFetchDictionary();
 
@@ -56,6 +56,7 @@ function App() {
       return;
     }
     fetchDictionary(word);
+    setCleaner(true)
   };
 
   const wordObject: Definition[] = useMemo(() => {
@@ -165,6 +166,7 @@ function App() {
     return () => {
       document.removeEventListener("keydown", handleWhipeKeys);
     };
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [data, formBool]);
 
   useEffect(() => {

@@ -5,7 +5,6 @@ export const useFetchDictionary = () => {
   const [data, setData] = useState<DictionaryItem | null>(null);
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [error, setError] = useState<string | null>("");
-  const [cleaner, setCleaner] = useState<boolean>(false);
 
   const fetchDictionary = async (word: string): Promise<void> => {
     const regex = /^[a-zA-Z\s]*$/;
@@ -37,9 +36,8 @@ export const useFetchDictionary = () => {
       setError(error instanceof Error ? error.message : String(error));
     } finally {
       setIsLoading(false);
-      setCleaner(true)
     }
   };
-  return { data, error, isLoading, cleaner, setData, setError, setCleaner, fetchDictionary }
+  return { data, error, isLoading, setData, setError, fetchDictionary }
 }
 
