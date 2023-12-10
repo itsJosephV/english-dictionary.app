@@ -27,6 +27,7 @@ import { handleMoreDataKey } from "./utils/keyboardutils/handleMoreDataKey";
 
 // Hooks
 import { useFetchDictionary } from "./utils/data/useFetchDictionary";
+import SynAndAntCards from "./components/SynAndAntCards";
 
 function App() {
   const [limit, setLimit] = useState<number | null>(5);
@@ -39,14 +40,8 @@ function App() {
   const lessDataRef = useRef<HTMLButtonElement>(null);
   const synAndAntRef = useRef<HTMLButtonElement>(null);
 
-  const {
-    data,
-    error,
-    isLoading,
-    setData,
-    setError,
-    fetchDictionary,
-  } = useFetchDictionary();
+  const { data, error, isLoading, setData, setError, fetchDictionary } =
+    useFetchDictionary();
 
   const handleFormSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -56,7 +51,7 @@ function App() {
       return;
     }
     fetchDictionary(word);
-    setCleaner(true)
+    setCleaner(true);
   };
 
   const wordObject: Definition[] = useMemo(() => {
@@ -166,7 +161,7 @@ function App() {
     return () => {
       document.removeEventListener("keydown", handleWhipeKeys);
     };
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [data, formBool]);
 
   useEffect(() => {
@@ -263,42 +258,10 @@ function App() {
         </form>
 
         {isSynAndAntActive && (
-          <div className="mt-4">
-            {sanitizedSynAndAnt.synonyms &&
-              sanitizedSynAndAnt.synonyms.length > 0 && (
-                <div className="flex flex-col gap-1.5 mb-3">
-                  <p className="text-sm text-neutral-400">Synonyms</p>
-                  <ul className="flex flex-row gap-2 flex-wrap">
-                    {sanitizedSynAndAnt.synonyms &&
-                      sanitizedSynAndAnt.synonyms.map((synItem, i) => (
-                        <li
-                          className="bg-neutral-700 rounded-sm px-1.5 text-xs"
-                          key={i}
-                        >
-                          {synItem}
-                        </li>
-                      ))}
-                  </ul>
-                </div>
-              )}
-            {sanitizedSynAndAnt.antonyms &&
-              sanitizedSynAndAnt.antonyms.length > 0 && (
-                <div className="flex flex-col gap-1.5">
-                  <p className="text-sm text-neutral-400">Antonyms</p>
-                  <ul className="flex flex-row gap-2 flex-wrap">
-                    {sanitizedSynAndAnt.antonyms &&
-                      sanitizedSynAndAnt.antonyms.map((antItem, i) => (
-                        <li
-                          className="bg-neutral-700 rounded-sm px-1.5 text-xs"
-                          key={i}
-                        >
-                          {antItem}
-                        </li>
-                      ))}
-                  </ul>
-                </div>
-              )}
-          </div>
+          <SynAndAntCards
+            synonyms={sanitizedSynAndAnt.synonyms}
+            antonyms={sanitizedSynAndAnt.antonyms}
+          />
         )}
 
         <section>
