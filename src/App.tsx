@@ -34,6 +34,7 @@ function App() {
   const [autofocus, SetAutoFocus] = useState<boolean>(true);
   const [cleaner, setCleaner] = useState<boolean>(false);
   const [isSynAndAntActive, SetIsSynAndAntActive] = useState<boolean>(false);
+  const [onSynWord, setOnSynWord] = useState<string | null>(null)
 
   const form = useRef<HTMLFormElement>(null);
   const moreDataRef = useRef<HTMLButtonElement>(null);
@@ -197,6 +198,10 @@ function App() {
     };
   }, [synAndAntBool]);
 
+  useEffect(() => {
+    console.log(onSynWord);
+  },[onSynWord])
+
   return (
     <main className="min-h-screen mx-auto pb-3">
       <header className="mb-5 pt-14 border-b bg-neutral-900 border-neutral-600/60 pb-5">
@@ -261,6 +266,8 @@ function App() {
           <SynAndAntCards
             synonyms={sanitizedSynAndAnt.synonyms}
             antonyms={sanitizedSynAndAnt.antonyms}
+            setOnSynWord={setOnSynWord}
+
           />
         )}
 

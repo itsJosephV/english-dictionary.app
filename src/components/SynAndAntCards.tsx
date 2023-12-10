@@ -1,14 +1,22 @@
-import React from "react";
-
 interface SanitizedSynAndAnt {
   synonyms?: string[];
   antonyms?: string[];
+  setOnSynWord: React.Dispatch<React.SetStateAction<string | null>>;
+  
 }
 
 const SynAndAntCards: React.FC<SanitizedSynAndAnt> = ({
   synonyms,
   antonyms,
+  setOnSynWord,
 }) => {
+
+  const handleSynButton = (synItem: string) => {
+    if (setOnSynWord && synItem) {
+      setOnSynWord(synItem);
+    }
+  };
+
   return (
     <div className="mt-4">
       {synonyms && synonyms.length > 0 && (
@@ -21,7 +29,9 @@ const SynAndAntCards: React.FC<SanitizedSynAndAnt> = ({
                   className="bg-neutral-700 rounded-sm px-1.5 text-xs"
                   key={i}
                 >
-                  {synItem}
+                  <button onClick={() => handleSynButton(synItem)}>
+                    {synItem}
+                  </button>
                 </li>
               ))}
           </ul>
