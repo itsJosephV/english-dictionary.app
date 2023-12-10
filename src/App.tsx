@@ -10,7 +10,6 @@ import SynAndAntToggle from "./components/SynAndAntToggle";
 import ShortCutsInfo from "./components/ShortCutsInfo";
 
 // Types
-import { DictionaryItem } from "./types";
 import { Definition } from "./types";
 import { Meaning } from "./types";
 import { SynAndAntItems } from "./types";
@@ -20,16 +19,16 @@ import { IcRoundSearch } from "./icons/SearchIcon";
 import { CaretDown } from "./icons/CaretDown";
 import { CaretUp } from "./icons/CaretUp";
 import { CleanIcon } from "./icons/CleanIcon";
+
+// Utils
 import { handleSynAndAntKey } from "./utils/keyboardutils/handleSynAndAntKey";
 import { handleLessDataKey } from "./utils/keyboardutils/handleLessDataKey";
 import { handleMoreDataKey } from "./utils/keyboardutils/handleMoreDataKey";
 
+import { useFetchDictionary } from "./utils/data/useFetchDictionary";
+
 function App() {
-  const [data, setData] = useState<DictionaryItem | null>(null);
-  const [loading, setLoading] = useState<boolean>(false);
-  const [error, setError] = useState<string | null>("");
   const [limit, setLimit] = useState<number | null>(5);
-  const [cleaner, setCleaner] = useState<boolean>(false);
   const [autofocus, SetAutoFocus] = useState<boolean>(true);
   const [isSynAndAntActive, SetIsSynAndAntActive] = useState<boolean>(false);
 
@@ -38,51 +37,25 @@ function App() {
   const lessDataRef = useRef<HTMLButtonElement>(null);
   const synAndAntRef = useRef<HTMLButtonElement>(null);
 
-  const fetchDictionary = async (word: string): Promise<void> => {
-    const regex = /^[a-zA-Z\s]*$/;
-    const spaceRegex = /^ *$/;
-
-    switch (true) {
-      case spaceRegex.test(word):
-        throw new Error(
-          "Spaces are allowed only in contexts like, e.g., 'look after', 'get out'."
-        );
-      case !regex.test(word):
-        throw new Error("Word must contain only alphabets");
-      default:
-        break;
-    }
-
-    const response = await fetch(
-      `https://api.dictionaryapi.dev/api/v2/entries/en/${word}`
-    );
-
-    if (!response.ok) {
-      throw new Error(`No entries found for "${word}"`);
-    }
-    const data = await response.json();
-    setData(data[0]);
-  };
+  const {
+    data,
+    error,
+    isLoading,
+    cleaner,
+    setData,
+    setError,
+    setCleaner,
+    fetchDictionary,
+  } = useFetchDictionary();
 
   const handleFormSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    setData(null);
-    setError("");
     setLimit(5);
     const word = form.current?.word.value;
     if (word.length === 0) {
       return;
     }
-    setLoading(true);
-    try {
-      await fetchDictionary(word);
-      setError("");
-    } catch (error) {
-      setError(error instanceof Error ? error.message : String(error));
-    } finally {
-      setLoading(false);
-      setCleaner(true);
-    }
+    fetchDictionary(word);
   };
 
   const wordObject: Definition[] = useMemo(() => {
@@ -327,7 +300,7 @@ function App() {
         )}
 
         <section>
-          {loading && <LoadingData />}
+          {isLoading && <LoadingData />}
           {error && <ErrorMessage error={error} />}
           {data
             ? data && (
@@ -377,7 +350,7 @@ function App() {
                   ) : null}
                 </Fragment>
               )
-            : !loading && !error && <Introduction />}
+            : !isLoading && !error && <Introduction />}
         </section>
       </article>
     </main>
