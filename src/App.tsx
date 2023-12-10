@@ -6,6 +6,7 @@ import ErrorMessage from "./components/ErrorMessage";
 import Introduction from "./components/Introduction";
 import InputAF from "./components/InputAF";
 import SynAndAntToggle from "./components/SynAndAntToggle";
+import ShortCutsInfo from "./components/ShortCutsInfo";
 // Types
 import { DictionaryItem } from "./types";
 import { Definition } from "./types";
@@ -28,8 +29,9 @@ function App() {
   const [isSynAndAntActive, SetIsSynAndAntActive] = useState<boolean>(false);
 
   const form = useRef<HTMLFormElement>(null);
-  const MoreData = useRef<HTMLButtonElement>(null);
-  const LessData = useRef<HTMLButtonElement>(null);
+  const moreDataRef = useRef<HTMLButtonElement>(null);
+  const lessDataRef = useRef<HTMLButtonElement>(null);
+  const synAndAntRef = useRef<HTMLButtonElement>(null);
 
   const fetchDictionary = async (word: string): Promise<void> => {
     const regex = /^[a-zA-Z\s][a-zA-Z\s]*$/;
@@ -101,10 +103,15 @@ function App() {
 
   const sanitizedSynAndAnt = synAndAnt
     ? {
-        synonyms: synAndAnt.synonyms?.filter(Boolean),
-        antonyms: synAndAnt.antonyms?.filter(Boolean),
+        synonyms: [...new Set(synAndAnt.synonyms?.filter(Boolean))],
+        antonyms: [...new Set(synAndAnt.antonyms?.filter(Boolean))],
       }
     : {};
+
+  const formBool = Boolean(form.current?.word.value);
+  const synAndAntBool: boolean = Boolean(
+    sanitizedSynAndAnt.antonyms?.length || sanitizedSynAndAnt.synonyms?.length
+  );
 
   // console.log(sanitizedSynAndAnt);
   // console.log(
@@ -113,18 +120,13 @@ function App() {
   //     : "FALSE"
   // );
 
-  const synAndAntData: boolean = Boolean(
-    sanitizedSynAndAnt.antonyms?.length || sanitizedSynAndAnt.synonyms?.length
-  );
-
-  // console.log(synAndAntData);
-
   const handleCleanResults = (e: React.FormEvent) => {
     e.preventDefault();
     form.current?.reset();
     setData(null);
     setError("");
     setLimit(null);
+    SetIsSynAndAntActive(false);
     setCleaner(false);
   };
 
@@ -168,6 +170,9 @@ function App() {
 
   useEffect(() => {
     const handleWhipeKeys = (e: KeyboardEvent) => {
+      if (!data && !formBool) {
+        return;
+      }
       if (e.shiftKey && e.key === "C") {
         e.preventDefault();
         console.log("data whiped");
@@ -175,6 +180,7 @@ function App() {
         setData(null);
         setError("");
         setLimit(null);
+        SetIsSynAndAntActive(false);
         setCleaner(false);
       }
     };
@@ -183,41 +189,66 @@ function App() {
     return () => {
       document.removeEventListener("keydown", handleWhipeKeys);
     };
-  }, []);
+  }, [data, formBool]);
 
   useEffect(() => {
-    const HandleMoreDataKey = (e: KeyboardEvent) => {
+    const handleMoreDataKey = (e: KeyboardEvent) => {
+      if (limit === null || wordObject.length < 5) {
+        return;
+      }
       if (e.shiftKey && e.key === "M") {
         e.preventDefault();
         console.log("more data");
-        MoreData.current?.click();
+        moreDataRef.current?.click();
       }
     };
-    document.addEventListener("keydown", HandleMoreDataKey);
+    document.addEventListener("keydown", handleMoreDataKey);
 
     return () => {
-      document.removeEventListener("keydown", HandleMoreDataKey);
+      document.removeEventListener("keydown", handleMoreDataKey);
     };
-  }, []);
+  }, [limit, wordObject.length]);
 
   useEffect(() => {
-    const HandleLessDataKey = (e: KeyboardEvent) => {
+    const handleLessDataKey = (e: KeyboardEvent) => {
+      if (limit === 5 || !data) {
+        return;
+      }
+
       if (e.shiftKey && e.key === "L") {
         e.preventDefault();
         console.log("less data");
-        LessData.current?.click();
+        lessDataRef.current?.click();
       }
     };
-    document.addEventListener("keydown", HandleLessDataKey);
+    document.addEventListener("keydown", handleLessDataKey);
 
     return () => {
-      document.removeEventListener("keydown", HandleLessDataKey);
+      document.removeEventListener("keydown", handleLessDataKey);
     };
-  }, []);
+  }, [limit, data]);
+
+  useEffect(() => {
+    const handleSynAndAntKey = (e: KeyboardEvent) => {
+      if (!synAndAntBool) {
+        return;
+      }
+      if (e.shiftKey && e.key === "S") {
+        e.preventDefault();
+        console.log("Synonyms & Antonyms open");
+        synAndAntRef.current?.click();
+      }
+    };
+    document.addEventListener("keydown", handleSynAndAntKey);
+
+    return () => {
+      document.removeEventListener("keydown", handleSynAndAntKey);
+    };
+  }, [synAndAntBool]);
 
   return (
     <main className="min-h-screen mx-auto pb-3">
-      <header className="mb-2 pt-14 border-b bg-neutral-900 border-neutral-600/60 pb-4">
+      <header className="mb-5 pt-14 border-b bg-neutral-900 border-neutral-600/60 pb-5">
         <div className="max-w-[850px] mx-auto px-5">
           <div className="text-orange-300 bg-orange-500/10 border border-orange-300 py-1 px-2 w-fit rounded-md mb-8">
             Dictionary App - Underwork 🚧{" "}
@@ -231,36 +262,24 @@ function App() {
           </div>
           {/* <p>ShorCuts</p> */}
           <div className="md:items-center gap-2 flex flex-col md:flex-row justify-between w-fit md:w-[100%]">
-            <div className="border border-neutral-700 p-1.5 rounded-sm inline-flex gap-3 items-center justify-between">
-              <div className="flex gap-1">
-                <span className="text-sm text-neutral-300">Clear</span>
-                <kbd className="inline-flex items-center rounded-sm px-1 text-sm font-sans bg-neutral-700 font-medium text-white">
-                  ⇧C
-                </kbd>
-              </div>
-              <div className="flex gap-1">
-                <span className="text-sm text-neutral-300">More/Less</span>
-                <kbd className="inline-flex items-center rounded-sm px-1 text-sm font-sans bg-neutral-700 font-medium text-white">
-                  ⇧M or L
-                </kbd>
-              </div>
-            </div>
+            <ShortCutsInfo />
             <InputAF autofocus={autofocus} SetAutoFocus={SetAutoFocus} />
           </div>
         </div>
       </header>
       <article className="max-w-[850px] mx-auto px-5">
-        <div className="mb-3 flex justify-end">
+        <div className="mb-2 flex justify-end">
           <SynAndAntToggle
             handleSynAndAntButton={handleSynAndAntButton}
-            synAndAntData={synAndAntData}
+            synAndAntBool={synAndAntBool}
             isSynAndAntActive={isSynAndAntActive}
+            synAndAntRef={synAndAntRef}
           />
         </div>
         <form
           ref={form}
           onSubmit={handleFormSubmit}
-          className="flex justify-center gap-2 mb-5 relative"
+          className="flex justify-center gap-2 mb-4 relative"
           action=""
         >
           <input
@@ -332,7 +351,7 @@ function App() {
           {data
             ? data && (
                 <>
-                  <div className="flex items-center justify-between mb-2 mt-4">
+                  <div className="flex items-center justify-between mb-2 mt-5">
                     <p className="text-3xl inline-flex font-bold">
                       {data?.word}
                       <span className="ml-3 text-[18px] font-normal text-neutral-400">
@@ -353,7 +372,7 @@ function App() {
                   {wordObject.length > 5 ? (
                     limit ? (
                       <button
-                        ref={MoreData}
+                        ref={moreDataRef}
                         className="flex items-center text-neutral-400 hover:text-white duration-200"
                         onClick={() => setLimit(null)}
                       >
@@ -364,7 +383,7 @@ function App() {
                       </button>
                     ) : (
                       <button
-                        ref={LessData}
+                        ref={lessDataRef}
                         className="flex items-center text-neutral-400 hover:text-white duration-200"
                         onClick={() => setLimit(5)}
                       >

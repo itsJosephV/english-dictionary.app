@@ -3,23 +3,26 @@ import { CaretDown } from "../icons/CaretDown";
 import { CaretUp } from "../icons/CaretUp";
 
 interface SynAndAntToggleProps {
-  synAndAntData: boolean;
-  isSynAndAntActive: boolean
+  synAndAntBool: boolean;
+  isSynAndAntActive: boolean;
   handleSynAndAntButton: () => void;
+  synAndAntRef: React.RefObject<HTMLButtonElement>
 }
 
 const SynAndAntToggle: React.FC<SynAndAntToggleProps> = ({
-  synAndAntData,
+  synAndAntBool,
   isSynAndAntActive,
   handleSynAndAntButton,
+  synAndAntRef
 }) => {
   return (
     <button
+      ref={synAndAntRef}
       onClick={handleSynAndAntButton}
       className={`text-xs flex items-center gap-[2px] ${
-        synAndAntData ? "text-teal-600" : "text-neutral-500"
+        synAndAntBool ? "text-teal-600 hover:text-teal-400 duration-200" : "text-neutral-500"
       }`}
-      disabled={!synAndAntData}
+      disabled={!synAndAntBool}
     >
       Synonyms / Antonysm <span>{!isSynAndAntActive ? <CaretDown /> : <CaretUp />}</span>
     </button>
