@@ -1,4 +1,5 @@
-import { useEffect, useRef, useState } from "react";
+import { Fragment, useEffect, useRef, useState } from "react";
+
 // Components
 import DefinitionCard from "./components/DefinitionCard";
 import LoadingData from "./components/LoadingData";
@@ -7,6 +8,7 @@ import Introduction from "./components/Introduction";
 import InputAF from "./components/InputAF";
 import SynAndAntToggle from "./components/SynAndAntToggle";
 import ShortCutsInfo from "./components/ShortCutsInfo";
+
 // Types
 import { DictionaryItem } from "./types";
 import { Definition } from "./types";
@@ -34,7 +36,7 @@ function App() {
   const synAndAntRef = useRef<HTMLButtonElement>(null);
 
   const fetchDictionary = async (word: string): Promise<void> => {
-    const regex = /^[a-zA-Z\s][a-zA-Z\s]*$/;
+    const regex = /^[a-zA-Z\s]*$/;
     const spaceRegex = /^ *$/;
 
     if (spaceRegex.test(word)) {
@@ -108,17 +110,10 @@ function App() {
       }
     : {};
 
-  const formBool = Boolean(form.current?.word.value);
+  const formBool: boolean = Boolean(form.current?.word.value);
   const synAndAntBool: boolean = Boolean(
     sanitizedSynAndAnt.antonyms?.length || sanitizedSynAndAnt.synonyms?.length
   );
-
-  // console.log(sanitizedSynAndAnt);
-  // console.log(
-  //   sanitizedSynAndAnt.antonyms?.length && sanitizedSynAndAnt.synonyms.length
-  //     ? "TRUE"
-  //     : "FALSE"
-  // );
 
   const handleCleanResults = (e: React.FormEvent) => {
     e.preventDefault();
@@ -162,8 +157,6 @@ function App() {
       document.removeEventListener("keydown", handleKeyDown);
     };
   }, [autofocus]);
-
-  // console.log(data);
 
   // const isMac = navigator.userAgent.indexOf("Mac") != -1;
   // const isWin = navigator.userAgent.indexOf("Win") != -1;
@@ -314,12 +307,12 @@ function App() {
                   <p className="text-sm text-neutral-400">Synonyms</p>
                   <ul className="flex flex-row gap-2 flex-wrap">
                     {sanitizedSynAndAnt.synonyms &&
-                      sanitizedSynAndAnt.synonyms.map((el, i) => (
+                      sanitizedSynAndAnt.synonyms.map((synItem, i) => (
                         <li
                           className="bg-neutral-700 rounded-sm px-1.5 text-xs"
                           key={i}
                         >
-                          {el}
+                          {synItem}
                         </li>
                       ))}
                   </ul>
@@ -331,12 +324,12 @@ function App() {
                   <p className="text-sm text-neutral-400">Antonyms</p>
                   <ul className="flex flex-row gap-2 flex-wrap">
                     {sanitizedSynAndAnt.antonyms &&
-                      sanitizedSynAndAnt.antonyms.map((el, i) => (
+                      sanitizedSynAndAnt.antonyms.map((antItem, i) => (
                         <li
                           className="bg-neutral-700 rounded-sm px-1.5 text-xs"
                           key={i}
                         >
-                          {el}
+                          {antItem}
                         </li>
                       ))}
                   </ul>
@@ -350,7 +343,7 @@ function App() {
           {error && <ErrorMessage error={error} />}
           {data
             ? data && (
-                <>
+                <Fragment>
                   <div className="flex items-center justify-between mb-2 mt-5">
                     <p className="text-3xl inline-flex font-bold">
                       {data?.word}
@@ -394,7 +387,7 @@ function App() {
                       </button>
                     )
                   ) : null}
-                </>
+                </Fragment>
               )
             : !loading && !error && <Introduction />}
         </section>
