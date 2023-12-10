@@ -1,4 +1,4 @@
-import { Fragment, useEffect, useRef, useState } from "react";
+import { Fragment, useEffect, useMemo, useRef, useState } from "react";
 
 // Components
 import DefinitionCard from "./components/DefinitionCard";
@@ -20,6 +20,9 @@ import { IcRoundSearch } from "./icons/SearchIcon";
 import { CaretDown } from "./icons/CaretDown";
 import { CaretUp } from "./icons/CaretUp";
 import { CleanIcon } from "./icons/CleanIcon";
+import { handleSynAndAntKey } from "./utils/keyboardutils/handleSynAndAntKey";
+import { handleLessDataKey } from "./utils/keyboardutils/handleLessDataKey";
+import { handleMoreDataKey } from "./utils/keyboardutils/handleMoreDataKey";
 
 function App() {
   const [data, setData] = useState<DictionaryItem | null>(null);
@@ -39,12 +42,15 @@ function App() {
     const regex = /^[a-zA-Z\s]*$/;
     const spaceRegex = /^ *$/;
 
-    if (spaceRegex.test(word)) {
-      throw new Error("Spaces are allowed in the context, e.g., 'look after'.");
-    }
-
-    if (!regex.test(word)) {
-      throw new Error("Word must contain only alphabets");
+    switch (true) {
+      case spaceRegex.test(word):
+        throw new Error(
+          "Spaces are allowed only in contexts like, e.g., 'look after', 'get out'."
+        );
+      case !regex.test(word):
+        throw new Error("Word must contain only alphabets");
+      default:
+        break;
     }
 
     const response = await fetch(
@@ -52,7 +58,7 @@ function App() {
     );
 
     if (!response.ok) {
-      throw new Error(`Word "${word}" was not found in the dictionary`);
+      throw new Error(`No entries found for "${word}"`);
     }
     const data = await response.json();
     setData(data[0]);
@@ -79,14 +85,17 @@ function App() {
     }
   };
 
-  const wordObject: Definition[] =
-    data?.meanings?.flatMap((meaning: Meaning) =>
-      meaning.definitions.map((definition) => ({
-        definition: definition.definition,
-        example: definition.example,
-        partOfSpeech: meaning.partOfSpeech,
-      }))
-    ) ?? [];
+  const wordObject: Definition[] = useMemo(() => {
+    return (
+      data?.meanings?.flatMap((meaning: Meaning) =>
+        meaning.definitions.map((definition) => ({
+          definition: definition.definition,
+          example: definition.example,
+          partOfSpeech: meaning.partOfSpeech,
+        }))
+      ) ?? []
+    );
+  }, [data?.meanings]);
 
   const synAndAnt: SynAndAntItems = (data?.meanings ?? []).reduce(
     (result, item) => {
@@ -110,6 +119,7 @@ function App() {
       }
     : {};
 
+  //? Helpers to avoid unnecessary shorcuts calls when no data
   const formBool: boolean = Boolean(form.current?.word.value);
   const synAndAntBool: boolean = Boolean(
     sanitizedSynAndAnt.antonyms?.length || sanitizedSynAndAnt.synonyms?.length
@@ -185,57 +195,35 @@ function App() {
   }, [data, formBool]);
 
   useEffect(() => {
-    const handleMoreDataKey = (e: KeyboardEvent) => {
-      if (limit === null || wordObject.length < 5) {
-        return;
-      }
-      if (e.shiftKey && e.key === "M") {
-        e.preventDefault();
-        console.log("more data");
-        moreDataRef.current?.click();
-      }
+    const handleKeyDown = (e: KeyboardEvent) => {
+      handleMoreDataKey(e, limit, wordObject, moreDataRef);
     };
-    document.addEventListener("keydown", handleMoreDataKey);
+    document.addEventListener("keydown", handleKeyDown);
 
     return () => {
-      document.removeEventListener("keydown", handleMoreDataKey);
+      document.removeEventListener("keydown", handleKeyDown);
     };
-  }, [limit, wordObject.length]);
+  }, [limit, wordObject]);
 
   useEffect(() => {
-    const handleLessDataKey = (e: KeyboardEvent) => {
-      if (limit === 5 || !data) {
-        return;
-      }
-
-      if (e.shiftKey && e.key === "L") {
-        e.preventDefault();
-        console.log("less data");
-        lessDataRef.current?.click();
-      }
+    const handleKeyDown = (e: KeyboardEvent) => {
+      handleLessDataKey(e, limit, data, lessDataRef);
     };
-    document.addEventListener("keydown", handleLessDataKey);
+    document.addEventListener("keydown", handleKeyDown);
 
     return () => {
-      document.removeEventListener("keydown", handleLessDataKey);
+      document.removeEventListener("keydown", handleKeyDown);
     };
   }, [limit, data]);
 
   useEffect(() => {
-    const handleSynAndAntKey = (e: KeyboardEvent) => {
-      if (!synAndAntBool) {
-        return;
-      }
-      if (e.shiftKey && e.key === "S") {
-        e.preventDefault();
-        console.log("Synonyms & Antonyms open");
-        synAndAntRef.current?.click();
-      }
+    const handleKeyDown = (e: KeyboardEvent) => {
+      handleSynAndAntKey(e, synAndAntBool, synAndAntRef);
     };
-    document.addEventListener("keydown", handleSynAndAntKey);
+    document.addEventListener("keydown", handleKeyDown);
 
     return () => {
-      document.removeEventListener("keydown", handleSynAndAntKey);
+      document.removeEventListener("keydown", handleKeyDown);
     };
   }, [synAndAntBool]);
 
@@ -272,7 +260,7 @@ function App() {
         <form
           ref={form}
           onSubmit={handleFormSubmit}
-          className="flex justify-center gap-2 mb-4 relative"
+          className="flex justify-center gap-2 relative"
           action=""
         >
           <input
@@ -300,7 +288,7 @@ function App() {
         </form>
 
         {isSynAndAntActive && (
-          <div className="">
+          <div className="mt-4">
             {sanitizedSynAndAnt.synonyms &&
               sanitizedSynAndAnt.synonyms.length > 0 && (
                 <div className="flex flex-col gap-1.5 mb-3">
