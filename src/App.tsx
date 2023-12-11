@@ -303,14 +303,16 @@ function App() {
           {data
             ? data && (
                 <Fragment>
-                  <div className="flex items-center flex-wrap gap-1.5 mb-3 mt-5">
-                    <p className="text-3xl font-bold">{data?.word}</p>
+                  <div className="flex items-center flex-wrap mb-2 mt-5">
+                    <p className="text-3xl font-semibold mr-2">{data?.word}</p>
                     <p className="text-neutral-400">
                       {data?.phonetics[0]?.text}
                     </p>
-                    {/* <p className="text-neutral-400 text-xs">
-                      {wordObject.length} Results
-                    </p> */}
+                  </div>
+                  <div className="mb-2">
+                    <p className="text-neutral-500 text-xs ">
+                      {wordObject.length} Results found
+                    </p>
                   </div>
                   <ul>
                     {wordObject
