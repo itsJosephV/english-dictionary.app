@@ -34,7 +34,7 @@ function App() {
   const [autofocus, SetAutoFocus] = useState<boolean>(true);
   const [cleaner, setCleaner] = useState<boolean>(false);
   const [isSynAndAntActive, SetIsSynAndAntActive] = useState<boolean>(false);
-  const [onSynWord, setOnSynWord] = useState<string | null>(null)
+  const [onSynWord, setOnSynWord] = useState<string | null>(null);
 
   const form = useRef<HTMLFormElement>(null);
   const moreDataRef = useRef<HTMLButtonElement>(null);
@@ -46,11 +46,13 @@ function App() {
 
   const handleFormSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    setOnSynWord(null);
     setLimit(5);
     const word = form.current?.word.value;
     if (word.length === 0) {
       return;
     }
+
     fetchDictionary(word);
     setCleaner(true);
   };
@@ -112,6 +114,20 @@ function App() {
     SetIsSynAndAntActive(!isSynAndAntActive);
   };
 
+  //? Chore: better testing & improve
+  useEffect(() => {
+    if (onSynWord !== null) {
+      if (form.current) {
+        form.current.word.value = onSynWord;
+      }
+
+      setCleaner(false);
+      fetchDictionary(onSynWord);
+      setCleaner(true);
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [onSynWord]);
+
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
       const regex = /^[a-zA-Z]$/;
@@ -141,24 +157,24 @@ function App() {
   // const isMac = navigator.userAgent.indexOf("Mac") != -1;
   // const isWin = navigator.userAgent.indexOf("Win") != -1;
 
+  const handleWhipeKeys = (e: KeyboardEvent) => {
+    if (!data && !formBool) {
+      return;
+    }
+    if (e.shiftKey && e.key === "C") {
+      e.preventDefault();
+      console.log("data whiped");
+      form.current?.reset();
+      setData(null);
+      setError("");
+      setLimit(null);
+      SetIsSynAndAntActive(false);
+      setCleaner(false);
+    }
+  };
+  
   useEffect(() => {
-    const handleWhipeKeys = (e: KeyboardEvent) => {
-      if (!data && !formBool) {
-        return;
-      }
-      if (e.shiftKey && e.key === "C") {
-        e.preventDefault();
-        console.log("data whiped");
-        form.current?.reset();
-        setData(null);
-        setError("");
-        setLimit(null);
-        SetIsSynAndAntActive(false);
-        setCleaner(false);
-      }
-    };
     document.addEventListener("keydown", handleWhipeKeys);
-
     return () => {
       document.removeEventListener("keydown", handleWhipeKeys);
     };
@@ -200,7 +216,7 @@ function App() {
 
   useEffect(() => {
     console.log(onSynWord);
-  },[onSynWord])
+  }, [onSynWord]);
 
   return (
     <main className="min-h-screen mx-auto pb-3">
@@ -267,7 +283,6 @@ function App() {
             synonyms={sanitizedSynAndAnt.synonyms}
             antonyms={sanitizedSynAndAnt.antonyms}
             setOnSynWord={setOnSynWord}
-
           />
         )}
 

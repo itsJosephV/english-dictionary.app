@@ -14,7 +14,7 @@ Todo List
 - [x] Key shorcuts
 - [x] Syno and Anto
 - [x] Syno and Anto Toggle button
-- [ ] S&A fetch buttons
+- [x] S&A fetch buttons / (REVISE THIS)
 - [ ] Favorites words
 - [ ] Copy word/meanings
 - [ ] rethink structure to display favorites

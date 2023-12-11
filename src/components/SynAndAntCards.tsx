@@ -2,7 +2,6 @@ interface SanitizedSynAndAnt {
   synonyms?: string[];
   antonyms?: string[];
   setOnSynWord: React.Dispatch<React.SetStateAction<string | null>>;
-  
 }
 
 const SynAndAntCards: React.FC<SanitizedSynAndAnt> = ({
@@ -10,9 +9,8 @@ const SynAndAntCards: React.FC<SanitizedSynAndAnt> = ({
   antonyms,
   setOnSynWord,
 }) => {
-
-  const handleSynButton = (synItem: string) => {
-    if (setOnSynWord && synItem) {
+  const handleSynAntButton = (synItem: string) => {
+    if (synItem) {
       setOnSynWord(synItem);
     }
   };
@@ -29,7 +27,7 @@ const SynAndAntCards: React.FC<SanitizedSynAndAnt> = ({
                   className="bg-neutral-700 rounded-sm px-1.5 text-xs"
                   key={i}
                 >
-                  <button onClick={() => handleSynButton(synItem)}>
+                  <button onClick={() => handleSynAntButton(synItem)}>
                     {synItem}
                   </button>
                 </li>
@@ -47,7 +45,9 @@ const SynAndAntCards: React.FC<SanitizedSynAndAnt> = ({
                   className="bg-neutral-700 rounded-sm px-1.5 text-xs"
                   key={i}
                 >
-                  {antItem}
+                  <button onClick={() => handleSynAntButton(antItem)}>
+                    {antItem}
+                  </button>
                 </li>
               ))}
           </ul>
