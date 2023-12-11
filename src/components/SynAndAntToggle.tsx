@@ -19,7 +19,7 @@ const SynAndAntToggle: React.FC<SynAndAntToggleProps> = ({
     <button
       ref={synAndAntRef}
       onClick={handleSynAndAntButton}
-      className={`text-xs flex items-center gap-[2px] ${
+      className={`text-xs flex items-center gap-[1px] ${
         synAndAntBool ? "text-teal-600 hover:text-teal-400 duration-200" : "text-neutral-500"
       }`}
       disabled={!synAndAntBool}

@@ -7,6 +7,7 @@ export function CaretUp(props: SVGProps<SVGSVGElement>) {
       width="1em"
       height="1em"
       viewBox="0 0 15 15"
+      className="inline-flex"
       {...props}
     >
       <path
