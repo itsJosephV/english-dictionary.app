@@ -323,7 +323,7 @@ function App() {
                     limit ? (
                       <button
                         ref={moreDataRef}
-                        className="flex items-center text-sm text-neutral-400 hover:text-white duration-200"
+                        className="flex items-center text-sm text-neutral-400 hover:text-white duration-200 mt-2"
                         onClick={() => setLimit(null)}
                       >
                         More results
@@ -334,7 +334,7 @@ function App() {
                     ) : (
                       <button
                         ref={lessDataRef}
-                        className="flex items-center text-sm text-neutral-400 hover:text-white duration-200"
+                        className="flex items-center text-sm text-neutral-400 hover:text-white duration-200 mt-2"
                         onClick={() => setLimit(5)}
                       >
                         Less results
