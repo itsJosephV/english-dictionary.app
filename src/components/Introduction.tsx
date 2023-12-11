@@ -4,6 +4,7 @@ const Introduction = () => {
       <p className="text-2xl">Type a word to look up in...</p>
       <p>The meaning "examples" may contain irrelevant content </p>
       <p>Synonyms & Antonyms will enable only if such data for either one exists</p>
+      <p>Some Synonyms & Antonyms may not be available in the current database </p>
       <p>Powered by api.dictionaryapi.dev</p>
     </div>
   );

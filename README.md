@@ -15,6 +15,7 @@ Todo List
 - [x] Syno and Anto
 - [x] Syno and Anto Toggle button
 - [x] S&A fetch buttons / (REVISE THIS)
+- [ ] Return to initial word button
 - [ ] Favorites words
 - [ ] Copy word/meanings
 - [ ] rethink structure to display favorites

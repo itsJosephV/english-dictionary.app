@@ -114,7 +114,7 @@ function App() {
     SetIsSynAndAntActive(!isSynAndAntActive);
   };
 
-  //? Chore: better testing & improve
+  //? Chore: better testing & improve — useCallback?
   useEffect(() => {
     if (onSynWord !== null) {
       if (form.current) {
@@ -219,7 +219,7 @@ function App() {
   }, [onSynWord]);
 
   return (
-    <main className="min-h-screen mx-auto pb-3">
+    <main className="min-h-screen mx-auto pb-5">
       <header className="mb-5 pt-14 border-b bg-neutral-900 border-neutral-600/60 pb-5">
         <div className="max-w-[850px] mx-auto px-5">
           <div className="text-orange-300 bg-orange-500/10 border border-orange-300 py-1 px-2 w-fit rounded-md mb-8">
