@@ -120,10 +120,7 @@ function App() {
       if (form.current) {
         form.current.word.value = onSynWord;
       }
-
-      setCleaner(false);
       fetchDictionary(onSynWord);
-      setCleaner(true);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [onSynWord]);
@@ -240,14 +237,17 @@ function App() {
         </div>
       </header>
       <article className="max-w-[850px] mx-auto px-5">
-        <div className="mb-2 flex justify-end">
+        {/* <div className="mb-2 flex justify-between items-center">
+          <p className="text-neutral-400 text-xs">
+            {wordObject.length} Results
+          </p>
           <SynAndAntToggle
             handleSynAndAntButton={handleSynAndAntButton}
             synAndAntBool={synAndAntBool}
             isSynAndAntActive={isSynAndAntActive}
             synAndAntRef={synAndAntRef}
           />
-        </div>
+        </div> */}
         <form
           ref={form}
           onSubmit={handleFormSubmit}
@@ -277,6 +277,17 @@ function App() {
             </button>
           )}
         </form>
+        <div className="mt-1 flex justify-end">
+          {/* <p className="text-neutral-400 text-xs">
+            {wordObject.length} Results
+          </p> */}
+          <SynAndAntToggle
+            handleSynAndAntButton={handleSynAndAntButton}
+            synAndAntBool={synAndAntBool}
+            isSynAndAntActive={isSynAndAntActive}
+            synAndAntRef={synAndAntRef}
+          />
+        </div>
 
         {isSynAndAntActive && (
           <SynAndAntCards
@@ -292,16 +303,14 @@ function App() {
           {data
             ? data && (
                 <Fragment>
-                  <div className="flex items-center justify-between mb-2 mt-5">
-                    <p className="text-3xl inline-flex font-bold">
-                      {data?.word}
-                      <span className="ml-3 text-[18px] font-normal text-neutral-400">
-                        {data?.phonetics[0]?.text}
-                      </span>
-                    </p>
+                  <div className="flex items-center flex-wrap gap-1.5 mb-3 mt-5">
+                    <p className="text-3xl font-bold">{data?.word}</p>
                     <p className="text-neutral-400">
-                      {wordObject.length} Results
+                      {data?.phonetics[0]?.text}
                     </p>
+                    {/* <p className="text-neutral-400 text-xs">
+                      {wordObject.length} Results
+                    </p> */}
                   </div>
                   <ul>
                     {wordObject
@@ -317,7 +326,7 @@ function App() {
                         className="flex items-center text-sm text-neutral-400 hover:text-white duration-200"
                         onClick={() => setLimit(null)}
                       >
-                        More
+                        More results
                         <span>
                           <CaretDown />
                         </span>
@@ -328,7 +337,7 @@ function App() {
                         className="flex items-center text-sm text-neutral-400 hover:text-white duration-200"
                         onClick={() => setLimit(5)}
                       >
-                        Less
+                        Less results
                         <span>
                           <CaretUp />
                         </span>

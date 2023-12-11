@@ -16,9 +16,9 @@ const SynAndAntCards: React.FC<SanitizedSynAndAnt> = ({
   };
 
   return (
-    <div className="mt-4">
+    <div className="mt-2 flex flex-col gap-3">
       {synonyms && synonyms.length > 0 && (
-        <div className="flex flex-col gap-1.5 mb-3">
+        <div className="flex flex-col gap-1.5">
           <p className="text-sm text-neutral-400">Synonyms</p>
           <ul className="flex flex-row gap-2 flex-wrap">
             {synonyms &&
