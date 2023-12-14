@@ -5,8 +5,10 @@ export const useFetchDictionary = () => {
   const [data, setData] = useState<DictionaryItem | null>(null);
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [error, setError] = useState<string | null>("");
+  const [firstWords, setFirstWords] = useState<Array<string>>([])
 
-  const fetchDictionary = async (word: string): Promise<void> => {
+
+  const fetchDictionary = async (word: string, cleanArray: boolean = false): Promise<void> => {
     const regex = /^[a-zA-Z\s]*$/;
     const spaceRegex = /^ *$/;
     setData(null);
@@ -30,14 +32,22 @@ export const useFetchDictionary = () => {
       if (!response.ok) {
         throw new Error(`No entries found for "${word}"`);
       }
+
       const data = await response.json();
       setData(data[0]);
+      
+      if (cleanArray) {
+        setFirstWords([word]);
+      } else {
+        setFirstWords([...firstWords, word]);
+      }
+
     } catch (error) {
       setError(error instanceof Error ? error.message : String(error));
     } finally {
       setIsLoading(false);
     }
   };
-  return { data, error, isLoading, setData, setError, fetchDictionary }
+  return { data, error, isLoading, firstWords, setData, setError, fetchDictionary }
 }
 

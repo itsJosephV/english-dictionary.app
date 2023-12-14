@@ -28,35 +28,45 @@ import { handleMoreDataKey } from "./utils/keyboardutils/handleMoreDataKey";
 // Hooks
 import { useFetchDictionary } from "./utils/data/useFetchDictionary";
 import SynAndAntCards from "./components/SynAndAntCards";
+import RestartButton from "./components/RestartButton";
 
 function App() {
   const [limit, setLimit] = useState<number | null>(5);
   const [autofocus, SetAutoFocus] = useState<boolean>(true);
   const [cleaner, setCleaner] = useState<boolean>(false);
   const [isSynAndAntActive, SetIsSynAndAntActive] = useState<boolean>(false);
-  const [onSynWord, setOnSynWord] = useState<string | null>(null);
+  const [onSynAntWord, setOnSynAntWord] = useState<string | null>(null);
+  const [firstInArr, setFirstInArr] = useState<boolean>(false);
 
   const form = useRef<HTMLFormElement>(null);
   const moreDataRef = useRef<HTMLButtonElement>(null);
   const lessDataRef = useRef<HTMLButtonElement>(null);
   const synAndAntRef = useRef<HTMLButtonElement>(null);
 
-  const { data, error, isLoading, setData, setError, fetchDictionary } =
-    useFetchDictionary();
+  const {
+    data,
+    error,
+    isLoading,
+    firstWords,
+    setData,
+    setError,
+    fetchDictionary,
+  } = useFetchDictionary();
 
   const handleFormSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    setOnSynWord(null);
+    setOnSynAntWord(null);
     setLimit(5);
     const word = form.current?.word.value;
     if (word.length === 0) {
       return;
     }
-
-    fetchDictionary(word);
+    fetchDictionary(word, true);
     setCleaner(true);
   };
+  console.log(firstWords);
 
+  //! INTEGRATE NEW API TO GET RID OF ALL THESE
   const wordObject: Definition[] = useMemo(() => {
     return (
       data?.meanings?.flatMap((meaning: Meaning) =>
@@ -90,6 +100,7 @@ function App() {
         antonyms: [...new Set(synAndAnt.antonyms?.filter(Boolean))],
       }
     : {};
+  //! INTEGRATE NEW API TO GET RID OF ALL THESE
 
   //? Helpers to avoid unnecessary shorcuts calls when no data
   const formBool: boolean = Boolean(form.current?.word.value);
@@ -116,14 +127,15 @@ function App() {
 
   //? Chore: better testing & improve — useCallback?
   useEffect(() => {
-    if (onSynWord !== null) {
+    if (onSynAntWord !== null) {
       if (form.current) {
-        form.current.word.value = onSynWord;
+        form.current.word.value = onSynAntWord;
+        fetchDictionary(onSynAntWord, false);
+        setFirstInArr(true);
       }
-      fetchDictionary(onSynWord);
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [onSynWord]);
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [onSynAntWord]);
 
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
@@ -167,6 +179,16 @@ function App() {
       setLimit(null);
       SetIsSynAndAntActive(false);
       setCleaner(false);
+      setFirstInArr(false);
+    }
+  };
+
+  const handleBackToFirst = () => {
+    const firstWordInArr = firstWords[0];
+    if (firstWords && form.current) {
+      fetchDictionary(firstWordInArr, true);
+      form.current.word.value = firstWordInArr;
+      setFirstInArr(false);
     }
   };
 
@@ -212,8 +234,8 @@ function App() {
   }, [synAndAntBool]);
 
   useEffect(() => {
-    console.log(onSynWord);
-  }, [onSynWord]);
+    console.log(onSynAntWord);
+  }, [onSynAntWord]);
 
   return (
     <main className="min-h-screen mx-auto pb-5">
@@ -237,17 +259,6 @@ function App() {
         </div>
       </header>
       <article className="max-w-[850px] mx-auto px-5">
-        {/* <div className="mb-2 flex justify-between items-center">
-          <p className="text-neutral-400 text-xs">
-            {wordObject.length} Results
-          </p>
-          <SynAndAntToggle
-            handleSynAndAntButton={handleSynAndAntButton}
-            synAndAntBool={synAndAntBool}
-            isSynAndAntActive={isSynAndAntActive}
-            synAndAntRef={synAndAntRef}
-          />
-        </div> */}
         <form
           ref={form}
           onSubmit={handleFormSubmit}
@@ -277,23 +288,23 @@ function App() {
             </button>
           )}
         </form>
-        <div className="mt-1 flex justify-end">
-          {/* <p className="text-neutral-400 text-xs">
-            {wordObject.length} Results
-          </p> */}
+        <div className="mt-1.5 flex justify-between items-center">
           <SynAndAntToggle
             handleSynAndAntButton={handleSynAndAntButton}
             synAndAntBool={synAndAntBool}
             isSynAndAntActive={isSynAndAntActive}
             synAndAntRef={synAndAntRef}
           />
+          {firstInArr && (
+            <RestartButton handleBackToFirst={handleBackToFirst} />
+          )}
         </div>
 
         {isSynAndAntActive && (
           <SynAndAntCards
             synonyms={sanitizedSynAndAnt.synonyms}
             antonyms={sanitizedSynAndAnt.antonyms}
-            setOnSynWord={setOnSynWord}
+            setOnSynWord={setOnSynAntWord}
           />
         )}
 
