@@ -62,6 +62,7 @@ function App() {
     }
     fetchDictionary(word, true);
     setCleaner(true);
+    setFirstInArr(false)
   };
 
   //? Helpers to avoid unnecessary shorcuts calls when no data
@@ -117,6 +118,11 @@ function App() {
       }
     }
 
+    
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [onSimilarWords]);
+
+  useEffect(() => {
     if (onSynAntWords !== null) {
       if (form.current) {
         form.current.word.value = onSynAntWords;
@@ -124,7 +130,7 @@ function App() {
       }
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [onSimilarWords, onSynAntWords]);
+  }, [onSynAntWords])
 
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {

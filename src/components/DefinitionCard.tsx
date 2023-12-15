@@ -15,7 +15,7 @@ const DefinitionCard: React.FC<WordCardProps> = ({
     }
   };
   return (
-    <li className="mb-3 bg-neutral-900 hover:bg-neutral-900/50 duration-200 pt-2 pb-3 px-3 rounded-sm last:mb-0">
+    <li className="mb-3 bg-neutral-900 hover:bg-neutral-900/80 duration-200 pt-2 pb-3 px-3 rounded-sm last:mb-0">
       <p className="text-sm text-neutral-400">{item.partOfSpeech}</p>
       <p>{item.definition}</p>
       {item.examples && (
