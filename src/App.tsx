@@ -5,9 +5,7 @@ import DefinitionCard from "./components/DefinitionCard";
 import LoadingData from "./components/LoadingData";
 import ErrorMessage from "./components/ErrorMessage";
 import Introduction from "./components/Introduction";
-import InputAF from "./components/InputAF";
 import SynAndAntToggle from "./components/SynAndAntToggle";
-import ShortCutsInfo from "./components/ShortCutsInfo";
 
 // Types
 import { Definition } from "./types";
@@ -15,10 +13,8 @@ import { Meaning } from "./types";
 import { SynAndAntItems } from "./types";
 
 // Icons
-import { IcRoundSearch } from "./icons/SearchIcon";
 import { CaretDown } from "./icons/CaretDown";
 import { CaretUp } from "./icons/CaretUp";
-import { CleanIcon } from "./icons/CleanIcon";
 
 // Utils
 import { handleSynAndAntKey } from "./utils/keyboardutils/handleSynAndAntKey";
@@ -29,6 +25,8 @@ import { handleMoreDataKey } from "./utils/keyboardutils/handleMoreDataKey";
 import { useFetchDictionary } from "./utils/data/useFetchDictionary";
 import SynAndAntCards from "./components/SynAndAntCards";
 import RestartButton from "./components/RestartButton";
+import Form from "./components/Form";
+import Header from "./components/Header";
 
 function App() {
   const [limit, setLimit] = useState<number | null>(5);
@@ -36,20 +34,22 @@ function App() {
   const [cleaner, setCleaner] = useState<boolean>(false);
   const [isSynAndAntActive, SetIsSynAndAntActive] = useState<boolean>(false);
   const [onSynAntWord, setOnSynAntWord] = useState<string | null>(null);
-  const [firstInArr, setFirstInArr] = useState<boolean>(false);
 
   const form = useRef<HTMLFormElement>(null);
   const moreDataRef = useRef<HTMLButtonElement>(null);
   const lessDataRef = useRef<HTMLButtonElement>(null);
   const synAndAntRef = useRef<HTMLButtonElement>(null);
+  const clearButtonRef = useRef<HTMLButtonElement>(null);
 
   const {
     data,
     error,
     isLoading,
     firstWords,
+    firstInArr,
     setData,
     setError,
+    setFirstInArr,
     fetchDictionary,
   } = useFetchDictionary();
 
@@ -64,8 +64,10 @@ function App() {
     fetchDictionary(word, true);
     setCleaner(true);
   };
+
   console.log(firstWords);
 
+  //! INTEGRATE NEW API TO GET RID OF ALL THESE
   //! INTEGRATE NEW API TO GET RID OF ALL THESE
   const wordObject: Definition[] = useMemo(() => {
     return (
@@ -100,13 +102,15 @@ function App() {
         antonyms: [...new Set(synAndAnt.antonyms?.filter(Boolean))],
       }
     : {};
-  //! INTEGRATE NEW API TO GET RID OF ALL THESE
 
   //? Helpers to avoid unnecessary shorcuts calls when no data
   const formBool: boolean = Boolean(form.current?.word.value);
   const synAndAntBool: boolean = Boolean(
     sanitizedSynAndAnt.antonyms?.length || sanitizedSynAndAnt.synonyms?.length
   );
+
+  //! INTEGRATE NEW API TO GET RID OF ALL THESE
+  //! INTEGRATE NEW API TO GET RID OF ALL THESE
 
   const handleCleanResults = (e: React.FormEvent) => {
     e.preventDefault();
@@ -116,6 +120,7 @@ function App() {
     setLimit(null);
     SetIsSynAndAntActive(false);
     setCleaner(false);
+    setFirstInArr(false);
   };
 
   const handleSynAndAntButton = () => {
@@ -125,16 +130,34 @@ function App() {
     SetIsSynAndAntActive(!isSynAndAntActive);
   };
 
+  const handleWhipeKeys = (e: KeyboardEvent) => {
+    if (!data && !formBool) {
+      return;
+    }
+    if (e.shiftKey && e.key === "C") {
+      e.preventDefault();
+      clearButtonRef.current?.click();
+    }
+  };
+
+  const handleBackToFirst = () => {
+    const firstWordInArr = firstWords[0];
+    if (firstWords && form.current) {
+      fetchDictionary(firstWordInArr, true);
+      form.current.word.value = firstWordInArr;
+      setFirstInArr(false);
+    }
+  };
+
   //? Chore: better testing & improve — useCallback?
   useEffect(() => {
     if (onSynAntWord !== null) {
       if (form.current) {
         form.current.word.value = onSynAntWord;
         fetchDictionary(onSynAntWord, false);
-        setFirstInArr(true);
       }
     }
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [onSynAntWord]);
 
   useEffect(() => {
@@ -165,32 +188,6 @@ function App() {
 
   // const isMac = navigator.userAgent.indexOf("Mac") != -1;
   // const isWin = navigator.userAgent.indexOf("Win") != -1;
-
-  const handleWhipeKeys = (e: KeyboardEvent) => {
-    if (!data && !formBool) {
-      return;
-    }
-    if (e.shiftKey && e.key === "C") {
-      e.preventDefault();
-      console.log("data whiped");
-      form.current?.reset();
-      setData(null);
-      setError("");
-      setLimit(null);
-      SetIsSynAndAntActive(false);
-      setCleaner(false);
-      setFirstInArr(false);
-    }
-  };
-
-  const handleBackToFirst = () => {
-    const firstWordInArr = firstWords[0];
-    if (firstWords && form.current) {
-      fetchDictionary(firstWordInArr, true);
-      form.current.word.value = firstWordInArr;
-      setFirstInArr(false);
-    }
-  };
 
   useEffect(() => {
     document.addEventListener("keydown", handleWhipeKeys);
@@ -233,61 +230,19 @@ function App() {
     };
   }, [synAndAntBool]);
 
-  useEffect(() => {
-    console.log(onSynAntWord);
-  }, [onSynAntWord]);
-
   return (
     <main className="min-h-screen mx-auto pb-5">
-      <header className="mb-5 pt-14 border-b bg-neutral-900 border-neutral-600/60 pb-5">
-        <div className="max-w-[850px] mx-auto px-5">
-          <div className="text-orange-300 bg-orange-500/10 border border-orange-300 py-1 px-2 w-fit rounded-md mb-8">
-            Dictionary App - Underwork 🚧{" "}
-          </div>
-          <div className="mb-8">
-            <p className="text-4xl font-bold mb-1">Dictionary</p>
-            <p className="text-neutral-400">
-              Your personal app to search, save and learn about your favorite
-              words.
-            </p>
-          </div>
-          {/* <p>ShorCuts</p> */}
-          <div className="md:items-center gap-2 flex flex-col md:flex-row justify-between w-fit md:w-[100%]">
-            <ShortCutsInfo />
-            <InputAF autofocus={autofocus} SetAutoFocus={SetAutoFocus} />
-          </div>
-        </div>
-      </header>
+      <section className="mb-5 pt-14 border-b bg-neutral-900 border-neutral-600/60 pb-5">
+<Header autofocus={autofocus} SetAutoFocus={SetAutoFocus} />
+      </section>
       <article className="max-w-[850px] mx-auto px-5">
-        <form
-          ref={form}
-          onSubmit={handleFormSubmit}
-          className="flex justify-center gap-2 relative"
-          action=""
-        >
-          <input
-            className="border border-neutral-600/70 rounded-sm bg-neutral-800 pl-1 w-full"
-            type="text"
-            name="word"
-            placeholder="Search..."
-            required
-          />
-
-          <button
-            className="bg-neutral-600/40 hover:bg-neutral-600 duration-200 px-1.5 rounded-sm"
-            role="submit"
-          >
-            <IcRoundSearch />
-          </button>
-          {cleaner && (
-            <button
-              className="absolute h-full right-11"
-              onClick={handleCleanResults}
-            >
-              <CleanIcon />
-            </button>
-          )}
-        </form>
+        <Form
+          form={form}
+          cleaner={cleaner}
+          clearButtonRef={clearButtonRef}
+          handleFormSubmit={handleFormSubmit}
+          handleCleanResults={handleCleanResults}
+        />
         <div className="mt-1.5 flex justify-between items-center">
           <SynAndAntToggle
             handleSynAndAntButton={handleSynAndAntButton}

@@ -6,7 +6,17 @@ export const useFetchDictionary = () => {
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [error, setError] = useState<string | null>("");
   const [firstWords, setFirstWords] = useState<Array<string>>([])
+  const [firstInArr, setFirstInArr] = useState<boolean>(false);
 
+
+  const updateFirstWords = (word: string, cleanArray: boolean) => {
+    if (cleanArray) {
+      setFirstWords([word]);
+    } else {
+      setFirstWords((prevWords) => [...prevWords, word]);
+      setFirstInArr(true);
+    }
+  };
 
   const fetchDictionary = async (word: string, cleanArray: boolean = false): Promise<void> => {
     const regex = /^[a-zA-Z\s]*$/;
@@ -35,12 +45,8 @@ export const useFetchDictionary = () => {
 
       const data = await response.json();
       setData(data[0]);
-      
-      if (cleanArray) {
-        setFirstWords([word]);
-      } else {
-        setFirstWords([...firstWords, word]);
-      }
+
+      updateFirstWords(word, cleanArray)
 
     } catch (error) {
       setError(error instanceof Error ? error.message : String(error));
@@ -48,6 +54,6 @@ export const useFetchDictionary = () => {
       setIsLoading(false);
     }
   };
-  return { data, error, isLoading, firstWords, setData, setError, fetchDictionary }
+  return { data, error, isLoading, firstWords, firstInArr, setData, setError, setFirstInArr, fetchDictionary }
 }
 
