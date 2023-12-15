@@ -15,9 +15,9 @@ Todo List
 - [x] Syno and Anto
 - [x] Syno and Anto Toggle button
 - [x] S&A fetch buttons / (REVISE THIS)
-- [ ] Return to initial word button
-- [ ] Favorites words
-- [ ] Copy word/meanings
-- [ ] rethink structure to display favorites
+- [x] Return to initial word button
+- [x] update to better API
 - [ ] Search when user stops typing (debounce)
-- [ ] Improve API (Wordnik!)
+- [ ] Copy word/meanings
+- [ ] Favorites words
+- [ ] rethink structure to display favorites
