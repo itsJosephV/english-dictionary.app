@@ -9,7 +9,7 @@ const SimilarToCard: React.FC<SimilarToWordsProps> = ({
   dataWordSimilar,
   setOnSimilarWords,
 }) => {
-  const handleSynAntButton = (synItem: string) => {
+  const handleSimilarToButton = (synItem: string) => {
     if (synItem) {
       setOnSimilarWords(synItem);
     }
@@ -21,7 +21,7 @@ const SimilarToCard: React.FC<SimilarToWordsProps> = ({
       <ul className="flex flex-row mt-4 gap-2 flex-wrap">
         {dataWordSimilar.similarTo.map((simItem, i) => (
           <li className="bg-neutral-700 rounded-sm px-1.5 text-xs" key={i}>
-            <button onClick={() => handleSynAntButton(simItem)}>
+            <button onClick={() => handleSimilarToButton(simItem)}>
               {simItem}
             </button>
           </li>

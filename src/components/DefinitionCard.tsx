@@ -2,78 +2,60 @@ import { WordResults } from "../types";
 
 interface WordCardProps {
   item: WordResults;
+  setOnSynAntWords: React.Dispatch<React.SetStateAction<string | null>>;
 }
 
-const DefinitionCard: React.FC<WordCardProps> = ({ item }) => {
+const DefinitionCard: React.FC<WordCardProps> = ({
+  item,
+  setOnSynAntWords,
+}) => {
+  const handleSynAntButton = (synOrAnt: string) => {
+    if (synOrAnt) {
+      setOnSynAntWords(synOrAnt);
+    }
+  };
   return (
-    <li className="mb-3 bg-neutral-700/40 hover:bg-neutral-700 duration-200 py-2 px-3 rounded-sm last:mb-0">
+    <li className="mb-3 bg-neutral-900 hover:bg-neutral-900/50 duration-200 pt-2 pb-3 px-3 rounded-sm last:mb-0">
       <p className="text-sm text-neutral-400">{item.partOfSpeech}</p>
       <p>{item.definition}</p>
-      <div className="text-neutral-500">
-        <ul
-          style={{
-            display: "flex",
-            flexDirection: "column",
-            gap: "5px",
-            listStyle: "none",
-          }}
-        >
-          {item.examples?.map((example, i) => (
-            <li key={i}>
-              <div style={{ display: "flex", flexDirection: "row" }}>
-                <span style={{ fontSize: "12px", marginRight: "5px" }}>
-                  {i + 1}.
-                </span>
-                <p style={{ fontSize: "12px" }}>{example}</p>
-              </div>
-            </li>
-          ))}
-        </ul>
-      </div>
-      <div
-        style={{
-          display: "flex",
-          flexWrap: "wrap",
-          flexDirection: "row",
-          gap: ".3rem",
-          marginTop: "10px",
-        }}
-      >
-        {item.synonyms?.map((syn, i) => (
-          <p
-            style={{
-              border: "1px solid green",
-              borderRadius: "5px",
-              padding: "3px",
-            }}
-            key={i}
-          >
-            {syn}
-          </p>
-        ))}
-      </div>
-      <div
-        style={{
-          display: "flex",
-          flexWrap: "wrap",
-          flexDirection: "row",
-          gap: ".3rem",
-          marginTop: "10px",
-        }}
-      >
-        {item.antonyms?.map((ant, i) => (
-          <p
-            style={{
-              border: "1px solid red",
-              borderRadius: "5px",
-              padding: "3px",
-            }}
-            key={i}
-          >
-            {ant}
-          </p>
-        ))}
-      </div>
+      {item.examples && (
+        <div className="flex flex-col mt-3">
+          <p className="text-sm text-neutral-400 mb-0.5">Examples</p>
+          <ul className="flex flex-col gap-1 text-neutral-500">
+            {item.examples?.map((example, i) => (
+              <li key={i}>
+                <p className="text-sm">
+                  {"-"} {example}
+                </p>
+              </li>
+            ))}
+          </ul>
+        </div>
+      )}
+      {item.synonyms && (
+        <div className="flex flex-col mt-3">
+          <p className="text-sm text-neutral-400 mb-2">Synonyms</p>
+          <ul className="flex flex-wrap gap-2">
+            {item.synonyms?.map((syn, i) => (
+              <li className="px-1.5 bg-teal-700 text-sm rounded-sm" key={i}>
+                <button onClick={() => handleSynAntButton(syn)}>{syn}</button>
+              </li>
+            ))}
+          </ul>
+        </div>
+      )}
+      {item.antonyms && (
+        <div className="flex flex-col mt-3">
+          <p className="text-sm text-neutral-400 mb-2">Antonyms</p>
+          <ul className="flex flex-wrap gap-2">
+            {item.antonyms?.map((ant, i) => (
+              <li className="px-1.5 bg-orange-700 text-sm rounded-sm" key={i}>
+                <button onClick={() => handleSynAntButton(ant)}>{ant}</button>
+              </li>
+            ))}
+          </ul>
+        </div>
+      )}
     </li>
   );
 };

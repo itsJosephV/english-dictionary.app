@@ -15,7 +15,7 @@ import { CaretDown } from "./icons/CaretDown";
 import { CaretUp } from "./icons/CaretUp";
 
 // Utils
-import { handleLessDataKey } from "./utils/keyboardutils/handleLessDataKeys"
+import { handleLessDataKey } from "./utils/keyboardutils/handleLessDataKeys";
 import { handleSimilarToKey } from "./utils/keyboardutils/handleSimilarToKey";
 import { handleMoreDataKey } from "./utils/keyboardutils/handleMoreDataKeys";
 
@@ -26,8 +26,10 @@ function App() {
   const [limit, setLimit] = useState<number | null>(5);
   const [autofocus, SetAutoFocus] = useState<boolean>(true);
   const [cleaner, setCleaner] = useState<boolean>(false);
-  const [isSimilarWordsActive, setIsSimilarWordsActive] = useState<boolean>(false);
+  const [isSimilarWordsActive, setIsSimilarWordsActive] =
+    useState<boolean>(false);
   const [onSimilarWords, setOnSimilarWords] = useState<string | null>(null);
+  const [onSynAntWords, setOnSynAntWords] = useState<string | null>(null);
 
   const form = useRef<HTMLFormElement>(null);
   const moreDataRef = useRef<HTMLButtonElement>(null);
@@ -43,6 +45,7 @@ function App() {
     firstWords,
     firstInArr,
     setDataDictionary,
+    setDataWordSimilar,
     setError,
     setFirstInArr,
     fetchDictionary,
@@ -51,6 +54,7 @@ function App() {
   const handleFormSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setOnSimilarWords(null);
+    setOnSynAntWords(null);
     setLimit(5);
     const word = form.current?.word.value;
     if (word.length === 0) {
@@ -64,10 +68,13 @@ function App() {
   const formBool: boolean = Boolean(form.current?.word.value);
   const similarToBool: boolean = Boolean(dataWordSimilar?.similarTo?.length);
 
+  console.log(similarToBool);
+
   const handleCleanResults = (e: React.FormEvent) => {
     e.preventDefault();
     form.current?.reset();
     setDataDictionary(null);
+    setDataWordSimilar(null);
     setError("");
     setLimit(null);
     setIsSimilarWordsActive(false);
@@ -109,8 +116,15 @@ function App() {
         fetchDictionary(onSimilarWords, false);
       }
     }
+
+    if (onSynAntWords !== null) {
+      if (form.current) {
+        form.current.word.value = onSynAntWords;
+        fetchDictionary(onSynAntWords, false);
+      }
+    }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [onSimilarWords]);
+  }, [onSimilarWords, onSynAntWords]);
 
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
@@ -184,8 +198,9 @@ function App() {
     };
   }, [similarToBool]);
 
-  console.log(dataDictionary);
-  console.log(dataWordSimilar);
+  // console.log(dataDictionary);
+  // console.log(dataWordSimilar);
+  console.log(onSynAntWords);
 
   return (
     <main className="min-h-screen mx-auto pb-5">
@@ -214,8 +229,8 @@ function App() {
 
         {isSimilarWordsActive && (
           <SimilarToCard
-          dataWordSimilar={dataWordSimilar}
-          setOnSimilarWords={setOnSimilarWords}
+            dataWordSimilar={dataWordSimilar}
+            setOnSimilarWords={setOnSimilarWords}
           />
         )}
 
@@ -226,9 +241,11 @@ function App() {
             ? dataDictionary && (
                 <Fragment>
                   <div className="flex items-center flex-wrap mb-2 mt-5">
-                    <p className="text-3xl font-semibold mr-2">{dataDictionary.word}</p>
+                    <p className="text-3xl font-semibold mr-2">
+                      {dataDictionary.word}
+                    </p>
                     <p className="text-neutral-400">
-                      {dataDictionary.pronunciation.all}
+                      {dataDictionary.pronunciation?.all}
                     </p>
                   </div>
                   <div className="mb-2">
@@ -240,7 +257,11 @@ function App() {
                     {dataDictionary.results
                       ?.slice(0, limit ? limit : dataDictionary.results.length)
                       .map((item, i) => (
-                        <DefinitionCard key={i} item={item} />
+                        <DefinitionCard
+                          key={i}
+                          item={item}
+                          setOnSynAntWords={setOnSynAntWords}
+                        />
                       ))}
                   </ul>
                   {dataDictionary.results.length > 5 ? (

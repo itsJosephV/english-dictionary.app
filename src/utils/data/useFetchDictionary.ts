@@ -70,7 +70,7 @@ export const useFetchDictionary = () => {
       setIsLoading(false);
     }
   };
-  return { dataDictionary, dataWordSimilar, error, isLoading, firstWords, firstInArr, setDataDictionary, setError, setFirstInArr, fetchDictionary }
+  return { dataDictionary, dataWordSimilar, error, isLoading, firstWords, firstInArr, setDataDictionary, setDataWordSimilar, setError, setFirstInArr, fetchDictionary }
 }
 
 

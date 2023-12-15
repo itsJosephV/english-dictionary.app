@@ -8,7 +8,7 @@ export interface WordResults {
 }
 
 export interface DictionaryItem {
-  pronunciation: {
+  pronunciation?: {
     all: string
   };
   results: WordResults[];
