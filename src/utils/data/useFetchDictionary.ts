@@ -1,13 +1,14 @@
 import { useState } from "react";
-import { DictionaryItem } from "../../types";
+
+import { DictionaryItem, WordSimilarTo } from "../../types";
 
 export const useFetchDictionary = () => {
-  const [data, setData] = useState<DictionaryItem | null>(null);
+  const [dataDictionary, setDataDictionary] = useState<DictionaryItem | null>(null);
+  const [dataWordSimilar, setDataWordSimilar] = useState<WordSimilarTo | null>(null);
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [error, setError] = useState<string | null>("");
   const [firstWords, setFirstWords] = useState<Array<string>>([])
   const [firstInArr, setFirstInArr] = useState<boolean>(false);
-
 
   const updateFirstWords = (word: string, cleanArray: boolean) => {
     if (cleanArray) {
@@ -18,10 +19,20 @@ export const useFetchDictionary = () => {
     }
   };
 
+  const delay = (ms: number) => new Promise((resolve) => setTimeout(resolve, ms));
+
   const fetchDictionary = async (word: string, cleanArray: boolean = false): Promise<void> => {
+    const baseUrl = import.meta.env.VITE_DICTAPI_URL
+    const apiKey = import.meta.env.VITE_DICTAPI_KEY
+    const query = "similarTo";
+    const headers = {
+      "X-RapidAPI-Key": apiKey,
+      "X-RapidAPI-Host": import.meta.env.VITE_DICTAPI_HOST
+    };
     const regex = /^[a-zA-Z\s]*$/;
     const spaceRegex = /^ *$/;
-    setData(null);
+    setDataDictionary(null);
+    setDataWordSimilar(null)
     setError("");
     setIsLoading(true);
 
@@ -30,21 +41,26 @@ export const useFetchDictionary = () => {
         case spaceRegex.test(word):
           throw new Error("Spaces are allowed only in contexts like, e.g., 'look after', 'get out'.")
         case !regex.test(word):
-          throw new Error(`No entries found for "${word}"`)
+          throw new Error(`"${word}" contains invalid characters`)
         default:
           break;
       }
 
-      const response = await fetch(
-        `https://api.dictionaryapi.dev/api/v2/entries/en/${word}`
-      );
+      const resOne = await fetch(`${baseUrl}${word}`, { headers });
 
-      if (!response.ok) {
+      await delay(250);
+
+      const resTwo = await fetch(`${baseUrl}${word}/${query}`, { headers });
+
+      if (!resOne.ok) {
         throw new Error(`No entries found for "${word}"`);
       }
 
-      const data = await response.json();
-      setData(data[0]);
+      const data1 = await resOne.json();
+      const data2 = await resTwo.json();
+
+      setDataDictionary(data1);
+      setDataWordSimilar(data2);
 
       updateFirstWords(word, cleanArray)
 
@@ -54,6 +70,7 @@ export const useFetchDictionary = () => {
       setIsLoading(false);
     }
   };
-  return { data, error, isLoading, firstWords, firstInArr, setData, setError, setFirstInArr, fetchDictionary }
+  return { dataDictionary, dataWordSimilar, error, isLoading, firstWords, firstInArr, setDataDictionary, setError, setFirstInArr, fetchDictionary }
 }
+
 

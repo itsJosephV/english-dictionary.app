@@ -1,12 +1,12 @@
-import { DictionaryItem } from "../../types";
+import { DictionaryItem } from "../../types"
 
 export const handleLessDataKey = (
   e: KeyboardEvent,
   limit: number | null,
-  data: DictionaryItem | null,
+  dataDictionary: DictionaryItem | null,
   lessDataRef: React.RefObject<HTMLButtonElement>
 ) => {
-  if (limit === 5 || !data) {
+  if (limit === 5 || !dataDictionary) {
     return;
   }
 

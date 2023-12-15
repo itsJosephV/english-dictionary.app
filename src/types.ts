@@ -1,31 +1,21 @@
-export interface Phonetic {
-  text: string;
-  audio?: string;
+export interface WordResults {
+  definition: string;
+  derivation?: string;
+  examples?: string[];
+  partOfSpeech: string;
+  antonyms?: string[];
+  synonyms?: string[];
 }
 
 export interface DictionaryItem {
+  pronunciation: {
+    all: string
+  };
+  results: WordResults[];
   word: string;
-  phonetic: string;
-  phonetics: Phonetic[];
-  origin: string;
-  meanings: Meaning[];
 }
 
-export interface Definition {
-  definition: string;
-  example?: string
-  partOfSpeech: string;
-}
-
-export interface Meaning {
-  definitions: Definition[];
-  synonyms?: string[];
-  example?:string
-  antonyms?: string[];
-  partOfSpeech: string;
-}
-
-export interface SynAndAntItems {
-  synonyms: string[];
-  antonyms: string[];
+export interface WordSimilarTo {
+  length: number;
+  similarTo?: string[];
 }

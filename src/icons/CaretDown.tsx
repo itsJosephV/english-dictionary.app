@@ -7,8 +7,8 @@ export function CaretDown(props: SVGProps<SVGSVGElement>) {
       width="1em"
       height="1em"
       viewBox="0 0 15 15"
-      {...props}
       className="inline-flex"
+      {...props}
     >
       <path
         fill="currentColor"
