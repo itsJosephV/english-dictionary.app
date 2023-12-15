@@ -29,7 +29,7 @@ export const useFetchDictionary = () => {
       "X-RapidAPI-Key": apiKey,
       "X-RapidAPI-Host": import.meta.env.VITE_DICTAPI_HOST
     };
-    const regex = /^[a-zA-Z\s]*$/;
+    const regex = /^[a-zA-Z\s-]*$/;
     const spaceRegex = /^ *$/;
     setDataDictionary(null);
     setDataWordSimilar(null)
