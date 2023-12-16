@@ -25,7 +25,7 @@ import { useFetchDictionary } from "./utils/data/useFetchDictionary";
 function App() {
   const [limit, setLimit] = useState<number | null>(5);
   const [autofocus, SetAutoFocus] = useState<boolean>(true);
-  const [cleaner, setCleaner] = useState<boolean>(false);
+  // const [cleaner, setCleaner] = useState<boolean>(false);
   const [isSimilarWordsActive, setIsSimilarWordsActive] =
     useState<boolean>(false);
   const [onSimilarWords, setOnSimilarWords] = useState<string | null>(null);
@@ -44,11 +44,13 @@ function App() {
     isLoading,
     firstWords,
     firstInArr,
+    cleaner,
     setDataDictionary,
     setDataWordSimilar,
     setError,
     setFirstInArr,
     fetchDictionary,
+    setCleaner,
   } = useFetchDictionary();
 
   const handleFormSubmit = async (e: React.FormEvent) => {
@@ -61,8 +63,7 @@ function App() {
       return;
     }
     fetchDictionary(word, true);
-    setCleaner(true);
-    setFirstInArr(false)
+    setFirstInArr(false);
   };
 
   //? Helpers to avoid unnecessary shorcuts calls when no data
@@ -117,8 +118,6 @@ function App() {
         fetchDictionary(onSimilarWords, false);
       }
     }
-
-    
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [onSimilarWords]);
 
@@ -130,7 +129,7 @@ function App() {
       }
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [onSynAntWords])
+  }, [onSynAntWords]);
 
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
@@ -210,7 +209,7 @@ function App() {
 
   return (
     <main className="min-h-screen mx-auto pb-5">
-      <section className="mb-5 pt-14 border-b bg-neutral-900 border-neutral-600/60 pb-5">
+      <section className="mb-5 pt-14 border-b bg-neutral-900 border-neutral-600/40 pb-5">
         <Header autofocus={autofocus} SetAutoFocus={SetAutoFocus} />
       </section>
       <article className="max-w-[850px] mx-auto px-5">
@@ -249,9 +248,8 @@ function App() {
                   <div className="flex items-center flex-wrap mb-2 mt-5">
                     <p className="text-3xl font-semibold mr-2">
                       {dataDictionary.word}
-                    </p>
-                    <p className="text-neutral-400">
-                      {dataDictionary.pronunciation?.all}
+                      {"  "}
+                      <span className="text-[1.2rem] text-neutral-400">{`/${dataDictionary.pronunciation?.all}/`}</span>
                     </p>
                   </div>
                   <div className="mb-2">
@@ -274,7 +272,7 @@ function App() {
                     limit ? (
                       <button
                         ref={moreDataRef}
-                        className="flex items-center text-sm text-neutral-400 hover:text-white duration-200 mt-2"
+                        className="flex items-center text-xs text-white hover:text-neutral-400 duration-200 mt-2"
                         onClick={() => setLimit(null)}
                       >
                         More results
@@ -285,7 +283,7 @@ function App() {
                     ) : (
                       <button
                         ref={lessDataRef}
-                        className="flex items-center text-sm text-neutral-400 hover:text-white duration-200 mt-2"
+                        className="flex items-center text-xs text-white hover:text-neutral-400 duration-200 mt-2"
                         onClick={() => setLimit(5)}
                       >
                         Less results

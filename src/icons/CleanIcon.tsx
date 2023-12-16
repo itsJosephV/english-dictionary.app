@@ -8,7 +8,7 @@ export function CleanIcon(props: SVGProps<SVGSVGElement>) {
       height="1.1em"
       viewBox="0 0 32 32"
       {...props}
-      className="text-neutral-400 hover:text-white duration-200"
+      className="text-white hover:text-neutral-400 duration-200"
     >
       <path
         fill="currentColor"

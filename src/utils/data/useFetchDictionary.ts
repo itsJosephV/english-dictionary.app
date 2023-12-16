@@ -5,6 +5,7 @@ import { DictionaryItem, WordSimilarTo } from "../../types";
 export const useFetchDictionary = () => {
   const [dataDictionary, setDataDictionary] = useState<DictionaryItem | null>(null);
   const [dataWordSimilar, setDataWordSimilar] = useState<WordSimilarTo | null>(null);
+  const [cleaner, setCleaner] = useState<boolean>(false);
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [error, setError] = useState<string | null>("");
   const [firstWords, setFirstWords] = useState<Array<string>>([])
@@ -68,9 +69,10 @@ export const useFetchDictionary = () => {
       setError(error instanceof Error ? error.message : String(error));
     } finally {
       setIsLoading(false);
+      setCleaner(true)
     }
   };
-  return { dataDictionary, dataWordSimilar, error, isLoading, firstWords, firstInArr, setDataDictionary, setDataWordSimilar, setError, setFirstInArr, fetchDictionary }
+  return { dataDictionary, dataWordSimilar, error, isLoading, firstWords, firstInArr, cleaner, setDataDictionary, setDataWordSimilar, setError, setFirstInArr, fetchDictionary, setCleaner }
 }
 
 

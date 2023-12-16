@@ -25,7 +25,7 @@ const DefinitionCard: React.FC<WordCardProps> = ({
             {item.examples?.map((example, i) => (
               <li key={i}>
                 <p className="text-sm">
-                  {"-"} {example}
+                  {"‣"} {example}
                 </p>
               </li>
             ))}
@@ -37,7 +37,10 @@ const DefinitionCard: React.FC<WordCardProps> = ({
           <p className="text-sm text-neutral-400 mb-2">Synonyms</p>
           <ul className="flex flex-wrap gap-2">
             {item.synonyms?.map((syn, i) => (
-              <li className="px-1.5 bg-teal-700 text-sm rounded-sm" key={i}>
+              <li
+                className="px-1.5 bg-neutral-800 text-sm text-purple-400 hover:text-purple-200 duration-200 rounded-sm"
+                key={i}
+              >
                 <button onClick={() => handleSynAntButton(syn)}>{syn}</button>
               </li>
             ))}
@@ -49,7 +52,10 @@ const DefinitionCard: React.FC<WordCardProps> = ({
           <p className="text-sm text-neutral-400 mb-2">Antonyms</p>
           <ul className="flex flex-wrap gap-2">
             {item.antonyms?.map((ant, i) => (
-              <li className="px-1.5 bg-orange-700 text-sm rounded-sm" key={i}>
+              <li
+                className="px-1.5 bg-neutral-800 text-sm rounded-sm text-orange-400 hover:text-orange-200 duration-200"
+                key={i}
+              >
                 <button onClick={() => handleSynAntButton(ant)}>{ant}</button>
               </li>
             ))}

@@ -6,7 +6,7 @@ interface RestartButtonProps {
 
 const RestartButton: React.FC<RestartButtonProps> = ({ handleBackToFirst }) => {
   return (
-    <button onClick={handleBackToFirst} className="text-xs text-orange-600 hover:text-orange-400 duration-200">
+    <button onClick={handleBackToFirst} className="text-xs text-rose-400 hover:text-rose-200 duration-200">
       <span className="flex items-center gap-0.5">
         <BackIcon />
         Restart
