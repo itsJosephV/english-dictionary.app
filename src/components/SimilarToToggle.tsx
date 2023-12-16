@@ -1,4 +1,3 @@
-
 import { CaretDown } from "../icons/CaretDown";
 import { CaretUp } from "../icons/CaretUp";
 

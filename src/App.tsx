@@ -11,8 +11,8 @@ import Header from "./components/Header";
 import SimilarToCard from "./components/SimilarToCard";
 
 // Icons
-import { CaretDown } from "./icons/CaretDown";
-import { CaretUp } from "./icons/CaretUp";
+// import { CaretDown } from "./icons/CaretDown";
+// import { CaretUp } from "./icons/CaretUp";
 
 // Utils
 import { handleLessDataKey } from "./utils/keyboardutils/handleLessDataKeys";
@@ -21,6 +21,7 @@ import { handleMoreDataKey } from "./utils/keyboardutils/handleMoreDataKeys";
 
 // Hooks
 import { useFetchDictionary } from "./utils/data/useFetchDictionary";
+import { MoreAndLess } from "./components/MoreAndLess";
 
 function App() {
   const [limit, setLimit] = useState<number | null>(5);
@@ -249,7 +250,9 @@ function App() {
                     <p className="text-3xl font-semibold mr-2">
                       {dataDictionary.word}
                       {"  "}
-                      <span className="text-[1.2rem] text-neutral-400">{`/${dataDictionary.pronunciation?.all}/`}</span>
+                      {dataDictionary.pronunciation && (
+                        <span className="text-[1.2rem] text-neutral-400">{`/${dataDictionary.pronunciation?.all}/`}</span>
+                      )}
                     </p>
                   </div>
                   <div className="mb-2">
@@ -270,27 +273,17 @@ function App() {
                   </ul>
                   {dataDictionary.results.length > 5 ? (
                     limit ? (
-                      <button
-                        ref={moreDataRef}
-                        className="flex items-center text-xs text-white hover:text-neutral-400 duration-200 mt-2"
-                        onClick={() => setLimit(null)}
-                      >
-                        More results
-                        <span>
-                          <CaretDown />
-                        </span>
-                      </button>
+                      <MoreAndLess
+                        dataRef={moreDataRef}
+                        setLimit={setLimit}
+                        dataValue={null}
+                      />
                     ) : (
-                      <button
-                        ref={lessDataRef}
-                        className="flex items-center text-xs text-white hover:text-neutral-400 duration-200 mt-2"
-                        onClick={() => setLimit(5)}
-                      >
-                        Less results
-                        <span>
-                          <CaretUp />
-                        </span>
-                      </button>
+                      <MoreAndLess
+                        dataRef={lessDataRef}
+                        setLimit={setLimit}
+                        dataValue={5}
+                      />
                     )
                   ) : null}
                 </Fragment>

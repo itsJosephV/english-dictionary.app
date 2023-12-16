@@ -17,3 +17,31 @@
   -moz-osx-font-smoothing: grayscale;
 }
 
+
+details > summary {
+  list-style: none;
+  font-size: 0.75rem/* 12px */;
+  line-height: 1rem/* 16px */;
+  cursor: pointer;
+  margin-top: .5rem;
+}
+
+details > summary::-webkit-details-marker {
+  display: none;
+}
+
+summary::after {
+  content: ' +';
+}
+details[open] summary:after {
+  content: " -";
+}
+
+details[open] summary ~ * {
+  animation: sweep .5s ease-in-out;
+}
+
+@keyframes sweep {
+  0%    {opacity: 0; transform: translateX(-10px)}
+  100%  {opacity: 1; transform: translateX(0)}
+}

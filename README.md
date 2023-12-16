@@ -17,6 +17,7 @@ Todo List
 - [x] S&A fetch buttons / (REVISE THIS)
 - [x] Return to initial word button
 - [x] update to better API
+- [ ] Random word
 - [ ] Search when user stops typing (debounce)
 - [ ] Copy word/meanings
 - [ ] Favorites words
