@@ -1,4 +1,6 @@
 import { Fragment, useEffect, useRef, useState } from "react";
+import { useHotkeys } from "react-hotkeys-hook";
+
 // Components
 import DefinitionCard from "./components/DefinitionCard";
 import LoadingData from "./components/LoadingData";
@@ -10,23 +12,15 @@ import Form from "./components/Form";
 import Header from "./components/Header";
 import SimilarToCard from "./components/SimilarToCard";
 
-// Icons
-// import { CaretDown } from "./icons/CaretDown";
-// import { CaretUp } from "./icons/CaretUp";
-
-// Utils
-import { handleLessDataKey } from "./utils/keyboardutils/handleLessDataKeys";
-import { handleSimilarToKey } from "./utils/keyboardutils/handleSimilarToKey";
-import { handleMoreDataKey } from "./utils/keyboardutils/handleMoreDataKeys";
-
 // Hooks
 import { useFetchDictionary } from "./utils/data/useFetchDictionary";
 import { MoreAndLess } from "./components/MoreAndLess";
 
+import { WordResults } from "./types";
+
 function App() {
   const [limit, setLimit] = useState<number | null>(5);
   const [autofocus, SetAutoFocus] = useState<boolean>(true);
-  // const [cleaner, setCleaner] = useState<boolean>(false);
   const [isSimilarWordsActive, setIsSimilarWordsActive] =
     useState<boolean>(false);
   const [onSimilarWords, setOnSimilarWords] = useState<string | null>(null);
@@ -92,16 +86,6 @@ function App() {
     setIsSimilarWordsActive(!isSimilarWordsActive);
   };
 
-  const handleWhipeKeys = (e: KeyboardEvent) => {
-    if (!dataDictionary && !formBool) {
-      return;
-    }
-    if (e.shiftKey && e.key === "C") {
-      e.preventDefault();
-      clearButtonRef.current?.click();
-    }
-  };
-
   const handleBackToFirst = () => {
     const firstWordInArr = firstWords[0];
     if (firstWords && form.current) {
@@ -158,51 +142,63 @@ function App() {
     };
   }, [autofocus]);
 
-  // const isMac = navigator.userAgent.indexOf("Mac") != -1;
-  // const isWin = navigator.userAgent.indexOf("Win") != -1;
+  useHotkeys(
+    "shift+C",
+    (e) => {
+      e.preventDefault();
 
-  useEffect(() => {
-    document.addEventListener("keydown", handleWhipeKeys);
-    return () => {
-      document.removeEventListener("keydown", handleWhipeKeys);
-    };
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [dataDictionary, formBool]);
-
-  useEffect(() => {
-    const handleKeyDown = (e: KeyboardEvent) => {
-      if (dataDictionary !== null) {
-        handleMoreDataKey(e, limit, dataDictionary, moreDataRef);
+      if (!dataDictionary && !formBool) {
+        return;
       }
-    };
-    document.addEventListener("keydown", handleKeyDown);
+      clearButtonRef.current?.click();
+      console.log("data whiped");
+    },
+    { enableOnFormTags: ["INPUT"] }
+  );
 
-    return () => {
-      document.removeEventListener("keydown", handleKeyDown);
-    };
-  }, [limit, dataDictionary]);
+  useHotkeys(
+    "shift+M",
+    (e) => {
+      e.preventDefault();
 
-  useEffect(() => {
-    const handleKeyDown = (e: KeyboardEvent) => {
-      handleLessDataKey(e, limit, dataDictionary, lessDataRef);
-    };
-    document.addEventListener("keydown", handleKeyDown);
+      if (
+        limit === null ||
+        (dataDictionary?.results as Array<WordResults>).length < 5
+      ) {
+        return;
+      }
 
-    return () => {
-      document.removeEventListener("keydown", handleKeyDown);
-    };
-  }, [limit, dataDictionary]);
+      moreDataRef.current?.click();
+      console.log("more data");
+    },
+    { enableOnFormTags: ["INPUT"] }
+  );
 
-  useEffect(() => {
-    const handleKeyDown = (e: KeyboardEvent) => {
-      handleSimilarToKey(e, similarToBool, similarToRef);
-    };
-    document.addEventListener("keydown", handleKeyDown);
+  useHotkeys(
+    "shift+L",
+    (e) => {
+      e.preventDefault();
+      if (limit === 5 || !dataDictionary) {
+        return;
+      }
+      lessDataRef.current?.click();
+      console.log("less data");
+    },
+    { enableOnFormTags: ["INPUT"] }
+  );
 
-    return () => {
-      document.removeEventListener("keydown", handleKeyDown);
-    };
-  }, [similarToBool]);
+  useHotkeys(
+    "shift+S",
+    (e) => {
+      e.preventDefault();
+      if (!similarToBool) {
+        return;
+      }
+      similarToRef.current?.click();
+      console.log("Similar to open");
+    },
+    { enableOnFormTags: ["INPUT"] }
+  );
 
   // console.log(dataDictionary);
   // console.log(dataWordSimilar);
