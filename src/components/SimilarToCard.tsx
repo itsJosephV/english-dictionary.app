@@ -16,8 +16,7 @@ const SimilarToCard: React.FC<SimilarToWordsProps> = ({
   };
   return (
     dataWordSimilar &&
-    dataWordSimilar.similarTo &&
-    dataWordSimilar.similarTo.length > 0 && (
+    dataWordSimilar.similarTo && (
       <ul className="flex flex-row mt-4 gap-2 flex-wrap">
         {dataWordSimilar.similarTo.map((simItem, i) => (
           <li

@@ -1,4 +1,4 @@
-## Dictionary App - Underwork 🚧
+# Dictionary App - Underwork 🚧
 
 *App to search, save and learn about your favorite words.*
 
