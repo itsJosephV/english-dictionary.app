@@ -30,6 +30,8 @@ const Form: React.FC<FormProps> = ({
         name="word"
         placeholder="Search..."
         required
+        autoCapitalize="none"
+        autoCorrect="none"
       />
 
       <button
