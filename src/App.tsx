@@ -207,7 +207,7 @@ function App() {
   console.log(onSynAntWords);
 
   return (
-      <main className="mx-auto pb-12 min-h-screen">
+      <main className="mx-auto pb-5 min-h-screen">
         <section className="mb-5 pt-16 border-b bg-neutral-900 border-neutral-600/40 pb-5">
           <Header autofocus={autofocus} SetAutoFocus={SetAutoFocus} />
         </section>
