@@ -209,7 +209,7 @@ function App() {
   return (
     <>
       <main className="mx-auto pb-12 min-h">
-        <section className="mb-5 pt-20 border-b bg-neutral-900 border-neutral-600/40 pb-5">
+        <section className="mb-5 pt-16 border-b bg-neutral-900 border-neutral-600/40 pb-5">
           <Header autofocus={autofocus} SetAutoFocus={SetAutoFocus} />
         </section>
         <article className="max-w-[850px] mx-auto px-5">
@@ -299,7 +299,3 @@ function App() {
 }
 
 export default App;
-
-<div className="text-orange-300 bg-orange-500/10 text-sm border border-orange-300 py-1 px-2 w-fit rounded-md mb-8">
-  Dictionary App - Underwork 🚧{" "}
-</div>;

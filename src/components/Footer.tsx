@@ -1,11 +1,15 @@
 const Footer = () => {
+  const currentYear = new Date().getFullYear();
   return (
     <footer className="border-t border-neutral-600/40">
       <div className="max-w-[850px] px-5 py-1.5 mx-auto flex justify-between">
-        <div className="">
-          <p className="text-orange-300 text-sm">work in progress 🚧</p>
+        <div>
+          <p className="text-orange-400 text-sm">work in progress 🚧</p>
         </div>
-        <div className="">
+        <div>
+          <p className="text-sm text-neutral-500">{currentYear}-Present</p>
+        </div>
+        <div>
           <a
             href="https://github.com/itsJosephV/dictionary-app/tree/main"
             target="_blank"
