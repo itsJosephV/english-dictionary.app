@@ -18,7 +18,7 @@ import { MoreAndLess } from "./components/MoreAndLess";
 
 // Hooks
 import { useFetchDictionary } from "./utils/data/useFetchDictionary";
-import Footer from "./components/Footer";
+// import Footer from "./components/Footer";
 
 function App() {
   const [limit, setLimit] = useState<number | null>(5);
@@ -207,8 +207,7 @@ function App() {
   console.log(onSynAntWords);
 
   return (
-    <>
-      <main className="mx-auto pb-12 min-h">
+      <main className="mx-auto pb-12 min-h-screen">
         <section className="mb-5 pt-16 border-b bg-neutral-900 border-neutral-600/40 pb-5">
           <Header autofocus={autofocus} SetAutoFocus={SetAutoFocus} />
         </section>
@@ -293,8 +292,6 @@ function App() {
           </section>
         </article>
       </main>
-      <Footer />
-    </>
   );
 }
 
