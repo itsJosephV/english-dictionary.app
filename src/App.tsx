@@ -1,9 +1,12 @@
 import { Fragment, useEffect, useRef, useState } from "react";
 import { useHotkeys } from "react-hotkeys-hook";
 
+//Types
+import { WordResults } from "./types";
+
 // Components
 import DefinitionCard from "./components/DefinitionCard";
-import LoadingData from "./components/LoadingData";
+import { LoadingData } from "./components/LoadingData";
 import ErrorMessage from "./components/ErrorMessage";
 import Introduction from "./components/Introduction";
 import SimilarToToggle from "./components/SimilarToToggle";
@@ -11,12 +14,11 @@ import RestartButton from "./components/RestartButton";
 import Form from "./components/Form";
 import Header from "./components/Header";
 import SimilarToCard from "./components/SimilarToCard";
+import { MoreAndLess } from "./components/MoreAndLess";
 
 // Hooks
 import { useFetchDictionary } from "./utils/data/useFetchDictionary";
-import { MoreAndLess } from "./components/MoreAndLess";
-
-import { WordResults } from "./types";
+import Footer from "./components/Footer";
 
 function App() {
   const [limit, setLimit] = useState<number | null>(5);
@@ -205,90 +207,99 @@ function App() {
   console.log(onSynAntWords);
 
   return (
-    <main className="min-h-screen mx-auto pb-5">
-      <section className="mb-5 pt-14 border-b bg-neutral-900 border-neutral-600/40 pb-5">
-        <Header autofocus={autofocus} SetAutoFocus={SetAutoFocus} />
-      </section>
-      <article className="max-w-[850px] mx-auto px-5">
-        <Form
-          form={form}
-          cleaner={cleaner}
-          clearButtonRef={clearButtonRef}
-          handleFormSubmit={handleFormSubmit}
-          handleCleanResults={handleCleanResults}
-        />
-        <div className="mt-1.5 flex justify-between items-center">
-          <SimilarToToggle
-            handleSimilarToButton={handleSimilarToButton}
-            similarToBool={similarToBool}
-            isSimilarWordsActive={isSimilarWordsActive}
-            similarToRef={similarToRef}
-          />
-          {firstInArr && (
-            <RestartButton handleBackToFirst={handleBackToFirst} />
-          )}
-        </div>
-
-        {isSimilarWordsActive && (
-          <SimilarToCard
-            dataWordSimilar={dataWordSimilar}
-            setOnSimilarWords={setOnSimilarWords}
-          />
-        )}
-
-        <section>
-          {isLoading && <LoadingData />}
-          {error && <ErrorMessage error={error} />}
-          {dataDictionary
-            ? dataDictionary && (
-                <Fragment>
-                  <div className="flex items-center flex-wrap mb-2 mt-5">
-                    <p className="text-3xl font-semibold mr-2">
-                      {dataDictionary.word}
-                      {"  "}
-                      {dataDictionary.pronunciation && (
-                        <span className="text-[1.2rem] text-neutral-400">{`/${dataDictionary.pronunciation?.all}/`}</span>
-                      )}
-                    </p>
-                  </div>
-                  <div className="mb-2">
-                    <p className="text-neutral-500 text-xs ">
-                      {dataDictionary.results.length} Results found
-                    </p>
-                  </div>
-                  <ul>
-                    {dataDictionary.results
-                      ?.slice(0, limit ? limit : dataDictionary.results.length)
-                      .map((item, i) => (
-                        <DefinitionCard
-                          key={i}
-                          item={item}
-                          setOnSynAntWords={setOnSynAntWords}
-                        />
-                      ))}
-                  </ul>
-                  {dataDictionary.results.length > 5 ? (
-                    limit ? (
-                      <MoreAndLess
-                        dataRef={moreDataRef}
-                        setLimit={setLimit}
-                        dataValue={null}
-                      />
-                    ) : (
-                      <MoreAndLess
-                        dataRef={lessDataRef}
-                        setLimit={setLimit}
-                        dataValue={5}
-                      />
-                    )
-                  ) : null}
-                </Fragment>
-              )
-            : !isLoading && !error && <Introduction />}
+    <>
+      <main className="mx-auto pb-12 min-h">
+        <section className="mb-5 pt-20 border-b bg-neutral-900 border-neutral-600/40 pb-5">
+          <Header autofocus={autofocus} SetAutoFocus={SetAutoFocus} />
         </section>
-      </article>
-    </main>
+        <article className="max-w-[850px] mx-auto px-5">
+          <Form
+            form={form}
+            cleaner={cleaner}
+            clearButtonRef={clearButtonRef}
+            handleFormSubmit={handleFormSubmit}
+            handleCleanResults={handleCleanResults}
+          />
+          <div className="mt-1.5 flex justify-between items-center">
+            <SimilarToToggle
+              handleSimilarToButton={handleSimilarToButton}
+              similarToBool={similarToBool}
+              isSimilarWordsActive={isSimilarWordsActive}
+              similarToRef={similarToRef}
+            />
+            {firstInArr && (
+              <RestartButton handleBackToFirst={handleBackToFirst} />
+            )}
+          </div>
+
+          {isSimilarWordsActive && (
+            <SimilarToCard
+              dataWordSimilar={dataWordSimilar}
+              setOnSimilarWords={setOnSimilarWords}
+            />
+          )}
+          <section className="">
+            {isLoading && <LoadingData />}
+            {error && <ErrorMessage error={error} />}
+            {dataDictionary
+              ? dataDictionary && (
+                  <Fragment>
+                    <div className="flex items-center flex-wrap mb-2 mt-5">
+                      <p className="text-3xl font-semibold mr-2">
+                        {dataDictionary.word}
+                        {"  "}
+                        {dataDictionary.pronunciation && (
+                          <span className="text-[1.2rem] text-neutral-400">{`/${dataDictionary.pronunciation?.all}/`}</span>
+                        )}
+                      </p>
+                    </div>
+                    <div className="mb-2">
+                      <p className="text-neutral-500 text-xs ">
+                        {dataDictionary.results.length} Results found
+                      </p>
+                    </div>
+                    <ul>
+                      {dataDictionary.results
+                        ?.slice(
+                          0,
+                          limit ? limit : dataDictionary.results.length
+                        )
+                        .map((item, i) => (
+                          <DefinitionCard
+                            key={i}
+                            item={item}
+                            setOnSynAntWords={setOnSynAntWords}
+                          />
+                        ))}
+                    </ul>
+                    {dataDictionary.results.length > 5 ? (
+                      limit ? (
+                        <MoreAndLess
+                          dataRef={moreDataRef}
+                          setLimit={setLimit}
+                          dataValue={null}
+                        />
+                      ) : (
+                        <MoreAndLess
+                          dataRef={lessDataRef}
+                          setLimit={setLimit}
+                          dataValue={5}
+                        />
+                      )
+                    ) : null}
+                  </Fragment>
+                )
+              : !isLoading && !error && <Introduction />}
+          </section>
+        </article>
+      </main>
+      <Footer />
+    </>
   );
 }
 
 export default App;
+
+<div className="text-orange-300 bg-orange-500/10 text-sm border border-orange-300 py-1 px-2 w-fit rounded-md mb-8">
+  Dictionary App - Underwork 🚧{" "}
+</div>;
