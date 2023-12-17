@@ -145,7 +145,7 @@ function App() {
   }, [autofocus]);
 
   useHotkeys(
-    "shift+C",
+    "shift+c",
     (e) => {
       e.preventDefault();
 
@@ -159,7 +159,7 @@ function App() {
   );
 
   useHotkeys(
-    "shift+M",
+    "shift+m",
     (e) => {
       e.preventDefault();
 
@@ -177,7 +177,7 @@ function App() {
   );
 
   useHotkeys(
-    "shift+L",
+    "shift+l",
     (e) => {
       e.preventDefault();
       if (limit === 5 || !dataDictionary) {
@@ -190,7 +190,7 @@ function App() {
   );
 
   useHotkeys(
-    "shift+S",
+    "shift+s",
     (e) => {
       e.preventDefault();
       if (!similarToBool) {
