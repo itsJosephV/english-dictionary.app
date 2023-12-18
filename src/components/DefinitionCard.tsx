@@ -1,11 +1,11 @@
 import { WordResults } from "../types";
 
-interface WordCardProps {
+type Props = {
   item: WordResults;
-  setOnSynAntWords: React.Dispatch<React.SetStateAction<string | null>>;
+  setOnSynAntWords: (synOrAnt: string | null) => void
 }
 
-const DefinitionCard: React.FC<WordCardProps> = ({
+const DefinitionCard: React.FC<Props> = ({
   item,
   setOnSynAntWords,
 }) => {

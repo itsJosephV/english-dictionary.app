@@ -1,11 +1,11 @@
 import { WordSimilarTo } from "../types";
 
-interface SimilarToWordsProps {
+type Props = {
   dataWordSimilar: WordSimilarTo | null;
-  setOnSimilarWords: React.Dispatch<React.SetStateAction<string | null>>;
+  setOnSimilarWords: (synItem: string | null) => void
 }
 
-const SimilarToCard: React.FC<SimilarToWordsProps> = ({
+const SimilarToCard: React.FC<Props> = ({
   dataWordSimilar,
   setOnSimilarWords,
 }) => {

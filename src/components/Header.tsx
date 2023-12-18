@@ -1,17 +1,14 @@
 import ShortCutsInfo from "./ShortCutsInfo";
 import InputAF from "./InputAF";
 
-interface HeaderProps {
+type Props = {
   autofocus: boolean,
   SetAutoFocus: React.Dispatch<React.SetStateAction<boolean>>
 }
 
-const Header: React.FC<HeaderProps> = ({autofocus, SetAutoFocus}) => {
+const Header: React.FC<Props> = ({autofocus, SetAutoFocus}) => {
   return (
     <header className="max-w-[850px] mx-auto px-5">
-      {/* <div className="text-orange-300 bg-orange-500/10 text-sm border border-orange-300 py-1 px-2 w-fit rounded-md mb-8">
-        Dictionary App - Underwork 🚧{" "}
-      </div> */}
       <div className="mb-8">
         <p className="text-4xl font-bold mb-1">Dictionary</p>
         <p className="text-neutral-400">

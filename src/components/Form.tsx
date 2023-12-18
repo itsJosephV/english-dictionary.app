@@ -2,7 +2,7 @@ import React from "react";
 import { IcRoundSearch } from "../icons/SearchIcon";
 import { CleanIcon } from "../icons/CleanIcon";
 
-interface FormProps {
+type Props = {
   form: React.RefObject<HTMLFormElement>;
   cleaner: boolean;
   clearButtonRef: React.RefObject<HTMLButtonElement>;
@@ -10,7 +10,7 @@ interface FormProps {
   handleCleanResults: (e: React.FormEvent) => void;
 }
 
-const Form: React.FC<FormProps> = ({
+const Form: React.FC<Props> = ({
   form,
   cleaner,
   clearButtonRef,

@@ -1,13 +1,13 @@
 import { CaretDown } from "../icons/CaretDown";
 import { CaretUp } from "../icons/CaretUp";
 
-interface MoreAndLessProps {
+type Props = {
   dataRef: React.RefObject<HTMLButtonElement>;
   dataValue: number | null;
-  setLimit: React.Dispatch<React.SetStateAction<number | null>>;
+  setLimit: (dataValue: number | null) => void;
 }
 
-export const MoreAndLess: React.FC<MoreAndLessProps> = ({
+export const MoreAndLess: React.FC<Props> = ({
   dataRef,
   dataValue,
   setLimit,

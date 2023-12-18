@@ -1,11 +1,11 @@
 import React from "react";
 
-interface AFProps {
+type Props = {
   autofocus: boolean;
-  SetAutoFocus: React.Dispatch<React.SetStateAction<boolean>>;
+  SetAutoFocus: (autofocus: boolean) => void
 }
 
-const InputAF: React.FC<AFProps> = ({ autofocus, SetAutoFocus }) => {
+const InputAF: React.FC<Props> = ({ autofocus, SetAutoFocus }) => {
   return (
     <label className="border border-neutral-700 p-1.5 justify-between rounded-sm inline-flex gap-3 items-center">
       <span className="text-sm text-neutral-300">

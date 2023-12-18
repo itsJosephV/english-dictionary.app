@@ -18,7 +18,6 @@ import { MoreAndLess } from "./components/MoreAndLess";
 
 // Hooks
 import { useFetchDictionary } from "./utils/data/useFetchDictionary";
-// import Footer from "./components/Footer";
 
 function App() {
   const [limit, setLimit] = useState<number | null>(5);

@@ -1,14 +1,14 @@
 import { CaretDown } from "../icons/CaretDown";
 import { CaretUp } from "../icons/CaretUp";
 
-interface SynAndAntToggleProps {
+type Props = {
   similarToBool: boolean;
   isSimilarWordsActive: boolean;
   handleSimilarToButton: () => void;
   similarToRef: React.RefObject<HTMLButtonElement>
 }
 
-const SimilarToToggle: React.FC<SynAndAntToggleProps> = ({
+const SimilarToToggle: React.FC<Props> = ({
   similarToBool,
   isSimilarWordsActive,
   handleSimilarToButton,
