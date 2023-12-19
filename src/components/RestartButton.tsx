@@ -6,7 +6,7 @@ type Props = {
 
 const RestartButton: React.FC<Props> = ({ handleBackToFirst }) => {
   return (
-    <button onClick={handleBackToFirst} className="text-xs text-rose-400 hover:text-rose-200 duration-200">
+    <button onClick={handleBackToFirst} className="text-xs text-indigo-300 hover:text-indigo-200 duration-200">
       <span className="flex items-center gap-0.5">
         <BackIcon />
         Restart

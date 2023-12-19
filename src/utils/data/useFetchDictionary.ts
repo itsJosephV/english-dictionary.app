@@ -3,6 +3,7 @@ import { useState } from "react";
 import { DictionaryItem, WordSimilarTo } from "../../types";
 
 export const useFetchDictionary = () => {
+  
   const [dataDictionary, setDataDictionary] = useState<DictionaryItem | null>(null);
   const [dataWordSimilar, setDataWordSimilar] = useState<WordSimilarTo | null>(null);
   const [cleaner, setCleaner] = useState<boolean>(false);
@@ -10,6 +11,16 @@ export const useFetchDictionary = () => {
   const [error, setError] = useState<string | null>("");
   const [firstWords, setFirstWords] = useState<Array<string>>([])
   const [firstInArr, setFirstInArr] = useState<boolean>(false);
+
+  const baseUrl = import.meta.env.VITE_DICTAPI_URL
+  const apiKey = import.meta.env.VITE_DICTAPI_KEY
+  const query = "similarTo";
+  const headers = {
+    "X-RapidAPI-Key": apiKey,
+    "X-RapidAPI-Host": import.meta.env.VITE_DICTAPI_HOST
+  };
+  const regex = /^[a-zA-Z\s][a-zA-Z\s.-]+[a-zA-Z\s]$/
+  const spaceRegex = /^ *$/;
 
   const updateFirstWords = (word: string, cleanArray: boolean) => {
     if (cleanArray) {
@@ -23,15 +34,6 @@ export const useFetchDictionary = () => {
   const delay = (ms: number) => new Promise((resolve) => setTimeout(resolve, ms));
 
   const fetchDictionary = async (word: string, cleanArray: boolean = false): Promise<void> => {
-    const baseUrl = import.meta.env.VITE_DICTAPI_URL
-    const apiKey = import.meta.env.VITE_DICTAPI_KEY
-    const query = "similarTo";
-    const headers = {
-      "X-RapidAPI-Key": apiKey,
-      "X-RapidAPI-Host": import.meta.env.VITE_DICTAPI_HOST
-    };
-    const regex = /^(?![-.])[a-zA-Z\s.-]+(?![-.])$/
-    const spaceRegex = /^ *$/;
     setDataDictionary(null);
     setDataWordSimilar(null)
     setError("");
@@ -62,7 +64,6 @@ export const useFetchDictionary = () => {
 
       setDataDictionary(data1);
       setDataWordSimilar(data2);
-
       updateFirstWords(word, cleanArray)
 
     } catch (error) {

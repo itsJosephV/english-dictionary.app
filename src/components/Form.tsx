@@ -25,7 +25,7 @@ const Form: React.FC<Props> = ({
       action=""
     >
       <input
-        className="border border-neutral-600/70 rounded-sm bg-neutral-800 pl-1 w-full"
+        className="border border-neutral-700 rounded-sm bg-neutral-800 pl-1 w-full"
         type="text"
         name="word"
         placeholder="Search..."
@@ -46,7 +46,7 @@ const Form: React.FC<Props> = ({
           className="absolute h-full right-11"
           onClick={handleCleanResults}
         >
-          <CleanIcon />
+          <CleanIcon className="text-neutral-300 hover:text-white duration-200" />
         </button>
       )}
     </form>

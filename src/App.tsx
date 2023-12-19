@@ -6,7 +6,7 @@ import { WordResults } from "./types";
 
 // Components
 import DefinitionCard from "./components/DefinitionCard";
-import { LoadingData } from "./components/LoadingData";
+import { LoadingData } from "./icons/LoadingData";
 import ErrorMessage from "./components/ErrorMessage";
 import Introduction from "./components/Introduction";
 import SimilarToToggle from "./components/SimilarToToggle";

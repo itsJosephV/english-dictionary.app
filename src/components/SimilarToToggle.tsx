@@ -19,7 +19,7 @@ const SimilarToToggle: React.FC<Props> = ({
       ref={similarToRef}
       onClick={handleSimilarToButton}
       className={`text-xs flex items-center gap-[1px] ${
-        similarToBool ? "text-white hover:text-neutral-400 duration-200" : "text-neutral-500"
+        similarToBool ? "text-indigo-300 hover:text-indigo-200 duration-200" : "text-neutral-500"
       }`}
       disabled={!similarToBool}
     >
@@ -29,3 +29,5 @@ const SimilarToToggle: React.FC<Props> = ({
 };
 
 export default SimilarToToggle;
+
+

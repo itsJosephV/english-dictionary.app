@@ -20,7 +20,7 @@ const SimilarToCard: React.FC<Props> = ({
       <ul className="flex flex-row mt-4 gap-2 flex-wrap">
         {dataWordSimilar.similarTo.map((simItem, i) => (
           <li
-            className="px-1.5 bg-neutral-800 border border-neutral-700/50 hover:border-neutral-600 text-sm text-neutral-300 hover:text-white duration-200 rounded-sm"
+            className="px-1.5 bg-neutral-700/50 border border-neutral-700  text-sm text-neutral-300 hover:text-white duration-200 rounded-sm"
             key={i}
           >
             <button onClick={() => handleSimilarToButton(simItem)}>
