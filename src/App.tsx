@@ -47,6 +47,7 @@ function App() {
     setFirstInArr,
     fetchDictionary,
     setCleaner,
+    fetchDictionaryRandom,
   } = useFetchDictionary();
 
   const handleFormSubmit = async (e: React.FormEvent) => {
@@ -66,7 +67,7 @@ function App() {
   const formBool: boolean = Boolean(form.current?.word.value);
   const similarToBool: boolean = Boolean(dataWordSimilar?.similarTo?.length);
 
-  console.log(similarToBool);
+  // console.log(similarToBool);
 
   const handleCleanResults = (e: React.FormEvent) => {
     e.preventDefault();
@@ -116,6 +117,14 @@ function App() {
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [onSynAntWords]);
+
+  useEffect(() => {
+    if(dataDictionary?.word) {
+      if(form.current) {
+        form.current.word.value = dataDictionary.word
+      }
+    }
+  }, [dataDictionary?.word])
 
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
@@ -201,96 +210,99 @@ function App() {
     { enableOnFormTags: ["INPUT"] }
   );
 
-  // console.log(dataDictionary);
-  // console.log(dataWordSimilar);
-  console.log(onSynAntWords);
-
+  console.log(dataDictionary);
+  console.log(dataWordSimilar);
+  
+  // console.log(dataDictionary?.word);
+  // console.log(firstWords);
   return (
-      <main className="mx-auto pb-5 min-h-screen">
-        <section className="mb-5 pt-16 border-b bg-neutral-900 border-neutral-600/40 pb-5">
-          <Header autofocus={autofocus} SetAutoFocus={SetAutoFocus} />
-        </section>
-        <article className="max-w-[850px] mx-auto px-5">
-          <Form
-            form={form}
-            cleaner={cleaner}
-            clearButtonRef={clearButtonRef}
-            handleFormSubmit={handleFormSubmit}
-            handleCleanResults={handleCleanResults}
+    <main className="mx-auto pb-5 min-h-screen">
+      <section className="mb-5 pt-16 border-b bg-neutral-900 border-neutral-600/40 pb-5">
+        <Header autofocus={autofocus} SetAutoFocus={SetAutoFocus} />
+      </section>
+      <article className="max-w-[850px] mx-auto px-5">
+        <Form
+          form={form}
+          cleaner={cleaner}
+          clearButtonRef={clearButtonRef}
+          handleFormSubmit={handleFormSubmit}
+          handleCleanResults={handleCleanResults}
+        />
+        <div className="mt-1.5 flex justify-between items-center">
+          <SimilarToToggle
+            handleSimilarToButton={handleSimilarToButton}
+            similarToBool={similarToBool}
+            isSimilarWordsActive={isSimilarWordsActive}
+            similarToRef={similarToRef}
           />
-          <div className="mt-1.5 flex justify-between items-center">
-            <SimilarToToggle
-              handleSimilarToButton={handleSimilarToButton}
-              similarToBool={similarToBool}
-              isSimilarWordsActive={isSimilarWordsActive}
-              similarToRef={similarToRef}
-            />
-            {firstInArr && (
-              <RestartButton handleBackToFirst={handleBackToFirst} />
-            )}
-          </div>
+          {firstInArr && (
+            <RestartButton handleBackToFirst={handleBackToFirst} />
+          )}
+        </div>
 
-          {isSimilarWordsActive && (
-            <SimilarToCard
-              dataWordSimilar={dataWordSimilar}
-              setOnSimilarWords={setOnSimilarWords}
+        {isSimilarWordsActive && (
+          <SimilarToCard
+            dataWordSimilar={dataWordSimilar}
+            setOnSimilarWords={setOnSimilarWords}
+          />
+        )}
+        <section>
+          {isLoading && <LoadingData />}
+          {error && <ErrorMessage error={error} />}
+          {!dataDictionary && !isLoading && !error && (
+            <Introduction
+              fetchDictionaryRandom={fetchDictionaryRandom}
+              form={form}
             />
           )}
-          <section className="">
-            {isLoading && <LoadingData />}
-            {error && <ErrorMessage error={error} />}
-            {dataDictionary
-              ? dataDictionary && (
-                  <Fragment>
-                    <div className="flex items-center flex-wrap mb-2 mt-5">
-                      <p className="text-3xl font-semibold mr-2">
-                        {dataDictionary.word}
-                        {"  "}
-                        {dataDictionary.pronunciation && (
-                          <span className="text-[1.2rem] text-neutral-400">{`/${dataDictionary.pronunciation?.all}/`}</span>
-                        )}
-                      </p>
-                    </div>
-                    <div className="mb-2">
-                      <p className="text-neutral-500 text-xs ">
-                        {dataDictionary.results.length} Results found
-                      </p>
-                    </div>
-                    <ul>
-                      {dataDictionary.results
-                        ?.slice(
-                          0,
-                          limit ? limit : dataDictionary.results.length
-                        )
-                        .map((item, i) => (
-                          <DefinitionCard
-                            key={i}
-                            item={item}
-                            setOnSynAntWords={setOnSynAntWords}
-                          />
-                        ))}
-                    </ul>
-                    {dataDictionary.results.length > 5 ? (
-                      limit ? (
-                        <MoreAndLess
-                          dataRef={moreDataRef}
-                          setLimit={setLimit}
-                          dataValue={null}
-                        />
-                      ) : (
-                        <MoreAndLess
-                          dataRef={lessDataRef}
-                          setLimit={setLimit}
-                          dataValue={5}
-                        />
-                      )
-                    ) : null}
-                  </Fragment>
+          {dataDictionary && (
+            <Fragment>
+              <div className="flex items-center flex-wrap mb-2 mt-5">
+                <p className="text-3xl font-semibold mr-2">
+                  {dataDictionary.word}
+                  {"  "}
+                  {dataDictionary.pronunciation && (
+                    <span className="text-[1.2rem] text-neutral-400">{`/${dataDictionary.pronunciation?.all}/`}</span>
+                  )}
+                </p>
+              </div>
+              <div className="mb-2">
+                <p className="text-neutral-500 text-xs ">
+                  {dataDictionary.results && dataDictionary.results.length}{" "}
+                  Results found
+                </p>
+              </div>
+              <ul>
+                {dataDictionary.results
+                  ?.slice(0, limit ? limit : dataDictionary.results.length)
+                  .map((item, i) => (
+                    <DefinitionCard
+                      key={i}
+                      item={item}
+                      setOnSynAntWords={setOnSynAntWords}
+                    />
+                  ))}
+              </ul>
+              {dataDictionary.results && dataDictionary.results.length > 5 ? (
+                limit ? (
+                  <MoreAndLess
+                    dataRef={moreDataRef}
+                    setLimit={setLimit}
+                    dataValue={null}
+                  />
+                ) : (
+                  <MoreAndLess
+                    dataRef={lessDataRef}
+                    setLimit={setLimit}
+                    dataValue={5}
+                  />
                 )
-              : !isLoading && !error && <Introduction />}
-          </section>
-        </article>
-      </main>
+              ) : null}
+            </Fragment>
+          )}
+        </section>
+      </article>
+    </main>
   );
 }
 
