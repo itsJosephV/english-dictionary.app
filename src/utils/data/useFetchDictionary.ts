@@ -3,15 +3,13 @@ import { useState } from "react";
 import { DictionaryItem, WordSimilarTo } from "../../types";
 
 export const useFetchDictionary = () => {
-
-  const [dataDictionary, setDataDictionary] = useState<DictionaryItem | null>(null);
-  const [dataWordSimilar, setDataWordSimilar] = useState<WordSimilarTo | null>(null);
-  const [cleaner, setCleaner] = useState<boolean>(false);
+  const [dictionaryData, setDictionaryData] = useState<DictionaryItem | null>(null);
+  const [similarToData, setSimilarToData] = useState<WordSimilarTo | null>(null);
+  const [isClearEn, setIsClearEn] = useState<boolean>(false);
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [error, setError] = useState<string | null>("");
-  const [firstWords, setFirstWords] = useState<Array<string>>([])
-  const [firstInArr, setFirstInArr] = useState<boolean>(false);
-
+  const [storedWords, setStoredWords] = useState<Array<string>>([])
+  const [isReseteableEn, setIsReseteableEn] = useState<boolean>(false);
 
   const baseUrl = import.meta.env.VITE_DICTAPI_URL
   const apiKey = import.meta.env.VITE_DICTAPI_KEY
@@ -30,10 +28,10 @@ export const useFetchDictionary = () => {
 
   const updateFirstWords = (word: string, cleanArray: boolean) => {
     if (cleanArray) {
-      setFirstWords([word]);
+      setStoredWords([word]);
     } else {
-      setFirstWords((prevWords) => [...prevWords, word]);
-      setFirstInArr(true);
+      setStoredWords((prevWords) => [...prevWords, word]);
+      setIsReseteableEn(true);
     }
   };
 
@@ -52,21 +50,21 @@ export const useFetchDictionary = () => {
       const resTwo = await fetch(`${baseUrl}${data1.word}/${query}`, { headers });
       const data2 = await resTwo.json()
       
-      setDataDictionary(data1);
-      setDataWordSimilar(data2);
+      setDictionaryData(data1);
+      setSimilarToData(data2);
       updateFirstWords(data1.word, true);
 
     } catch (error) {
       handleErrors(error)
     } finally {
       setIsLoading(false);
-      setCleaner(true)
+      setIsClearEn(true)
     }
   }
 
   const fetchDictionary = async (word: string, cleanArray: boolean = false): Promise<void> => {
-    setDataDictionary(null);
-    setDataWordSimilar(null)
+    setDictionaryData(null);
+    setSimilarToData(null)
     setError("");
     setIsLoading(true);
 
@@ -91,18 +89,18 @@ export const useFetchDictionary = () => {
       const data1 = await resOne.json();
       const data2 = await resTwo.json();
 
-      setDataDictionary(data1);
-      setDataWordSimilar(data2);
+      setDictionaryData(data1);
+      setSimilarToData(data2);
       updateFirstWords(word, cleanArray)
 
     } catch (error) {
       handleErrors(error)
     } finally {
       setIsLoading(false);
-      setCleaner(true)
+      setIsClearEn(true)
     }
   };
-  return { dataDictionary, dataWordSimilar, error, isLoading, firstWords, firstInArr, cleaner, setDataDictionary, setDataWordSimilar, setError, setFirstInArr, fetchDictionary, setCleaner, fetchDictionaryRandom }
+  return { dictionaryData, similarToData, error, isLoading, storedWords, isReseteableEn, isClearEn, setDictionaryData, setSimilarToData, setError, setIsReseteableEn, fetchDictionary, setIsClearEn, fetchDictionaryRandom }
 }
 
 

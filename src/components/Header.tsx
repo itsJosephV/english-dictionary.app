@@ -2,11 +2,11 @@ import ShortCutsInfo from "./ShortCutsInfo";
 import InputAF from "./InputAF";
 
 type Props = {
-  autofocus: boolean,
-  SetAutoFocus: React.Dispatch<React.SetStateAction<boolean>>
+  isAutoFocusEn: boolean,
+  setIsAutoFocusEn: React.Dispatch<React.SetStateAction<boolean>>
 }
 
-const Header: React.FC<Props> = ({autofocus, SetAutoFocus}) => {
+const Header: React.FC<Props> = ({isAutoFocusEn, setIsAutoFocusEn}) => {
   return (
     <header className="max-w-[850px] mx-auto px-5">
       <div className="mb-8">
@@ -18,7 +18,7 @@ const Header: React.FC<Props> = ({autofocus, SetAutoFocus}) => {
       {/* <p>ShorCuts</p> */}
       <div className="md:items-center gap-2 flex flex-col md:flex-row justify-between w-fit md:w-[100%]">
         <ShortCutsInfo />
-        <InputAF autofocus={autofocus} SetAutoFocus={SetAutoFocus} />
+        <InputAF isAutoFocusEn={isAutoFocusEn} setIsAutoFocusEn={setIsAutoFocusEn} />
       </div>
     </header>
   );

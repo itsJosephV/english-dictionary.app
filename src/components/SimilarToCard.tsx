@@ -1,24 +1,24 @@
 import { WordSimilarTo } from "../types";
 
 type Props = {
-  dataWordSimilar: WordSimilarTo | null;
-  setOnSimilarWords: (synItem: string | null) => void
+  similarToData: WordSimilarTo | null;
+  setOnSimilarToWords: (synItem: string | null) => void
 }
 
 const SimilarToCard: React.FC<Props> = ({
-  dataWordSimilar,
-  setOnSimilarWords,
+  similarToData,
+  setOnSimilarToWords,
 }) => {
   const handleSimilarToButton = (synItem: string) => {
     if (synItem) {
-      setOnSimilarWords(synItem);
+      setOnSimilarToWords(synItem);
     }
   };
   return (
-    dataWordSimilar &&
-    dataWordSimilar.similarTo && (
+    similarToData &&
+    similarToData.similarTo && (
       <ul className="flex flex-row mt-4 gap-2 flex-wrap">
-        {dataWordSimilar.similarTo.map((simItem, i) => (
+        {similarToData.similarTo.map((simItem, i) => (
           <li
             className="px-1.5 bg-neutral-700/50 border border-neutral-700  text-sm text-neutral-300 hover:text-white duration-200 rounded-sm"
             key={i}

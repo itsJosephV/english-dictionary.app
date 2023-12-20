@@ -4,19 +4,19 @@ import { CaretUp } from "../icons/CaretUp";
 type Props = {
   dataRef: React.RefObject<HTMLButtonElement>;
   dataValue: number | null;
-  setLimit: (dataValue: number | null) => void;
+  setResultsLimit: (dataValue: number | null) => void;
 }
 
 export const MoreAndLess: React.FC<Props> = ({
   dataRef,
   dataValue,
-  setLimit,
+  setResultsLimit,
 }) => {
   return (
     <button
       ref={dataRef}
       className="flex items-center text-xs text-neutral-300 hover:text-white duration-200 mt-2"
-      onClick={() => setLimit(dataValue)}
+      onClick={() => setResultsLimit(dataValue)}
     >
       {!dataValue ? "More results" : "Less results"}
       <span>

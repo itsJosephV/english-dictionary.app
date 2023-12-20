@@ -20,11 +20,10 @@ import { MoreAndLess } from "./components/MoreAndLess";
 import { useFetchDictionary } from "./utils/data/useFetchDictionary";
 
 function App() {
-  const [limit, setLimit] = useState<number | null>(5);
-  const [autofocus, SetAutoFocus] = useState<boolean>(true);
-  const [isSimilarWordsActive, setIsSimilarWordsActive] =
-    useState<boolean>(false);
-  const [onSimilarWords, setOnSimilarWords] = useState<string | null>(null);
+  const [resultsLimit, setResultsLimit] = useState<number | null>(5);
+  const [IsAutofocusEn, setIsAutoFocusEn] = useState<boolean>(true);
+  const [isSimilarWordsActive, setIsSimilarWordsActive] = useState<boolean>(false);
+  const [onSimilarToWords, setOnSimilarToWords] = useState<string | null>(null);
   const [onSynAntWords, setOnSynAntWords] = useState<string | null>(null);
 
   const form = useRef<HTMLFormElement>(null);
@@ -34,79 +33,77 @@ function App() {
   const clearButtonRef = useRef<HTMLButtonElement>(null);
 
   const {
-    dataDictionary,
-    dataWordSimilar,
+    dictionaryData,
+    similarToData,
     error,
     isLoading,
-    firstWords,
-    firstInArr,
-    cleaner,
-    setDataDictionary,
-    setDataWordSimilar,
-    setError,
-    setFirstInArr,
-    fetchDictionary,
-    setCleaner,
+    storedWords,
+    isReseteableEn,
+    isClearEn,
+    setDictionaryData,
+    setSimilarToData,
     fetchDictionaryRandom,
+    setError,
+    fetchDictionary,
+    setIsClearEn,
+    setIsReseteableEn,
   } = useFetchDictionary();
 
   const handleFormSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    setOnSimilarWords(null);
+    setOnSimilarToWords(null);
     setOnSynAntWords(null);
-    setLimit(5);
+    setResultsLimit(5);
     const word = form.current?.word.value;
     if (word.length === 0) {
       return;
     }
     fetchDictionary(word, true);
-    setFirstInArr(false);
+    setIsReseteableEn(false);
   };
 
   //? Helpers to avoid unnecessary shorcuts calls when no data
   const formBool: boolean = Boolean(form.current?.word.value);
-  const similarToBool: boolean = Boolean(dataWordSimilar?.similarTo?.length);
-
-  // console.log(similarToBool);
+  const similarToBool: boolean = Boolean(similarToData?.similarTo?.length);
 
   const handleCleanResults = (e: React.FormEvent) => {
     e.preventDefault();
     form.current?.reset();
-    setDataDictionary(null);
-    setDataWordSimilar(null);
+    setDictionaryData(null);
+    setSimilarToData(null);
     setError("");
-    setLimit(null);
+    setResultsLimit(null);
     setIsSimilarWordsActive(false);
-    setCleaner(false);
-    setFirstInArr(false);
+    setIsClearEn(false);
+    setIsReseteableEn(false);
   };
 
   const handleSimilarToButton = () => {
-    if (!dataDictionary) {
+    if (!dictionaryData) {
       return;
     }
     setIsSimilarWordsActive(!isSimilarWordsActive);
   };
 
   const handleBackToFirst = () => {
-    const firstWordInArr = firstWords[0];
-    if (firstWords && form.current) {
+    const firstWordInArr = storedWords[0];
+    if (storedWords && form.current) {
       fetchDictionary(firstWordInArr, true);
       form.current.word.value = firstWordInArr;
-      setFirstInArr(false);
+      setIsReseteableEn(false);
     }
   };
 
-  //? Chore: better testing & improve — useCallback?
+  //? Perf: better testing & improve — useCallback?
   useEffect(() => {
-    if (onSimilarWords !== null) {
+    if (onSimilarToWords !== null) {
       if (form.current) {
-        form.current.word.value = onSimilarWords;
-        fetchDictionary(onSimilarWords, false);
+        form.current.word.value = onSimilarToWords;
+        fetchDictionary(onSimilarToWords, false);
       }
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [onSimilarWords]);
+  }, [onSimilarToWords]);
 
   useEffect(() => {
     if (onSynAntWords !== null) {
@@ -119,12 +116,12 @@ function App() {
   }, [onSynAntWords]);
 
   useEffect(() => {
-    if(dataDictionary?.word) {
-      if(form.current) {
-        form.current.word.value = dataDictionary.word
+    if (dictionaryData?.word) {
+      if (form.current) {
+        form.current.word.value = dictionaryData.word;
       }
     }
-  }, [dataDictionary?.word])
+  }, [dictionaryData?.word]);
 
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
@@ -135,7 +132,7 @@ function App() {
         return;
       }
 
-      if (autofocus) {
+      if (IsAutofocusEn) {
         if (
           regex.test(e.key) ||
           (inputValue.length > 0 && e.key === "Backspace")
@@ -150,14 +147,14 @@ function App() {
     return () => {
       document.removeEventListener("keydown", handleKeyDown);
     };
-  }, [autofocus]);
+  }, [IsAutofocusEn]);
 
   useHotkeys(
     "shift+c",
     (e) => {
       e.preventDefault();
 
-      if (!dataDictionary && !formBool) {
+      if (!dictionaryData && !formBool) {
         return;
       }
       clearButtonRef.current?.click();
@@ -172,8 +169,8 @@ function App() {
       e.preventDefault();
 
       if (
-        limit === null ||
-        (dataDictionary?.results as Array<WordResults>).length < 5
+        resultsLimit === null ||
+        (dictionaryData?.results as Array<WordResults>).length < 5
       ) {
         return;
       }
@@ -188,7 +185,7 @@ function App() {
     "shift+l",
     (e) => {
       e.preventDefault();
-      if (limit === 5 || !dataDictionary) {
+      if (resultsLimit === 5 || !dictionaryData) {
         return;
       }
       lessDataRef.current?.click();
@@ -210,20 +207,19 @@ function App() {
     { enableOnFormTags: ["INPUT"] }
   );
 
-  console.log(dataDictionary);
-  console.log(dataWordSimilar);
-  
+  console.log(dictionaryData);
+  console.log(similarToData);
   // console.log(dataDictionary?.word);
   // console.log(firstWords);
   return (
     <main className="mx-auto pb-5 min-h-screen">
       <section className="mb-5 pt-16 border-b bg-neutral-900 border-neutral-600/40 pb-5">
-        <Header autofocus={autofocus} SetAutoFocus={SetAutoFocus} />
+        <Header isAutoFocusEn={IsAutofocusEn} setIsAutoFocusEn={setIsAutoFocusEn} />
       </section>
       <article className="max-w-[850px] mx-auto px-5">
         <Form
           form={form}
-          cleaner={cleaner}
+          cleaner={isClearEn}
           clearButtonRef={clearButtonRef}
           handleFormSubmit={handleFormSubmit}
           handleCleanResults={handleCleanResults}
@@ -235,46 +231,46 @@ function App() {
             isSimilarWordsActive={isSimilarWordsActive}
             similarToRef={similarToRef}
           />
-          {firstInArr && (
+          {isReseteableEn && (
             <RestartButton handleBackToFirst={handleBackToFirst} />
           )}
         </div>
 
         {isSimilarWordsActive && (
           <SimilarToCard
-            dataWordSimilar={dataWordSimilar}
-            setOnSimilarWords={setOnSimilarWords}
+            similarToData={similarToData}
+            setOnSimilarToWords={setOnSimilarToWords}
           />
         )}
         <section>
           {isLoading && <LoadingData />}
           {error && <ErrorMessage error={error} />}
-          {!dataDictionary && !isLoading && !error && (
+          {!dictionaryData && !isLoading && !error && (
             <Introduction
               fetchDictionaryRandom={fetchDictionaryRandom}
               form={form}
             />
           )}
-          {dataDictionary && (
+          {dictionaryData && (
             <Fragment>
               <div className="flex items-center flex-wrap mb-2 mt-5">
                 <p className="text-3xl font-semibold mr-2">
-                  {dataDictionary.word}
+                  {dictionaryData.word}
                   {"  "}
-                  {dataDictionary.pronunciation && (
-                    <span className="text-[1.2rem] text-neutral-400">{`/${dataDictionary.pronunciation?.all}/`}</span>
+                  {dictionaryData.pronunciation && (
+                    <span className="text-[1.2rem] text-neutral-400">{`/${dictionaryData.pronunciation?.all}/`}</span>
                   )}
                 </p>
               </div>
               <div className="mb-2">
                 <p className="text-neutral-500 text-xs ">
-                  {dataDictionary.results && dataDictionary.results.length}{" "}
+                  {dictionaryData.results && dictionaryData.results.length}{" "}
                   Results found
                 </p>
               </div>
               <ul>
-                {dataDictionary.results
-                  ?.slice(0, limit ? limit : dataDictionary.results.length)
+                {dictionaryData.results
+                  ?.slice(0, resultsLimit ? resultsLimit : dictionaryData.results.length)
                   .map((item, i) => (
                     <DefinitionCard
                       key={i}
@@ -283,17 +279,17 @@ function App() {
                     />
                   ))}
               </ul>
-              {dataDictionary.results && dataDictionary.results.length > 5 ? (
-                limit ? (
+              {dictionaryData.results && dictionaryData.results.length > 5 ? (
+                resultsLimit ? (
                   <MoreAndLess
                     dataRef={moreDataRef}
-                    setLimit={setLimit}
+                    setResultsLimit={setResultsLimit}
                     dataValue={null}
                   />
                 ) : (
                   <MoreAndLess
                     dataRef={lessDataRef}
-                    setLimit={setLimit}
+                    setResultsLimit={setResultsLimit}
                     dataValue={5}
                   />
                 )
