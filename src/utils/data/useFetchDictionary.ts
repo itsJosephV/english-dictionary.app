@@ -15,8 +15,8 @@ export const useFetchDictionary = () => {
 
   const baseUrl = import.meta.env.VITE_DICTAPI_URL
   const apiKey = import.meta.env.VITE_DICTAPI_KEY
+  const randomWordURL = import.meta.env.VITE_DICTAPI_RANDOM
   const query = "similarTo";
-  const randomWordURL = "https://wordsapiv1.p.rapidapi.com/words?random=true"
   const headers = {
     "X-RapidAPI-Key": apiKey,
     "X-RapidAPI-Host": import.meta.env.VITE_DICTAPI_HOST
