@@ -21,7 +21,7 @@ const Introduction: React.FC<Props> = ({fetchDictionaryRandom}) => {
               fetchDictionaryRandom();
               console.log('test');
             }}
-            className=" px-2 py-0.5 rounded-sm text-neutral-300 border border-neutral-700 hover:text-white duration-200 bg-neutral-700/50 flex items-center gap-1"
+            className=" px-1.5 rounded-sm text-neutral-300 border border-neutral-700 hover:text-white duration-200 bg-neutral-700/50 flex items-center gap-1"
           >
             random word{" "}
             <span>
