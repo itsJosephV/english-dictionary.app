@@ -1,14 +1,15 @@
 import React from "react";
 import { IcRoundSearch } from "../icons/SearchIcon";
 import { CleanIcon } from "../icons/CleanIcon";
+// import { useFetchDictionary } from "../utils/data/useFetchDictionary";
 
 type Props = {
   form: React.RefObject<HTMLFormElement>;
+  handleFormSubmit: (word: string) => Promise<void>;
   cleaner: boolean;
   clearButtonRef: React.RefObject<HTMLButtonElement>;
-  handleFormSubmit: (e: React.FormEvent) => Promise<void>;
   handleCleanResults: (e: React.FormEvent) => void;
-}
+};
 
 const Form: React.FC<Props> = ({
   form,
@@ -17,10 +18,16 @@ const Form: React.FC<Props> = ({
   handleFormSubmit,
   handleCleanResults,
 }) => {
+
+  const handleWordSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    handleFormSubmit(form.current?.word.value || "");
+  };
+
   return (
     <form
       ref={form}
-      onSubmit={handleFormSubmit}
+      onSubmit={handleWordSubmit}
       className="flex justify-center gap-2 relative"
       action=""
     >

@@ -1,28 +1,25 @@
-import { Fragment, useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useHotkeys } from "react-hotkeys-hook";
 
 //Types
 import { WordResults } from "./types";
 
 // Components
-import DefinitionCard from "./components/DefinitionCard";
-import { LoadingData } from "./icons/LoadingData";
-import ErrorMessage from "./components/ErrorMessage";
-import Introduction from "./components/Introduction";
 import SimilarToToggle from "./components/SimilarToToggle";
 import RestartButton from "./components/RestartButton";
 import Form from "./components/Form";
 import Header from "./components/Header";
 import SimilarToCard from "./components/SimilarToCard";
-import { MoreAndLess } from "./components/MoreAndLess";
 
 // Hooks
 import { useFetchDictionary } from "./utils/data/useFetchDictionary";
+import List from "./components/List";
 
-function App() {
+const App = () => {
   const [resultsLimit, setResultsLimit] = useState<number | null>(5);
   const [IsAutofocusEn, setIsAutoFocusEn] = useState<boolean>(true);
-  const [isSimilarWordsActive, setIsSimilarWordsActive] = useState<boolean>(false);
+  const [isSimilarWordsActive, setIsSimilarWordsActive] =
+    useState<boolean>(false);
   const [onSimilarToWords, setOnSimilarToWords] = useState<string | null>(null);
   const [onSynAntWords, setOnSynAntWords] = useState<string | null>(null);
 
@@ -49,12 +46,10 @@ function App() {
     setIsReseteableEn,
   } = useFetchDictionary();
 
-  const handleFormSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
+    const handleFormSubmit = async (word: string) => {
     setOnSimilarToWords(null);
     setOnSynAntWords(null);
     setResultsLimit(5);
-    const word = form.current?.word.value;
     if (word.length === 0) {
       return;
     }
@@ -208,15 +203,18 @@ function App() {
   );
 
   console.log(dictionaryData);
-  console.log(similarToData);
+  // console.log(similarToData);
   // console.log(dataDictionary?.word);
   // console.log(firstWords);
   return (
     <main className="mx-auto pb-5 min-h-screen">
-      <section className="mb-5 pt-16 border-b bg-neutral-900 border-neutral-600/40 pb-5">
-        <Header isAutoFocusEn={IsAutofocusEn} setIsAutoFocusEn={setIsAutoFocusEn} />
+      <section className="mb-5 pt-20 border-b bg-neutral-900 border-neutral-600/40 pb-5">
+        <Header
+          isAutoFocusEn={IsAutofocusEn}
+          setIsAutoFocusEn={setIsAutoFocusEn}
+        />
       </section>
-      <article className="max-w-[850px] mx-auto px-5">
+      <article className="max-w-[750px] mx-auto px-5">
         <Form
           form={form}
           cleaner={isClearEn}
@@ -242,64 +240,18 @@ function App() {
             setOnSimilarToWords={setOnSimilarToWords}
           />
         )}
-        <section>
-          {isLoading && <LoadingData />}
-          {error && <ErrorMessage error={error} />}
-          {!dictionaryData && !isLoading && !error && (
-            <Introduction
-              fetchDictionaryRandom={fetchDictionaryRandom}
-              form={form}
-            />
-          )}
-          {dictionaryData && (
-            <Fragment>
-              <div className="flex items-center flex-wrap mb-2 mt-5">
-                <p className="text-3xl font-semibold mr-2">
-                  {dictionaryData.word}
-                  {"  "}
-                  {dictionaryData.pronunciation && (
-                    <span className="text-[1.2rem] text-neutral-400">{`/${dictionaryData.pronunciation?.all}/`}</span>
-                  )}
-                </p>
-              </div>
-              <div className="mb-2">
-                <p className="text-neutral-500 text-xs ">
-                  {dictionaryData.results && dictionaryData.results.length}{" "}
-                  Results found
-                </p>
-              </div>
-              <ul>
-                {dictionaryData.results
-                  ?.slice(0, resultsLimit ? resultsLimit : dictionaryData.results.length)
-                  .map((item, i) => (
-                    <DefinitionCard
-                      key={i}
-                      item={item}
-                      setOnSynAntWords={setOnSynAntWords}
-                    />
-                  ))}
-              </ul>
-              {dictionaryData.results && dictionaryData.results.length > 5 ? (
-                resultsLimit ? (
-                  <MoreAndLess
-                    dataRef={moreDataRef}
-                    setResultsLimit={setResultsLimit}
-                    dataValue={null}
-                  />
-                ) : (
-                  <MoreAndLess
-                    dataRef={lessDataRef}
-                    setResultsLimit={setResultsLimit}
-                    dataValue={5}
-                  />
-                )
-              ) : null}
-            </Fragment>
-          )}
-        </section>
+        <List
+          resultsLimit={resultsLimit}
+          setOnSynAntWords={setOnSynAntWords}
+          setResultsLimit={setResultsLimit}
+          dictionaryData={dictionaryData}
+          fetchDictionaryRandom={fetchDictionaryRandom}
+          error={error}
+          isLoading={isLoading}
+        />
       </article>
     </main>
   );
-}
+};
 
 export default App;

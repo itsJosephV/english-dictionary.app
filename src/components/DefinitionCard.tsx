@@ -16,7 +16,7 @@ const DefinitionCard: React.FC<Props> = ({
   };
   return (
     <li className="mb-3 bg-neutral-900 hover:bg-neutral-900/70 duration-200 p-3 rounded-sm last:mb-0">
-      <p className="text-sm text-neutral-400">{item.partOfSpeech}</p>
+      <p className="text-sm text-neutral-400 mb-2 bg-neutral-800 inline-flex px-1 rounded-sm">{item.partOfSpeech}</p>
       <p>{item.definition}</p>
       {(item.examples || item.synonyms || item.antonyms) && (
         <details open={false}>

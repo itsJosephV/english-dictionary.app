@@ -7,7 +7,7 @@ type Props = {
 
 const InputAF: React.FC<Props> = ({ isAutoFocusEn, setIsAutoFocusEn }) => {
   return (
-    <label className="border border-neutral-700 p-1.5 justify-between rounded-sm inline-flex gap-3 items-center">
+    <label className="p-1.5 justify-between rounded-sm inline-flex gap-3 items-center">
       <span className="text-sm text-neutral-300">
         Input auto-focus {"(Only Desktop)"}
       </span>

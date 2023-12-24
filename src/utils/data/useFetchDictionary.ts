@@ -14,7 +14,7 @@ export const useFetchDictionary = () => {
   const baseUrl = import.meta.env.VITE_DICTAPI_URL
   const apiKey = import.meta.env.VITE_DICTAPI_KEY
   const randomWordURL = import.meta.env.VITE_DICTAPI_RANDOM
-  const query = "similarTo";
+  const subjectQuery = "similarTo";
   const headers = {
     "X-RapidAPI-Key": apiKey,
     "X-RapidAPI-Host": import.meta.env.VITE_DICTAPI_HOST
@@ -47,7 +47,7 @@ export const useFetchDictionary = () => {
       }
 
       const data1 = await resOne.json()
-      const resTwo = await fetch(`${baseUrl}${data1.word}/${query}`, { headers });
+      const resTwo = await fetch(`${baseUrl}${data1.word}/${subjectQuery}`, { headers });
       const data2 = await resTwo.json()
       
       setDictionaryData(data1);
@@ -63,10 +63,10 @@ export const useFetchDictionary = () => {
   }
 
   const fetchDictionary = async (word: string, cleanArray: boolean = false): Promise<void> => {
+    setIsLoading(true);
     setDictionaryData(null);
     setSimilarToData(null)
     setError("");
-    setIsLoading(true);
 
     try {
       switch (true) {
@@ -80,7 +80,7 @@ export const useFetchDictionary = () => {
 
       const resOne = await fetch(`${baseUrl}${word}`, { headers });
       await delay(250);
-      const resTwo = await fetch(`${baseUrl}${word}/${query}`, { headers });
+      const resTwo = await fetch(`${baseUrl}${word}/${subjectQuery}`, { headers });
 
       if (!resOne.ok) {
         throw new Error(`No entries found for "${word}"`);

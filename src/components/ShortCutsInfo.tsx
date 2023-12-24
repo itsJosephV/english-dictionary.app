@@ -1,23 +1,29 @@
 const ShortCutsInfo = () => {
   return (
-    <div className="border border-neutral-700 p-1.5 rounded-sm flex flex-wrap flex-row gap-3 items-center">
+    <div  className="flex flex-col md:flex-row justify-center md:gap-3 gap-2 mx-auto border p-2 rounded-sm border-neutral-700">
       <div className="flex gap-1">
-        <span className="text-sm text-neutral-300">More/Less</span>
-        <kbd className="inline-flex items-center rounded-sm px-1 text-sm font-sans bg-neutral-700 font-medium text-white">
-          ⇧M or L
+        <kbd className="flex items-center rounded-sm px-1 text-sm font-sans bg-neutral-700/50 font-medium text-neutral-400">
+          ⇧M-L
         </kbd>
+        <span className="text-sm text-neutral-400">More/Less</span>
       </div>
       <div className="flex gap-1">
-        <span className="text-sm text-neutral-300">Similars</span>
-        <kbd className="inline-flex items-center rounded-sm px-1 text-sm font-sans bg-neutral-700 font-medium text-white">
+        <kbd className="flex items-center rounded-sm px-1 text-sm font-sans bg-neutral-700/50 font-medium text-neutral-400">
           ⇧S
         </kbd>
+        <span className="text-sm text-neutral-400">Similars</span>
       </div>
       <div className="flex gap-1">
-        <span className="text-sm text-neutral-300">Clear</span>
-        <kbd className="inline-flex items-center rounded-sm px-1 text-sm font-sans bg-neutral-700 font-medium text-white">
+        <kbd className="flex items-center rounded-sm px-1 text-sm font-sans bg-neutral-700/50 font-medium text-neutral-400">
           ⇧C
         </kbd>
+        <span className="text-sm text-neutral-400">Clear</span>
+      </div>
+      <div className="flex gap-1">
+        <kbd className="flex items-center rounded-sm px-1 text-sm font-sans bg-neutral-700/50 font-medium text-neutral-400">
+          ⇧R
+        </kbd>
+        <span className="text-sm text-neutral-400">Reset</span>
       </div>
     </div>
   );
