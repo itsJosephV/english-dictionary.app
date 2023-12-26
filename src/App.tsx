@@ -5,10 +5,10 @@ import { useHotkeys } from "react-hotkeys-hook";
 import { WordResults } from "./types";
 
 // Components
+import Header from "./components/Header";
+import Form from "./components/Form";
 import SimilarToToggle from "./components/SimilarToToggle";
 import RestartButton from "./components/RestartButton";
-import Form from "./components/Form";
-import Header from "./components/Header";
 import SimilarToCard from "./components/SimilarToCard";
 
 // Hooks
@@ -46,7 +46,7 @@ const App = () => {
     setIsReseteableEn,
   } = useFetchDictionary();
 
-    const handleFormSubmit = async (word: string) => {
+  const handleFormSubmit = async (word: string) => {
     setOnSimilarToWords(null);
     setOnSynAntWords(null);
     setResultsLimit(5);
@@ -91,30 +91,35 @@ const App = () => {
 
   //? Perf: better testing & improve — useCallback?
   useEffect(() => {
-    if (onSimilarToWords !== null) {
-      if (form.current) {
-        form.current.word.value = onSimilarToWords;
-        fetchDictionary(onSimilarToWords, false);
-      }
+    if (!onSimilarToWords) {
+      return;
+    }
+
+    if (form.current) {
+      form.current.word.value = onSimilarToWords;
+      fetchDictionary(onSimilarToWords, false);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [onSimilarToWords]);
 
   useEffect(() => {
-    if (onSynAntWords !== null) {
-      if (form.current) {
-        form.current.word.value = onSynAntWords;
-        fetchDictionary(onSynAntWords, false);
-      }
+    if (!onSynAntWords) {
+      return;
+    }
+
+    if (form.current) {
+      form.current.word.value = onSynAntWords;
+      fetchDictionary(onSynAntWords, false);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [onSynAntWords]);
 
   useEffect(() => {
-    if (dictionaryData?.word) {
-      if (form.current) {
-        form.current.word.value = dictionaryData.word;
-      }
+    if (!dictionaryData?.word) {
+      return;
+    }
+    if (form.current) {
+      form.current.word.value = dictionaryData.word;
     }
   }, [dictionaryData?.word]);
 
@@ -127,13 +132,15 @@ const App = () => {
         return;
       }
 
-      if (IsAutofocusEn) {
-        if (
-          regex.test(e.key) ||
-          (inputValue.length > 0 && e.key === "Backspace")
-        ) {
-          form.current?.word.focus();
-        }
+      if (!IsAutofocusEn) {
+        return;
+      }
+
+      if (
+        regex.test(e.key) ||
+        (inputValue.length > 0 && e.key === "Backspace")
+      ) {
+        form.current?.word.focus();
       }
     };
 
@@ -164,7 +171,7 @@ const App = () => {
       e.preventDefault();
 
       if (
-        resultsLimit === null ||
+        !resultsLimit ||
         (dictionaryData?.results as Array<WordResults>).length < 5
       ) {
         return;

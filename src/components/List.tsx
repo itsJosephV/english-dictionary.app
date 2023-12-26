@@ -20,13 +20,13 @@ type Props = {
 };
 
 const List: React.FC<Props> = ({
-  resultsLimit,
-  setOnSynAntWords,
-  setResultsLimit,
   dictionaryData,
-  fetchDictionaryRandom,
   isLoading,
   error,
+  resultsLimit,
+  setResultsLimit,
+  setOnSynAntWords,
+  fetchDictionaryRandom,
 }) => {
   //? custom hook not working when refactoring this way
   //! const { isLoading, error, fetchDictionaryRandom, dictionaryData } =
