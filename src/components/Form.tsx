@@ -1,61 +1,80 @@
-import React from "react";
 import { IcRoundSearch } from "../icons/SearchIcon";
 import { CleanIcon } from "../icons/CleanIcon";
-// import { useFetchDictionary } from "../utils/data/useFetchDictionary";
+import { BackIcon } from "../icons/BackIcon";
 
 type Props = {
   form: React.RefObject<HTMLFormElement>;
-  handleFormSubmit: (word: string) => Promise<void>;
+  word: string | null;
   cleaner: boolean;
   clearButtonRef: React.RefObject<HTMLButtonElement>;
+  handleFormSubmit: (word: string) => Promise<void>;
   handleCleanResults: (e: React.FormEvent) => void;
+  setWord: React.Dispatch<React.SetStateAction<string | null>>;
+  handleBackToFirst: () => void;
+  isReseteableEn: boolean;
 };
 
 const Form: React.FC<Props> = ({
   form,
+  word,
   cleaner,
   clearButtonRef,
   handleFormSubmit,
   handleCleanResults,
+  setWord,
+  handleBackToFirst,
+  isReseteableEn,
 }) => {
-
   const handleWordSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    handleFormSubmit(form.current?.word.value || "");
+    handleFormSubmit(word || "");
   };
 
   return (
     <form
       ref={form}
       onSubmit={handleWordSubmit}
-      className="flex justify-center gap-2 relative"
+      className="flex justify-center gap-1"
       action=""
     >
-      <input
-        className="border border-neutral-700 rounded-sm bg-neutral-800 pl-1 w-full"
-        type="text"
-        name="word"
-        placeholder="Search..."
-        required
-        autoCapitalize="none"
-        autoCorrect="none"
-      />
-
+      <div className="w-full relative">
+        <input
+          className="border border-neutral-700 rounded-md bg-neutral-800/50 py-0.5 pl-1.5 pr-8 w-full"
+          type="text"
+          name="word"
+          placeholder="Search..."
+          required
+          autoCapitalize="none"
+          autoCorrect="none"
+          onChange={(e) => setWord(e.target.value)}
+          value={word || ""}
+        />
+        {cleaner && (
+          <button
+            type="button"
+            ref={clearButtonRef}
+            className="absolute h-full right-2"
+            onClick={handleCleanResults}
+          >
+            <CleanIcon className="text-neutral-300 hover:text-white duration-200" />
+          </button>
+        )}
+      </div>
+      {isReseteableEn && (
+        <button
+          className="bg-indigo-600/50 border border-indigo-500 duration-200 px-1 hover:text-white rounded-md"
+          type="button"
+          onClick={handleBackToFirst}
+        >
+          <BackIcon />
+        </button>
+      )}
       <button
-        className="bg-neutral-600/40 hover:bg-neutral-600 duration-200 px-1.5 rounded-sm"
-        role="submit"
+        className="bg-neutral-800/50 border border-neutral-700 duration-200 px-1 hover:text-white rounded-md"
+        type="submit"
       >
         <IcRoundSearch />
       </button>
-      {cleaner && (
-        <button
-          ref={clearButtonRef}
-          className="absolute h-full right-11"
-          onClick={handleCleanResults}
-        >
-          <CleanIcon className="text-neutral-300 hover:text-white duration-200" />
-        </button>
-      )}
     </form>
   );
 };

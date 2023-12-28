@@ -1,32 +1,27 @@
 import { useEffect, useRef, useState } from "react";
 import { useHotkeys } from "react-hotkeys-hook";
 
-//Types
-import { WordResults } from "./types";
-
 // Components
-import Header from "./components/Header";
 import Form from "./components/Form";
-import SimilarToToggle from "./components/SimilarToToggle";
-import RestartButton from "./components/RestartButton";
-import SimilarToCard from "./components/SimilarToCard";
+import SimilarToList from "./components/SimilarToList";
 
 // Hooks
 import { useFetchDictionary } from "./utils/data/useFetchDictionary";
 import List from "./components/List";
+import InputAF from "./components/InputAF";
 
 const App = () => {
+  const [word, setWord] = useState<string | null>(null);
   const [resultsLimit, setResultsLimit] = useState<number | null>(5);
-  const [IsAutofocusEn, setIsAutoFocusEn] = useState<boolean>(true);
+  const [isAutoFocusEn, setIsAutoFocusEn] = useState<boolean>(true);
   const [isSimilarWordsActive, setIsSimilarWordsActive] =
     useState<boolean>(false);
   const [onSimilarToWords, setOnSimilarToWords] = useState<string | null>(null);
   const [onSynAntWords, setOnSynAntWords] = useState<string | null>(null);
+  const [isClearEn, setIsClearEn] = useState<boolean>(false);
 
   const form = useRef<HTMLFormElement>(null);
-  const moreDataRef = useRef<HTMLButtonElement>(null);
-  const lessDataRef = useRef<HTMLButtonElement>(null);
-  const similarToRef = useRef<HTMLButtonElement>(null);
+  const similarToRef = useRef<HTMLDetailsElement>(null);
   const clearButtonRef = useRef<HTMLButtonElement>(null);
 
   const {
@@ -36,34 +31,33 @@ const App = () => {
     isLoading,
     storedWords,
     isReseteableEn,
-    isClearEn,
     setDictionaryData,
     setSimilarToData,
     fetchDictionaryRandom,
     setError,
     fetchDictionary,
-    setIsClearEn,
     setIsReseteableEn,
   } = useFetchDictionary();
 
   const handleFormSubmit = async (word: string) => {
+    if (!word?.length) {
+      return;
+    }
+    await fetchDictionary(word, true);
     setOnSimilarToWords(null);
     setOnSynAntWords(null);
     setResultsLimit(5);
-    if (word.length === 0) {
-      return;
-    }
-    fetchDictionary(word, true);
     setIsReseteableEn(false);
+    setIsSimilarWordsActive(false);
   };
 
   //? Helpers to avoid unnecessary shorcuts calls when no data
-  const formBool: boolean = Boolean(form.current?.word.value);
+  const formBool: boolean = Boolean(word?.length);
   const similarToBool: boolean = Boolean(similarToData?.similarTo?.length);
 
   const handleCleanResults = (e: React.FormEvent) => {
     e.preventDefault();
-    form.current?.reset();
+    setWord(null);
     setDictionaryData(null);
     setSimilarToData(null);
     setError("");
@@ -73,18 +67,18 @@ const App = () => {
     setIsReseteableEn(false);
   };
 
-  const handleSimilarToButton = () => {
+  const handleSimilarToButton = (e: React.ChangeEvent<HTMLDetailsElement>) => {
     if (!dictionaryData) {
       return;
     }
-    setIsSimilarWordsActive(!isSimilarWordsActive);
+    setIsSimilarWordsActive(e.target.open);
   };
 
   const handleBackToFirst = () => {
     const firstWordInArr = storedWords[0];
-    if (storedWords && form.current) {
+    if (storedWords) {
       fetchDictionary(firstWordInArr, true);
-      form.current.word.value = firstWordInArr;
+      setWord(firstWordInArr);
       setIsReseteableEn(false);
     }
   };
@@ -94,11 +88,8 @@ const App = () => {
     if (!onSimilarToWords) {
       return;
     }
-
-    if (form.current) {
-      form.current.word.value = onSimilarToWords;
-      fetchDictionary(onSimilarToWords, false);
-    }
+    setWord(onSimilarToWords);
+    fetchDictionary(onSimilarToWords, false);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [onSimilarToWords]);
 
@@ -106,11 +97,8 @@ const App = () => {
     if (!onSynAntWords) {
       return;
     }
-
-    if (form.current) {
-      form.current.word.value = onSynAntWords;
-      fetchDictionary(onSynAntWords, false);
-    }
+    setWord(onSynAntWords);
+    fetchDictionary(onSynAntWords, false);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [onSynAntWords]);
 
@@ -118,28 +106,26 @@ const App = () => {
     if (!dictionaryData?.word) {
       return;
     }
-    if (form.current) {
-      form.current.word.value = dictionaryData.word;
-    }
+    setWord(dictionaryData.word);
   }, [dictionaryData?.word]);
+
+  useEffect(() => {
+    setIsClearEn(!!word || (!!dictionaryData && !word));
+  }, [word, dictionaryData]);
 
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
       const regex = /^[a-zA-Z]$/;
-      const inputValue = form.current?.word.value;
 
       if (e.metaKey || e.ctrlKey || e.shiftKey) {
         return;
       }
 
-      if (!IsAutofocusEn) {
+      if (!isAutoFocusEn) {
         return;
       }
 
-      if (
-        regex.test(e.key) ||
-        (inputValue.length > 0 && e.key === "Backspace")
-      ) {
+      if (regex.test(e.key) || (word && e.key === "Backspace")) {
         form.current?.word.focus();
       }
     };
@@ -149,7 +135,7 @@ const App = () => {
     return () => {
       document.removeEventListener("keydown", handleKeyDown);
     };
-  }, [IsAutofocusEn]);
+  }, [isAutoFocusEn, word]);
 
   useHotkeys(
     "shift+c",
@@ -166,87 +152,57 @@ const App = () => {
   );
 
   useHotkeys(
-    "shift+m",
-    (e) => {
-      e.preventDefault();
-
-      if (
-        !resultsLimit ||
-        (dictionaryData?.results as Array<WordResults>).length < 5
-      ) {
-        return;
-      }
-
-      moreDataRef.current?.click();
-      console.log("more data");
-    },
-    { enableOnFormTags: ["INPUT"] }
-  );
-
-  useHotkeys(
-    "shift+l",
-    (e) => {
-      e.preventDefault();
-      if (resultsLimit === 5 || !dictionaryData) {
-        return;
-      }
-      lessDataRef.current?.click();
-      console.log("less data");
-    },
-    { enableOnFormTags: ["INPUT"] }
-  );
-
-  useHotkeys(
     "shift+s",
     (e) => {
       e.preventDefault();
       if (!similarToBool) {
         return;
       }
-      similarToRef.current?.click();
-      console.log("Similar to open");
+
+      if (similarToRef.current) {
+        similarToRef.current.open = !similarToRef.current.open;
+      }
     },
     { enableOnFormTags: ["INPUT"] }
   );
 
-  console.log(dictionaryData);
-  // console.log(similarToData);
-  // console.log(dataDictionary?.word);
-  // console.log(firstWords);
   return (
-    <main className="mx-auto pb-5 min-h-screen">
-      <section className="mb-5 pt-20 border-b bg-neutral-900 border-neutral-600/40 pb-5">
-        <Header
+    <>
+      <nav className="border-b px-5 border-neutral-800 mx-[-1.25rem]">
+        <div className="max-w-[1024px] mx-auto py-1.5 flex">
+          <p className="font-bold flex-1">Dictionary</p>
+          <InputAF
+            isAutoFocusEn={isAutoFocusEn}
+            setIsAutoFocusEn={setIsAutoFocusEn}
+          />
+        </div>
+      </nav>
+      <main className="max-w-[640px] mx-auto pt-16 pb-6 min-h">
+        {/* <Header
           isAutoFocusEn={IsAutofocusEn}
           setIsAutoFocusEn={setIsAutoFocusEn}
-        />
-      </section>
-      <article className="max-w-[750px] mx-auto px-5">
-        <Form
-          form={form}
-          cleaner={isClearEn}
-          clearButtonRef={clearButtonRef}
-          handleFormSubmit={handleFormSubmit}
-          handleCleanResults={handleCleanResults}
-        />
-        <div className="mt-1.5 flex justify-between items-center">
-          <SimilarToToggle
+        /> */}
+        <section className="mb-5">
+          <Form
+            form={form}
+            cleaner={isClearEn}
+            clearButtonRef={clearButtonRef}
+            handleFormSubmit={handleFormSubmit}
+            handleCleanResults={handleCleanResults}
+            word={word}
+            setWord={setWord}
+            handleBackToFirst={handleBackToFirst}
+            isReseteableEn={isReseteableEn}
+          />
+          <SimilarToList
             handleSimilarToButton={handleSimilarToButton}
             similarToBool={similarToBool}
             isSimilarWordsActive={isSimilarWordsActive}
             similarToRef={similarToRef}
-          />
-          {isReseteableEn && (
-            <RestartButton handleBackToFirst={handleBackToFirst} />
-          )}
-        </div>
-
-        {isSimilarWordsActive && (
-          <SimilarToCard
             similarToData={similarToData}
             setOnSimilarToWords={setOnSimilarToWords}
           />
-        )}
+        </section>
         <List
           resultsLimit={resultsLimit}
           setOnSynAntWords={setOnSynAntWords}
@@ -256,8 +212,8 @@ const App = () => {
           error={error}
           isLoading={isLoading}
         />
-      </article>
-    </main>
+      </main>
+    </>
   );
 };
 

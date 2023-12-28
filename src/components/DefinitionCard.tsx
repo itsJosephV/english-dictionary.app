@@ -15,8 +15,8 @@ const DefinitionCard: React.FC<Props> = ({
     }
   };
   return (
-    <li className="mb-3 bg-neutral-900 hover:bg-neutral-900/70 duration-200 p-3 rounded-sm last:mb-0">
-      <p className="text-sm text-neutral-400 mb-2 bg-neutral-800 inline-flex px-1 rounded-sm">{item.partOfSpeech}</p>
+    <li className="mb-3 bg-neutral-800/50 duration-200 p-3 rounded-md last:mb-0">
+      <p className="text-sm text-neutral-400 mb-2 border border-neutral-700 inline-flex py-0.5 px-1 rounded-md">{item.partOfSpeech}</p>
       <p>{item.definition}</p>
       {(item.examples || item.synonyms || item.antonyms) && (
         <details open={false}>
@@ -41,7 +41,7 @@ const DefinitionCard: React.FC<Props> = ({
               <ul className="flex flex-wrap gap-2">
                 {item.synonyms?.map((syn, i) => (
                   <li
-                    className="px-1.5 bg-purple-500/10 text-sm text-purple-300 hover:text-purple-200 duration-200 rounded-sm"
+                    className="px-1.5 py-0.5 bg-purple-500/10 text-sm text-purple-300 hover:text-purple-200 duration-200 rounded-md"
                     key={i}
                   >
                     <button onClick={() => handleSynAntButton(syn)}>
@@ -58,7 +58,7 @@ const DefinitionCard: React.FC<Props> = ({
               <ul className="flex flex-wrap gap-2">
                 {item.antonyms?.map((ant, i) => (
                   <li
-                    className="px-1.5 bg-orange-500/10 text-sm rounded-sm text-orange-300 hover:text-orange-200 duration-200"
+                    className="px-1.5 py-0.5 bg-orange-500/10 text-sm rounded-md text-orange-300 hover:text-orange-200 duration-200"
                     key={i}
                   >
                     <button onClick={() => handleSynAntButton(ant)}>

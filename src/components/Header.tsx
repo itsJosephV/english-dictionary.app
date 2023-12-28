@@ -7,7 +7,7 @@ type Props = {
 
 const Header: React.FC<Props> = ({isAutoFocusEn, setIsAutoFocusEn}) => {
   return (
-    <header className="max-w-[750px] mx-auto px-5">
+    <header className="mb-5">
       <div className="mb-8">
         <p className="text-4xl font-bold mb-1">Dictionary</p>
         <p className="text-neutral-400">

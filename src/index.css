@@ -7,14 +7,21 @@
   line-height: 1.5;
   font-weight: 400;
 
+  --footer-height: 37px;
+
   color-scheme: light dark;
   color: rgba(255, 255, 255, 0.87);
   background-color: #202020;
+  
 
   font-synthesis: none;
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+}
+
+body {
+  @apply bg-neutral-950/50 px-5
 }
 
 details > summary {
@@ -23,6 +30,10 @@ details > summary {
   line-height: 1rem/* 16px */;
   cursor: pointer;
   margin-top: .5rem;
+}
+
+.min-h {
+  min-height: calc(100vh - var(--footer-height));
 }
 
 details > summary::-webkit-details-marker {

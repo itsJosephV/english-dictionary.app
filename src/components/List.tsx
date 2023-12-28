@@ -1,4 +1,4 @@
-import { Fragment, useEffect, useRef } from "react";
+import { Fragment, useRef } from "react";
 // import { useFetchDictionary } from "../utils/data/useFetchDictionary";
 import Introduction from "./Introduction";
 import ErrorMessage from "./ErrorMessage";
@@ -41,7 +41,7 @@ const List: React.FC<Props> = ({
       e.preventDefault();
 
       if (
-        resultsLimit === null ||
+        !resultsLimit ||
         (dictionaryData?.results as Array<WordResults>).length < 5
       ) {
         return;
@@ -66,16 +66,8 @@ const List: React.FC<Props> = ({
     { enableOnFormTags: ["INPUT"] }
   );
 
-  useEffect(() => {
-    if (dictionaryData) {
-      console.log("dictionaryData:", dictionaryData);
-    } else {
-      console.log("no data");
-    }
-  }, [dictionaryData]);
-
   return (
-    <section>
+    <section className="">
       {isLoading && <LoadingData />}
       {error && <ErrorMessage error={error} />}
       {!dictionaryData && !isLoading && !error && (
@@ -83,8 +75,8 @@ const List: React.FC<Props> = ({
       )}
       {dictionaryData && (
         <Fragment>
-          <div className="flex items-center flex-wrap mb-2 mt-7">
-            <p className="text-3xl font-semibold mr-2">
+          <div className="flex items-center flex-wrap mb-3 mt-7">
+            <p className="text-4xl font-semibold mr-2">
               {dictionaryData.word}
               {"  "}
               {dictionaryData.pronunciation &&

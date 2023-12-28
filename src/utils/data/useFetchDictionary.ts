@@ -5,7 +5,6 @@ import { DictionaryItem, WordSimilarTo } from "../../types";
 export const useFetchDictionary = () => {
   const [dictionaryData, setDictionaryData] = useState<DictionaryItem | null>(null);
   const [similarToData, setSimilarToData] = useState<WordSimilarTo | null>(null);
-  const [isClearEn, setIsClearEn] = useState<boolean>(false);
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [error, setError] = useState<string | null>("");
   const [storedWords, setStoredWords] = useState<Array<string>>([])
@@ -13,11 +12,12 @@ export const useFetchDictionary = () => {
 
   const baseUrl = import.meta.env.VITE_DICTAPI_URL
   const apiKey = import.meta.env.VITE_DICTAPI_KEY
-  const randomWordURL = import.meta.env.VITE_DICTAPI_RANDOM
+  const host = import.meta.env.VITE_DICTAPI_HOST
   const subjectQuery = "similarTo";
+  const randomWordURL = import.meta.env.VITE_DICTAPI_RANDOM
   const headers = {
     "X-RapidAPI-Key": apiKey,
-    "X-RapidAPI-Host": import.meta.env.VITE_DICTAPI_HOST
+    "X-RapidAPI-Host": host
   };
   const regex = /^[a-zA-Z\s][a-zA-Z\s'.-]+[a-zA-Z\s]$/
   const spaceRegex = /^ *$/;
@@ -58,7 +58,6 @@ export const useFetchDictionary = () => {
       handleErrors(error)
     } finally {
       setIsLoading(false);
-      setIsClearEn(true)
     }
   }
 
@@ -97,10 +96,9 @@ export const useFetchDictionary = () => {
       handleErrors(error)
     } finally {
       setIsLoading(false);
-      setIsClearEn(true)
     }
   };
-  return { dictionaryData, similarToData, error, isLoading, storedWords, isReseteableEn, isClearEn, setDictionaryData, setSimilarToData, setError, setIsReseteableEn, fetchDictionary, setIsClearEn, fetchDictionaryRandom }
+  return { dictionaryData, similarToData, error, isLoading, storedWords, isReseteableEn, setDictionaryData, setSimilarToData, setError, setIsReseteableEn, fetchDictionary, fetchDictionaryRandom }
 }
 
 

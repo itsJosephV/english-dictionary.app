@@ -10,7 +10,7 @@ const Introduction: React.FC<Props> = ({ fetchDictionaryRandom }) => {
 
   return (
     <div className="grid place-content-center min-h-20 text-center text-neutral-400 mt-7">
-      <div className="flex flex-col gap-3 mb-7">
+      <div className="flex flex-col gap-3 mb-10">
         <p className="text-2xl">Type a word to look up in...</p>
         <div className="flex items-center gap-1.5 justify-center">
           <p className="text-lg">or get a</p>
@@ -19,7 +19,7 @@ const Introduction: React.FC<Props> = ({ fetchDictionaryRandom }) => {
               fetchDictionaryRandom();
               console.log("test");
             }}
-            className=" px-1.5 rounded-sm text-neutral-300 border border-neutral-700 hover:text-white duration-200 bg-neutral-700/50 flex items-center gap-1"
+            className=" px-1.5 rounded-md text-neutral-300 border border-neutral-700 hover:text-white duration-200 bg-neutral-800/50 flex items-center gap-1"
           >
             random word{" "}
             <span>
@@ -28,7 +28,7 @@ const Introduction: React.FC<Props> = ({ fetchDictionaryRandom }) => {
           </button>
         </div>
       </div>
-      <div className="flex flex-col gap-2 mb-7">
+      <div className="flex flex-col gap-2 mb-10">
         <p className="text-neutral-500">
           Most common use for the word might not appear first in results
         </p>
@@ -39,13 +39,13 @@ const Introduction: React.FC<Props> = ({ fetchDictionaryRandom }) => {
           Some "Similar words" might not be available
         </p>
       </div>
-      <label htmlFor="" className="flex flex-col mb-7">
+      <label htmlFor="" className="flex flex-col mb-10">
       <p className="text-xs mb-2 text-neutral-500">Keyboard shorcuts (Desktop)</p>
       <ShortCutsInfo/>
       </label>
       <div className="flex flex-col gap-2">
         <p className="text-sm text-neutral-500">
-          by JosephV / {currentYear}—Present
+          by JosephV / {currentYear} - Present
         </p>
         <p className="text-neutral-500 text-sm">
           Powered by{" "}
