@@ -1,5 +1,4 @@
 import { Fragment, useRef } from "react";
-// import { useFetchDictionary } from "../utils/data/useFetchDictionary";
 import Introduction from "./Introduction";
 import ErrorMessage from "./ErrorMessage";
 import DefinitionCard from "./DefinitionCard";
@@ -8,6 +7,7 @@ import { useHotkeys } from "react-hotkeys-hook";
 import { DictionaryItem } from "../types";
 import { LoadingData } from "../icons/LoadingData";
 import { WordResults } from "../types";
+import FavoriteButton from "./FavoriteButton";
 
 type Props = {
   resultsLimit: number | null;
@@ -17,6 +17,7 @@ type Props = {
   fetchDictionaryRandom: () => Promise<void>;
   isLoading: boolean;
   error: string | null;
+  isDetailsOpen: boolean;
 };
 
 const List: React.FC<Props> = ({
@@ -27,11 +28,8 @@ const List: React.FC<Props> = ({
   setResultsLimit,
   setOnSynAntWords,
   fetchDictionaryRandom,
+  isDetailsOpen,
 }) => {
-  //? custom hook not working when refactoring this way
-  //! const { isLoading, error, fetchDictionaryRandom, dictionaryData } =
-  //!   useFetchDictionary();
-
   const moreDataRef = useRef<HTMLButtonElement>(null);
   const lessDataRef = useRef<HTMLButtonElement>(null);
 
@@ -75,15 +73,19 @@ const List: React.FC<Props> = ({
       )}
       {dictionaryData && (
         <Fragment>
-          <div className="flex items-center flex-wrap mb-3 mt-7">
-            <p className="text-4xl font-semibold mr-2">
-              {dictionaryData.word}
-              {"  "}
+          <div className="mt-7 mb-1">
+            <div className="flex flex-wrap items-center gap-2">
+              <p className="text-4xl font-semibold">{dictionaryData.word}</p>
               {dictionaryData.pronunciation &&
                 dictionaryData.pronunciation.all && (
-                  <span className="text-[1.2rem] text-neutral-400">{`/${dictionaryData.pronunciation?.all}/`}</span>
+                  <span className="text-[1.2rem] text-neutral-400">{`—${" "}/${
+                    dictionaryData.pronunciation?.all
+                  }/`}</span>
                 )}
-            </p>
+            </div>
+          </div>
+          <div className="mb-4">
+            <FavoriteButton dictionaryData={dictionaryData} />
           </div>
           <div className="mb-2">
             {dictionaryData.results && dictionaryData.results.length ? (
@@ -109,6 +111,7 @@ const List: React.FC<Props> = ({
                     key={i}
                     item={item}
                     setOnSynAntWords={setOnSynAntWords}
+                    isDetailsOpen={isDetailsOpen}
                   />
                 ))}
             </ul>

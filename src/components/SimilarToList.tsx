@@ -1,11 +1,11 @@
 import SimilarToCard from "./SimilarToCard";
 import { WordSimilarTo } from "../types";
-import { SetStateAction } from "react";
+import { SetStateAction, useRef } from "react";
+import { useHotkeys } from "react-hotkeys-hook";
 
 type Props = {
   similarToBool: boolean;
   isSimilarWordsActive: boolean;
-  similarToRef: React.RefObject<HTMLDetailsElement>;
   similarToData: WordSimilarTo | null;
   setOnSimilarToWords: React.Dispatch<SetStateAction<string | null>>;
   handleSimilarToButton: (e: React.ChangeEvent<HTMLDetailsElement>) => void;
@@ -14,11 +14,27 @@ type Props = {
 const SimilarToList: React.FC<Props> = ({
   similarToBool,
   isSimilarWordsActive,
-  similarToRef,
   similarToData,
   setOnSimilarToWords,
   handleSimilarToButton,
 }) => {
+  const similarToRef = useRef<HTMLDetailsElement>(null);
+
+  useHotkeys(
+    "shift+s",
+    (e) => {
+      e.preventDefault();
+      if (!similarToBool) {
+        return;
+      }
+
+      if (similarToRef.current) {
+        similarToRef.current.open = !similarToRef.current.open;
+      }
+    },
+    { enableOnFormTags: ["INPUT"] }
+  );
+
   return (
     <details
       className={`text-xs flex items-center ${

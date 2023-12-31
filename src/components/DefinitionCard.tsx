@@ -2,12 +2,14 @@ import { WordResults } from "../types";
 
 type Props = {
   item: WordResults;
-  setOnSynAntWords: (synOrAnt: string | null) => void
-}
+  setOnSynAntWords: (synOrAnt: string | null) => void;
+  isDetailsOpen: boolean;
+};
 
 const DefinitionCard: React.FC<Props> = ({
   item,
   setOnSynAntWords,
+  isDetailsOpen,
 }) => {
   const handleSynAntButton = (synOrAnt: string) => {
     if (synOrAnt) {
@@ -15,12 +17,18 @@ const DefinitionCard: React.FC<Props> = ({
     }
   };
   return (
-    <li className="mb-3 bg-neutral-800/50 duration-200 p-3 rounded-md last:mb-0">
-      <p className="text-sm text-neutral-400 mb-2 border border-neutral-700 inline-flex py-0.5 px-1 rounded-md">{item.partOfSpeech}</p>
+    <li className="mb-3 bg-neutral-800/50 p-3 rounded-md last:mb-0">
+      {item.partOfSpeech && (
+        <p className="inline-flex mb-2 text-sm text-neutral-400 border border-neutral-700 py-0.5 px-1 rounded-md">
+          {item.partOfSpeech}
+        </p>
+      )}
       <p>{item.definition}</p>
       {(item.examples || item.synonyms || item.antonyms) && (
-        <details open={false}>
-          <summary className="text-indigo-300 hover:text-indigo-200 duration-200">Details</summary>
+        <details open={isDetailsOpen}>
+          <summary className="text-indigo-300 hover:text-indigo-200 duration-200">
+            Details
+          </summary>
           {item.examples && (
             <div className="flex flex-col mt-3">
               <p className="text-sm text-neutral-400 mb-0.5">Examples</p>

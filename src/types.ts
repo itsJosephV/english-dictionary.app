@@ -19,3 +19,10 @@ export interface WordSimilarTo {
   length: number;
   similarTo?: string[];
 }
+
+export interface FavoriteWords {
+  favorites: string[];
+  addFavorite: (word: string) => void
+  removeFavorite: (word: string) => void
+  cleanLocalStorage: () => void
+}

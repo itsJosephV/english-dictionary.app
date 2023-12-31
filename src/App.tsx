@@ -9,6 +9,8 @@ import SimilarToList from "./components/SimilarToList";
 import { useFetchDictionary } from "./utils/data/useFetchDictionary";
 import List from "./components/List";
 import InputAF from "./components/InputAF";
+import { useFavoriteWords } from "./context/favoriteWords/useFavoriteWords";
+import FavoriteWords from "./components/FavoriteWords";
 
 const App = () => {
   const [word, setWord] = useState<string | null>(null);
@@ -20,9 +22,12 @@ const App = () => {
   const [onSynAntWords, setOnSynAntWords] = useState<string | null>(null);
   const [isClearEn, setIsClearEn] = useState<boolean>(false);
 
+  const [isDetailsOpen, setIsDetailsOpen] = useState<boolean>(false);
+
   const form = useRef<HTMLFormElement>(null);
-  const similarToRef = useRef<HTMLDetailsElement>(null);
   const clearButtonRef = useRef<HTMLButtonElement>(null);
+
+  const { cleanLocalStorage } = useFavoriteWords();
 
   const {
     dictionaryData,
@@ -151,37 +156,34 @@ const App = () => {
     { enableOnFormTags: ["INPUT"] }
   );
 
-  useHotkeys(
-    "shift+s",
-    (e) => {
-      e.preventDefault();
-      if (!similarToBool) {
-        return;
-      }
-
-      if (similarToRef.current) {
-        similarToRef.current.open = !similarToRef.current.open;
-      }
-    },
-    { enableOnFormTags: ["INPUT"] }
-  );
-
   return (
     <>
       <nav className="border-b px-5 border-neutral-800 mx-[-1.25rem]">
         <div className="max-w-[1024px] mx-auto py-1.5 flex">
-          <p className="font-bold flex-1">Dictionary</p>
+          <p className="font-bold text-[1.2rem] flex-1">Dictionary</p>
           <InputAF
             isAutoFocusEn={isAutoFocusEn}
             setIsAutoFocusEn={setIsAutoFocusEn}
           />
+          <label className="ml-2 text-sm flex items-center gap-2" htmlFor="">
+            details
+            <input
+              type="checkbox"
+              onClick={() => setIsDetailsOpen(!isDetailsOpen)}
+            />
+          </label>
+          <button
+            onClick={() => cleanLocalStorage()}
+            className="ml-2 text-sm bg-indigo-900 px-1 rounded-md"
+          >
+            deleteLS
+          </button>
         </div>
       </nav>
       <main className="max-w-[640px] mx-auto pt-16 pb-6 min-h">
-        {/* <Header
-          isAutoFocusEn={IsAutofocusEn}
-          setIsAutoFocusEn={setIsAutoFocusEn}
-        /> */}
+        <section className="mb-10">
+          <FavoriteWords />
+        </section>
         <section className="mb-5">
           <Form
             form={form}
@@ -198,7 +200,6 @@ const App = () => {
             handleSimilarToButton={handleSimilarToButton}
             similarToBool={similarToBool}
             isSimilarWordsActive={isSimilarWordsActive}
-            similarToRef={similarToRef}
             similarToData={similarToData}
             setOnSimilarToWords={setOnSimilarToWords}
           />
@@ -211,6 +212,7 @@ const App = () => {
           fetchDictionaryRandom={fetchDictionaryRandom}
           error={error}
           isLoading={isLoading}
+          isDetailsOpen={isDetailsOpen}
         />
       </main>
     </>

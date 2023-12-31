@@ -18,7 +18,7 @@ Todo List
 - [x] Return to initial word button
 - [x] update to better API
 - [x] Random word
+- [x] Favorites words
 - [ ] Search when user stops typing (debounce)
 - [ ] Copy word/meanings
-- [ ] Favorites words
 - [ ] rethink structure to display favorites

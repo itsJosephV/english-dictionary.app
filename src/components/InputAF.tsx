@@ -15,6 +15,7 @@ const InputAF: React.FC<Props> = ({ isAutoFocusEn, setIsAutoFocusEn }) => {
           type="checkbox"
           onChange={() => setIsAutoFocusEn(!isAutoFocusEn)}
           checked={isAutoFocusEn}
+          // disabled
         />
     </label>
   );

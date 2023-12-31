@@ -19,7 +19,7 @@ export const useFetchDictionary = () => {
     "X-RapidAPI-Key": apiKey,
     "X-RapidAPI-Host": host
   };
-  const regex = /^[a-zA-Z\s][a-zA-Z\s'.-]+[a-zA-Z\s]$/
+  const regex = /^[a-zA-Z\s]*[a-zA-Z\s'.-]+[a-zA-Z\s]*$/
   const spaceRegex = /^ *$/;
 
   const handleErrors = (error: unknown) => {

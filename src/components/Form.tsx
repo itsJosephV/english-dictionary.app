@@ -62,7 +62,7 @@ const Form: React.FC<Props> = ({
       </div>
       {isReseteableEn && (
         <button
-          className="bg-indigo-600/50 border border-indigo-500 duration-200 px-1 hover:text-white rounded-md"
+          className="bg-indigo-600/50 border border-indigo-500 duration-200 w-[32px] h-[30px] hover:text-white rounded-md flex items-center justify-center"
           type="button"
           onClick={handleBackToFirst}
         >
@@ -70,7 +70,7 @@ const Form: React.FC<Props> = ({
         </button>
       )}
       <button
-        className="bg-neutral-800/50 border border-neutral-700 duration-200 px-1 hover:text-white rounded-md"
+        className="flex items-center justify-center bg-neutral-800/50 border border-neutral-700 duration-200 w-[32px] h-[30px] hover:text-white rounded-md"
         type="submit"
       >
         <IcRoundSearch />
