@@ -29,17 +29,17 @@ const FavoriteButton: React.FC<Props> = ({ dictionaryData }) => {
   return (
     <button
       onClick={handleToggleFavorite}
-      className="bg-neutral-800 rounded-sm px-1 cursor-pointer"
+      className="bg-neutral-800 rounded-sm px-1.5 cursor-pointer border border-indigo-300/30"
     >
       {isFavorite ? (
-        <p className="flex text-xs text-indigo-300 gap-1 items-center">
+        <p className="flex text-xs text-indigo-300  gap-1 items-center">
           added
           <span>
             <FavoriteIcon />
           </span>
         </p>
       ) : (
-        <p className="flex text-xs text-indigo-300  gap-1 items-center">
+        <p className="flex text-xs text-indigo-300 gap-1 items-center">
           add
           <span>
             <NoFavoriteIcon />

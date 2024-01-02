@@ -7,5 +7,11 @@ export default {
   theme: {
     extend: {},
   },
-  plugins: [],
+  plugins: [
+    // Initialize with default values (see options below)
+    // eslint-disable-next-line @typescript-eslint/no-var-requires, no-undef
+    require("tailwindcss-radix")({
+      variantPrefix: "rdx",
+    }),
+  ],
 }

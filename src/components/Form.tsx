@@ -62,7 +62,7 @@ const Form: React.FC<Props> = ({
       </div>
       {isReseteableEn && (
         <button
-          className="bg-indigo-600/50 border border-indigo-500 duration-200 w-[32px] h-[30px] hover:text-white rounded-md flex items-center justify-center"
+          className="bg-indigo-800/30 border border-indigo-300/30 duration-200 w-[32px] h-[30px] hover:text-indigo-200 text-indigo-300 rounded-md flex items-center justify-center"
           type="button"
           onClick={handleBackToFirst}
         >

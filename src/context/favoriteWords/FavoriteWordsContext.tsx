@@ -15,10 +15,10 @@ export const FavoritesProvider = ({ children }: { children: ReactNode }) => {
   }, [favorites]);
 
   const addFavorite = (word: string) => {
-    if(favorites.length < 15) {
+    if (favorites.length < 15) {
       setFavorites((prevFavs) => [...prevFavs, word]);
     } else {
-      alert('only 20 fav words allowed')
+      alert("only 20 fav words allowed");
     }
   };
 
@@ -27,11 +27,13 @@ export const FavoritesProvider = ({ children }: { children: ReactNode }) => {
   };
 
   const cleanLocalStorage = () => {
-    if(!favorites.length) {
-      return 
+    if (!favorites.length) {
+      return;
     }
-    setFavorites([])
-  }
+    if (window.confirm("are you sure?")) {
+      setFavorites([]);
+    }
+  };
 
   return (
     <FavoriteWordsContext.Provider

@@ -8,9 +8,8 @@ import SimilarToList from "./components/SimilarToList";
 // Hooks
 import { useFetchDictionary } from "./utils/data/useFetchDictionary";
 import List from "./components/List";
-import InputAF from "./components/InputAF";
-import { useFavoriteWords } from "./context/favoriteWords/useFavoriteWords";
 import FavoriteWords from "./components/FavoriteWords";
+import SettNav from "./components/SettNav";
 
 const App = () => {
   const [word, setWord] = useState<string | null>(null);
@@ -27,7 +26,6 @@ const App = () => {
   const form = useRef<HTMLFormElement>(null);
   const clearButtonRef = useRef<HTMLButtonElement>(null);
 
-  const { cleanLocalStorage } = useFavoriteWords();
 
   const {
     dictionaryData,
@@ -158,29 +156,13 @@ const App = () => {
 
   return (
     <>
-      <nav className="border-b px-5 border-neutral-800 mx-[-1.25rem]">
-        <div className="max-w-[1024px] mx-auto py-1.5 flex">
-          <p className="font-bold text-[1.2rem] flex-1">Dictionary</p>
-          <InputAF
-            isAutoFocusEn={isAutoFocusEn}
-            setIsAutoFocusEn={setIsAutoFocusEn}
-          />
-          <label className="ml-2 text-sm flex items-center gap-2" htmlFor="">
-            details
-            <input
-              type="checkbox"
-              onClick={() => setIsDetailsOpen(!isDetailsOpen)}
-            />
-          </label>
-          <button
-            onClick={() => cleanLocalStorage()}
-            className="ml-2 text-sm bg-indigo-900 px-1 rounded-md"
-          >
-            deleteLS
-          </button>
-        </div>
-      </nav>
-      <main className="max-w-[640px] mx-auto pt-16 pb-6 min-h">
+      <SettNav
+        isAutoFocusEn={isAutoFocusEn}
+        isDetailsOpen={isDetailsOpen}
+        setIsDetailsOpen={setIsDetailsOpen}
+        setIsAutoFocusEn={setIsAutoFocusEn}
+      />
+      <main className="max-w-[640px] mx-auto pt-16 px-5 pb-6 min-h">
         <section className="mb-10">
           <FavoriteWords />
         </section>

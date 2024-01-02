@@ -21,7 +21,7 @@
 }
 
 body {
-  @apply bg-neutral-950/50 px-5
+  @apply bg-neutral-950/50
 }
 
 details > summary {
