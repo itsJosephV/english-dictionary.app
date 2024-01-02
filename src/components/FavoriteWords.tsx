@@ -7,10 +7,11 @@ const FavoriteWords = () => {
   return (
     <>
       <p className="mb-1.5 font-bold">Favorites</p>
-      <div className="min-h-[26px]">
+      <div className="min-h-[60px]">
         {!favorites.length ? (
           <div className="text-neutral-500">
-            Save up to 20 meaningful words, learn them, replace them.
+            <p>Save up to 10 meaningful words, learn them, replace them.</p>
+            {/* <p>Save up to 10 meaningful words, learn them, replace them.</p> */}
           </div>
         ) : (
           <ul className="flex flex-wrap gap-2">

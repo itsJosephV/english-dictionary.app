@@ -26,7 +26,6 @@ const App = () => {
   const form = useRef<HTMLFormElement>(null);
   const clearButtonRef = useRef<HTMLButtonElement>(null);
 
-
   const {
     dictionaryData,
     similarToData,
@@ -162,11 +161,11 @@ const App = () => {
         setIsDetailsOpen={setIsDetailsOpen}
         setIsAutoFocusEn={setIsAutoFocusEn}
       />
-      <main className="max-w-[640px] mx-auto pt-16 px-5 pb-6 min-h">
-        <section className="mb-10">
+      <main className="max-w-[640px] mx-auto pt-10 md:pt-12 px-5 pb-6 min-h">
+        <section className="mb-7">
           <FavoriteWords />
         </section>
-        <section className="mb-5">
+        <section className="mb-7">
           <Form
             form={form}
             cleaner={isClearEn}

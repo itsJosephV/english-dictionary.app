@@ -36,7 +36,7 @@ const SettNav: React.FC<Props> = ({
             <DropdownMenu.Content
               sideOffset={10}
               side="bottom"
-              className="min-w-[160px] bg-neutral-800 rounded-md p-1.5"
+              className="min-w-[180px] bg-neutral-800 rounded-md p-1.5"
             >
               <DropdownMenu.Item
                 onSelect={(e) => e.preventDefault()}
@@ -67,10 +67,15 @@ const SettNav: React.FC<Props> = ({
               <DropdownMenu.Item
                 onClick={() => cleanLocalStorage()}
                 disabled={!favorites.length}
-                className="p-1.5 text-sm h-[30px] flex items-center rounded-md focus:bg-red-400/20 text-red-400 cursor-pointer outline-none
+                className="pl-1.5 pr-[3px] text-sm h-[30px] flex items-center justify-between rounded-md focus:bg-red-400/20 text-red-400 cursor-pointer outline-none
                rdx-disabled:cursor-not-allowed rdx-disabled:opacity-50"
               >
                 Clean favorites
+                {favorites.length ? (
+                  <span className="rounded-md w-[18px] h-[18px] flex items-center justify-center">
+                    {favorites.length}
+                  </span>
+                ): null}
               </DropdownMenu.Item>
             </DropdownMenu.Content>
           </DropdownMenu.Portal>
