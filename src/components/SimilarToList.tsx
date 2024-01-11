@@ -1,21 +1,14 @@
 import SimilarToCard from "./SimilarToCard";
-import { SetStateAction, useRef } from "react";
+import { useRef } from "react";
 import { useHotkeys } from "react-hotkeys-hook";
 import { useDictionaryContext } from "../context/api/useDictionaryContext";
+import { useFunctionalityContext } from "../context/functionalities/useFunctionalityContext";
 
-type Props = {
-  isSimilarWordsActive: boolean;
-  setOnSimilarToWords: React.Dispatch<SetStateAction<string | null>>;
-  handleSimilarToButton: (e: React.ChangeEvent<HTMLDetailsElement>) => void;
-};
-
-const SimilarToList: React.FC<Props> = ({
-  isSimilarWordsActive,
-  setOnSimilarToWords,
-  handleSimilarToButton,
-}) => {
+const SimilarToList = () => {
   const similarToRef = useRef<HTMLDetailsElement>(null);
   const { similarToData } = useDictionaryContext();
+  const { isSimilarWordsActive, setOnSimilarToWords, handleSimilarToButton } =
+    useFunctionalityContext();
   const similarToBool: boolean = Boolean(similarToData?.similarTo?.length);
 
   useHotkeys(

@@ -1,8 +1,10 @@
 import { ReactNode, createContext, useState } from "react";
-
 import { DictionaryItem, WordSimilarTo } from "../../types";
-
 import { DictionaryCtx } from "../../types";
+
+type Props = {
+  children?: ReactNode
+}
 
 export const DictionaryDataContext = createContext<DictionaryCtx | null>(null);
 
@@ -17,10 +19,9 @@ const headers = {
 };
 const regex = /^[a-zA-Z\s]*[a-zA-Z\s'.-]+[a-zA-Z\s]*$/;
 const spaceRegex = /^ *$/;
-
 const delay = (ms: number) => new Promise((resolve) => setTimeout(resolve, ms));
 
-export const DictionaryContext = ({ children }: { children: ReactNode }) => {
+export const DictionaryProvider: React.FC<Props> = ({ children }) => {
   const [dictionaryData, setDictionaryData] = useState<DictionaryItem | null>(
     null
   );

@@ -1,5 +1,5 @@
 import { RemoveFavorite } from "../icons/RemoveFavorite";
-import { useFavoriteWords } from "../context/favoriteWords/useFavoriteWords";
+import { useFavoriteWords } from "../context/favoriteWords/useFavoriteWordsContext";
 
 const FavoriteWords = () => {
   const { favorites, removeFavorite } = useFavoriteWords();

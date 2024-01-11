@@ -1,6 +1,5 @@
-// import { FavoriteWordsContextProps } from "@/types";
 import { useContext } from "react";
-import { DictionaryDataContext } from "./DictionaryContext";
+import { DictionaryDataContext } from "./DictionaryProvider";
 
 export const useDictionaryContext = () => {
   const context = useContext(DictionaryDataContext);

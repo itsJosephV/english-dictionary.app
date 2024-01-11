@@ -1,10 +1,13 @@
 import { ReactNode, createContext, useEffect, useState } from "react";
-
 import { FavoriteWords } from "../../types";
 
 export const FavoriteWordsContext = createContext<FavoriteWords | null>(null);
 
-export const FavoritesProvider = ({ children }: { children: ReactNode }) => {
+type Props = {
+  children?: ReactNode;
+};
+
+export const FavoritesProvider: React.FC<Props> = ({ children }) => {
   const [favorites, setFavorites] = useState<string[]>(() => {
     const storedFavorites = localStorage.getItem("favorites");
     return storedFavorites ? JSON.parse(storedFavorites) : [];

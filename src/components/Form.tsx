@@ -3,33 +3,21 @@ import { CleanIcon } from "../icons/CleanIcon";
 import { BackIcon } from "../icons/BackIcon";
 import { useHotkeys } from "react-hotkeys-hook";
 import { useDictionaryContext } from "../context/api/useDictionaryContext";
+import { useRef } from "react";
+import { useFunctionalityContext } from "../context/functionalities/useFunctionalityContext";
 
-
-type Props = {
-  form: React.RefObject<HTMLFormElement>;
-  word: string | null;
-  isClearEn: boolean;
-  clearButtonRef: React.RefObject<HTMLButtonElement>;
-  handleFormSubmit: (word: string) => Promise<void>;
-  handleCleanResults: (e: React.FormEvent) => void;
-  setWord: React.Dispatch<React.SetStateAction<string | null>>;
-  handleBackToFirst: () => void;
-  isReseteableEn: boolean;
-};
-
-const Form: React.FC<Props> = ({
-  form,
-  word,
-  isClearEn,
-  clearButtonRef,
-  handleFormSubmit,
-  handleCleanResults,
-  setWord,
-  handleBackToFirst,
-  isReseteableEn,
-}) => {
-  const { dictionaryData } = useDictionaryContext();
-
+const Form = () => {
+  const { dictionaryData, isReseteableEn } = useDictionaryContext();
+  const {
+    form,
+    word,
+    isClearEn,
+    handleFormSubmit,
+    handleCleanResults,
+    setWord,
+    handleBackToFirst,
+  } = useFunctionalityContext();
+  const clearButtonRef = useRef<HTMLButtonElement>(null);
   const formBool: boolean = Boolean(word?.length);
 
   const handleWordSubmit = (e: React.FormEvent) => {

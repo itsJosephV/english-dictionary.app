@@ -30,5 +30,3 @@ const ShortCutsInfo = () => {
 };
 
 export default ShortCutsInfo;
-
-// border border-neutral-700 p-1.5 rounded-md flex flex-col md:flex-row  md:gap-3 gap-1.5 md:items-center items-start md:justify-between

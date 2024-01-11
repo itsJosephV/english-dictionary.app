@@ -8,28 +8,16 @@ import { LoadingData } from "../icons/LoadingData";
 import { WordResults } from "../types";
 import FavoriteButton from "./FavoriteButton";
 import { useDictionaryContext } from "../context/api/useDictionaryContext";
+import { useFunctionalityContext } from "../context/functionalities/useFunctionalityContext";
 
-type Props = {
-  resultsLimit: number | null;
-  setOnSynAntWords: React.Dispatch<React.SetStateAction<string | null>>;
-  setResultsLimit: React.Dispatch<React.SetStateAction<number | null>>;
-  // isLoading: boolean;
-  // error: string | null;
-  isDetailsOpen: boolean;
-};
-
-const List: React.FC<Props> = ({
-  // isLoading,
-  // error,
-  resultsLimit,
-  setResultsLimit,
-  setOnSynAntWords,
-  isDetailsOpen,
-}) => {
+const List = () => {
   const moreDataRef = useRef<HTMLButtonElement>(null);
   const lessDataRef = useRef<HTMLButtonElement>(null);
 
-  const {dictionaryData, fetchDictionaryRandom, error, isLoading} = useDictionaryContext()
+  const { dictionaryData, fetchDictionaryRandom, error, isLoading } =
+    useDictionaryContext();
+  const { resultsLimit, setResultsLimit, isDetailsOpen, setOnSynAntWords } =
+    useFunctionalityContext();
 
   useHotkeys(
     "shift+m",
@@ -63,7 +51,7 @@ const List: React.FC<Props> = ({
   );
 
   return (
-    <section className="">
+    <>
       {isLoading && <LoadingData />}
       {error && <ErrorMessage error={error} />}
       {!dictionaryData && !isLoading && !error && (
@@ -71,7 +59,7 @@ const List: React.FC<Props> = ({
       )}
       {dictionaryData && (
         <Fragment>
-          <div className="mt-7 mb-1">
+          <div>
             <div className="flex flex-wrap items-center gap-2">
               <p className="text-4xl font-semibold">{dictionaryData.word}</p>
               {dictionaryData.pronunciation &&
@@ -131,7 +119,7 @@ const List: React.FC<Props> = ({
           ) : null}
         </Fragment>
       )}
-    </section>
+    </>
   );
 };
 

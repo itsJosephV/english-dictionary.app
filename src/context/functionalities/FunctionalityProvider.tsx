@@ -1,25 +1,31 @@
-import { useDictionaryContext } from "../context/api/useDictionaryContext";
-import React, { useEffect, useRef, useState } from "react";
+import { ReactNode, createContext, useEffect, useRef, useState } from "react";
+import { useDictionaryContext } from "../api/useDictionaryContext";
+import { FunctionalityCtx } from "../../types";
 
-const useDictionaryFns = () => {
+export const FunctionalityContext = createContext<FunctionalityCtx | null>(
+  null
+);
+
+type Props = {
+  children?: ReactNode;
+};
+
+const FunctionalityProvider: React.FC<Props> = ({ children }) => {
   const [word, setWord] = useState<string | null>(null);
   const [resultsLimit, setResultsLimit] = useState<number | null>(5);
   const [isSimilarWordsActive, setIsSimilarWordsActive] =
     useState<boolean>(false);
+  const [isAutoFocusEn, setIsAutoFocusEn] = useState<boolean>(true);
   const [onSimilarToWords, setOnSimilarToWords] = useState<string | null>(null);
   const [onSynAntWords, setOnSynAntWords] = useState<string | null>(null);
   const [isClearEn, setIsClearEn] = useState<boolean>(false);
   const [isDetailsOpen, setIsDetailsOpen] = useState<boolean>(false);
-  const [isAutoFocusEn, setIsAutoFocusEn] = useState<boolean>(true);
-
 
   const form = useRef<HTMLFormElement>(null);
-  const clearButtonRef = useRef<HTMLButtonElement>(null);
 
   const {
     dictionaryData,
     storedWords,
-    isReseteableEn,
     setDictionaryData,
     setSimilarToData,
     setError,
@@ -128,34 +134,31 @@ const useDictionaryFns = () => {
     };
   }, [isAutoFocusEn, word]);
 
-  return {
-    word,
-    resultsLimit,
-    isSimilarWordsActive,
-    isAutoFocusEn,
-    onSimilarToWords,
-    onSynAntWords,
-    isClearEn,
-    isDetailsOpen,
-    form,
-    clearButtonRef,
-    dictionaryData,
-    storedWords,
-    isReseteableEn,
-    setWord,
-    setResultsLimit,
-    setIsSimilarWordsActive,
-    setIsAutoFocusEn,
-    setOnSimilarToWords,
-    setOnSynAntWords,
-    setIsClearEn,
-    setIsDetailsOpen,
-    handleFormSubmit,
-    handleCleanResults,
-    handleSimilarToButton,
-    handleBackToFirst,
-    // Add other functions here...
-  };
+  return (
+    <FunctionalityContext.Provider
+      value={{
+        word,
+        form,
+        resultsLimit,
+        isSimilarWordsActive,
+        isClearEn,
+        isDetailsOpen,
+        isAutoFocusEn,
+        handleFormSubmit,
+        handleCleanResults,
+        handleSimilarToButton,
+        handleBackToFirst,
+        setIsAutoFocusEn,
+        setIsDetailsOpen,
+        setWord,
+        setResultsLimit,
+        setOnSynAntWords,
+        setOnSimilarToWords,
+      }}
+    >
+      {children}
+    </FunctionalityContext.Provider>
+  );
 };
 
-export default useDictionaryFns;
+export default FunctionalityProvider;

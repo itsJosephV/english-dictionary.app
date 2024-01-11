@@ -2,22 +2,13 @@
 import * as DropdownMenu from "@radix-ui/react-dropdown-menu";
 import { SettingsIcon } from "../icons/SettingsIcon";
 import { GitHubIcon } from "../icons/GithubIcon";
-import { useFavoriteWords } from "../context/favoriteWords/useFavoriteWords";
+import { useFavoriteWords } from "../context/favoriteWords/useFavoriteWordsContext";
+import { useFunctionalityContext } from "../context/functionalities/useFunctionalityContext";
 
-type Props = {
-  isAutoFocusEn: boolean;
-  isDetailsOpen: boolean;
-  setIsAutoFocusEn: React.Dispatch<React.SetStateAction<boolean>>;
-  setIsDetailsOpen: React.Dispatch<React.SetStateAction<boolean>>;
-};
-
-const SettNav: React.FC<Props> = ({
-  isAutoFocusEn,
-  isDetailsOpen,
-  setIsDetailsOpen,
-  setIsAutoFocusEn,
-}) => {
+  const SettNav = (
+) => {
   const { cleanLocalStorage, favorites } = useFavoriteWords();
+  const { isDetailsOpen, setIsDetailsOpen, isAutoFocusEn, setIsAutoFocusEn  } = useFunctionalityContext()
   
 
   return (

@@ -1,9 +1,9 @@
 // import { FavoriteWordsContextProps } from "@/types";
 import { useContext } from "react";
-import { FavoriteWordsContext } from "./FavoriteWordsContext";
+import { FunctionalityContext } from "./FunctionalityProvider";
 
-export const useFavoriteWords = () => {
-  const context = useContext(FavoriteWordsContext);
+export const useFunctionalityContext = () => {
+  const context = useContext(FunctionalityContext);
   if (!context) {
     throw new Error("no context provided");
   }

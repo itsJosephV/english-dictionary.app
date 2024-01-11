@@ -1,5 +1,5 @@
 import { DictionaryItem } from "../types";
-import { useFavoriteWords } from "../context/favoriteWords/useFavoriteWords";
+import { useFavoriteWords } from "../context/favoriteWords/useFavoriteWordsContext";
 import { FavoriteIcon } from "../icons/FavoriteIcon";
 import { NoFavoriteIcon } from "../icons/NoFavoriteIcon";
 
