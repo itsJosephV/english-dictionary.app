@@ -26,3 +26,18 @@ export interface FavoriteWords {
   removeFavorite: (word: string) => void
   cleanLocalStorage: () => void
 }
+
+export interface DictionaryCtx {
+  dictionaryData: DictionaryItem | null;
+  similarToData: WordSimilarTo | null;
+  error: string | null;
+  isLoading: boolean;
+  storedWords: string[];
+  isReseteableEn: boolean;
+  setDictionaryData: (data: DictionaryItem | null) => void;
+  setSimilarToData: (data: WordSimilarTo | null) => void;
+  setError: (error: string | null) => void;
+  setIsReseteableEn: (value: boolean) => void;
+  fetchDictionary: (word: string, cleanArray?: boolean) => Promise<void>;
+  fetchDictionaryRandom: () => Promise<void>;
+}

@@ -1,6 +1,9 @@
 import { IcRoundSearch } from "../icons/SearchIcon";
 import { CleanIcon } from "../icons/CleanIcon";
 import { BackIcon } from "../icons/BackIcon";
+import { useHotkeys } from "react-hotkeys-hook";
+import { useDictionaryContext } from "../context/api/useDictionaryContext";
+
 
 type Props = {
   form: React.RefObject<HTMLFormElement>;
@@ -25,10 +28,28 @@ const Form: React.FC<Props> = ({
   handleBackToFirst,
   isReseteableEn,
 }) => {
+  const { dictionaryData } = useDictionaryContext();
+
+  const formBool: boolean = Boolean(word?.length);
+
   const handleWordSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     handleFormSubmit(word || "");
   };
+
+  useHotkeys(
+    "shift+c",
+    (e) => {
+      e.preventDefault();
+
+      if (!dictionaryData && !formBool) {
+        return;
+      }
+      clearButtonRef.current?.click();
+      console.log("data whiped");
+    },
+    { enableOnFormTags: ["INPUT"] }
+  );
 
   return (
     <form

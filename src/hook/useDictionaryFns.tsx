@@ -1,25 +1,17 @@
-import { useEffect, useRef, useState } from "react";
+import { useDictionaryContext } from "../context/api/useDictionaryContext";
+import React, { useEffect, useRef, useState } from "react";
 
-// Components
-import Form from "./components/Form";
-import SimilarToList from "./components/SimilarToList";
-
-// Hooks
-import List from "./components/List";
-import FavoriteWords from "./components/FavoriteWords";
-import SettNav from "./components/SettNav";
-import { useDictionaryContext } from "./context/api/useDictionaryContext";
-
-const App = () => {
+const useDictionaryFns = () => {
   const [word, setWord] = useState<string | null>(null);
   const [resultsLimit, setResultsLimit] = useState<number | null>(5);
   const [isSimilarWordsActive, setIsSimilarWordsActive] =
     useState<boolean>(false);
-  const [isAutoFocusEn, setIsAutoFocusEn] = useState<boolean>(true);
   const [onSimilarToWords, setOnSimilarToWords] = useState<string | null>(null);
   const [onSynAntWords, setOnSynAntWords] = useState<string | null>(null);
   const [isClearEn, setIsClearEn] = useState<boolean>(false);
   const [isDetailsOpen, setIsDetailsOpen] = useState<boolean>(false);
+  const [isAutoFocusEn, setIsAutoFocusEn] = useState<boolean>(true);
+
 
   const form = useRef<HTMLFormElement>(null);
   const clearButtonRef = useRef<HTMLButtonElement>(null);
@@ -136,45 +128,34 @@ const App = () => {
     };
   }, [isAutoFocusEn, word]);
 
-  return (
-    <>
-      <SettNav
-        isAutoFocusEn={isAutoFocusEn}
-        isDetailsOpen={isDetailsOpen}
-        setIsDetailsOpen={setIsDetailsOpen}
-        setIsAutoFocusEn={setIsAutoFocusEn}
-      />
-      <main className="max-w-[640px] mx-auto pt-10 md:pt-12 px-5 pb-6 min-h">
-        <section className="mb-7">
-          <FavoriteWords />
-        </section>
-        <section className="mb-7">
-          <Form
-            form={form}
-            isClearEn={isClearEn}
-            clearButtonRef={clearButtonRef}
-            handleFormSubmit={handleFormSubmit}
-            handleCleanResults={handleCleanResults}
-            word={word}
-            setWord={setWord}
-            handleBackToFirst={handleBackToFirst}
-            isReseteableEn={isReseteableEn}
-          />
-          <SimilarToList
-            handleSimilarToButton={handleSimilarToButton}
-            isSimilarWordsActive={isSimilarWordsActive}
-            setOnSimilarToWords={setOnSimilarToWords}
-          />
-        </section>
-        <List
-          resultsLimit={resultsLimit}
-          setOnSynAntWords={setOnSynAntWords}
-          setResultsLimit={setResultsLimit}
-          isDetailsOpen={isDetailsOpen}
-        />
-      </main>
-    </>
-  );
+  return {
+    word,
+    resultsLimit,
+    isSimilarWordsActive,
+    isAutoFocusEn,
+    onSimilarToWords,
+    onSynAntWords,
+    isClearEn,
+    isDetailsOpen,
+    form,
+    clearButtonRef,
+    dictionaryData,
+    storedWords,
+    isReseteableEn,
+    setWord,
+    setResultsLimit,
+    setIsSimilarWordsActive,
+    setIsAutoFocusEn,
+    setOnSimilarToWords,
+    setOnSynAntWords,
+    setIsClearEn,
+    setIsDetailsOpen,
+    handleFormSubmit,
+    handleCleanResults,
+    handleSimilarToButton,
+    handleBackToFirst,
+    // Add other functions here...
+  };
 };
 
-export default App;
+export default useDictionaryFns;

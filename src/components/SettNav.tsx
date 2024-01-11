@@ -1,4 +1,4 @@
-import React from "react";
+// import React from "react";
 import * as DropdownMenu from "@radix-ui/react-dropdown-menu";
 import { SettingsIcon } from "../icons/SettingsIcon";
 import { GitHubIcon } from "../icons/GithubIcon";
@@ -18,6 +18,7 @@ const SettNav: React.FC<Props> = ({
   setIsAutoFocusEn,
 }) => {
   const { cleanLocalStorage, favorites } = useFavoriteWords();
+  
 
   return (
     <nav className="border-b px-5 border-neutral-800 ">
@@ -28,9 +29,7 @@ const SettNav: React.FC<Props> = ({
         </a>
         <DropdownMenu.Root>
           <DropdownMenu.Trigger className="flex items-center outline-none">
-            <button>
-              <SettingsIcon className="text-[1.3rem]" />
-            </button>
+            <SettingsIcon className="text-[1.3rem]" />
           </DropdownMenu.Trigger>
           <DropdownMenu.Portal>
             <DropdownMenu.Content
@@ -45,6 +44,7 @@ const SettNav: React.FC<Props> = ({
                 <label className="w-full flex justify-between items-center">
                   Autofocus
                   <input
+                    readOnly
                     type="checkbox"
                     onChange={() => setIsAutoFocusEn(!isAutoFocusEn)}
                     checked={isAutoFocusEn}
@@ -58,6 +58,7 @@ const SettNav: React.FC<Props> = ({
                 <label className="w-full flex justify-between items-center">
                   Details
                   <input
+                    readOnly
                     type="checkbox"
                     onClick={() => setIsDetailsOpen(!isDetailsOpen)}
                     checked={isDetailsOpen}
@@ -75,7 +76,7 @@ const SettNav: React.FC<Props> = ({
                   <span className="rounded-md w-[18px] h-[18px] flex items-center justify-center">
                     {favorites.length}
                   </span>
-                ): null}
+                ) : null}
               </DropdownMenu.Item>
             </DropdownMenu.Content>
           </DropdownMenu.Portal>

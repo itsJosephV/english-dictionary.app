@@ -4,34 +4,32 @@ import ErrorMessage from "./ErrorMessage";
 import DefinitionCard from "./DefinitionCard";
 import { MoreAndLess } from "./MoreAndLess";
 import { useHotkeys } from "react-hotkeys-hook";
-import { DictionaryItem } from "../types";
 import { LoadingData } from "../icons/LoadingData";
 import { WordResults } from "../types";
 import FavoriteButton from "./FavoriteButton";
+import { useDictionaryContext } from "../context/api/useDictionaryContext";
 
 type Props = {
   resultsLimit: number | null;
   setOnSynAntWords: React.Dispatch<React.SetStateAction<string | null>>;
   setResultsLimit: React.Dispatch<React.SetStateAction<number | null>>;
-  dictionaryData: DictionaryItem | null;
-  fetchDictionaryRandom: () => Promise<void>;
-  isLoading: boolean;
-  error: string | null;
+  // isLoading: boolean;
+  // error: string | null;
   isDetailsOpen: boolean;
 };
 
 const List: React.FC<Props> = ({
-  dictionaryData,
-  isLoading,
-  error,
+  // isLoading,
+  // error,
   resultsLimit,
   setResultsLimit,
   setOnSynAntWords,
-  fetchDictionaryRandom,
   isDetailsOpen,
 }) => {
   const moreDataRef = useRef<HTMLButtonElement>(null);
   const lessDataRef = useRef<HTMLButtonElement>(null);
+
+  const {dictionaryData, fetchDictionaryRandom, error, isLoading} = useDictionaryContext()
 
   useHotkeys(
     "shift+m",
