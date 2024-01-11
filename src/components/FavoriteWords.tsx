@@ -11,7 +11,6 @@ const FavoriteWords = () => {
         {!favorites.length ? (
           <div className="text-neutral-500">
             <p>Save up to 10 meaningful words, learn them, replace them.</p>
-            {/* <p>Save up to 10 meaningful words, learn them, replace them.</p> */}
           </div>
         ) : (
           <ul className="flex flex-wrap gap-2">

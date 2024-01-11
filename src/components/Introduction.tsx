@@ -1,12 +1,10 @@
 import { RandomIcon } from "../icons/RandomIcon";
 import ShortCutsInfo from "./ShortCutsInfo";
+import { useDictionaryContext } from "../context/api/useDictionaryContext";
 
-type Props = {
-  fetchDictionaryRandom: () => Promise<void>;
-};
-
-const Introduction: React.FC<Props> = ({ fetchDictionaryRandom }) => {
+const Introduction = () => {
   const currentYear = new Date().getFullYear();
+  const { fetchDictionaryRandom } = useDictionaryContext();
 
   return (
     <div className="grid place-content-center min-h-20 text-center text-neutral-400 mt-7">
@@ -40,8 +38,10 @@ const Introduction: React.FC<Props> = ({ fetchDictionaryRandom }) => {
         </p>
       </div>
       <label htmlFor="" className="flex flex-col mb-10">
-      <p className="text-xs mb-2 text-neutral-500">Keyboard shorcuts (Desktop)</p>
-      <ShortCutsInfo/>
+        <p className="text-xs mb-2 text-neutral-500">
+          Keyboard shorcuts (Desktop)
+        </p>
+        <ShortCutsInfo />
       </label>
       <div className="flex flex-col gap-2">
         <p className="text-sm text-neutral-500">

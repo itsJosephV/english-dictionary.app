@@ -1,4 +1,3 @@
-// import { FavoriteWordsContextProps } from "@/types";
 import { useContext } from "react";
 import { FavoriteWordsContext } from "./FavoriteWordsProvider";
 

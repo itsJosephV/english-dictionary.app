@@ -14,10 +14,8 @@ const List = () => {
   const moreDataRef = useRef<HTMLButtonElement>(null);
   const lessDataRef = useRef<HTMLButtonElement>(null);
 
-  const { dictionaryData, fetchDictionaryRandom, error, isLoading } =
-    useDictionaryContext();
-  const { resultsLimit, setResultsLimit, isDetailsOpen, setOnSynAntWords } =
-    useFunctionalityContext();
+  const { dictionaryData, error, isLoading } = useDictionaryContext();
+  const { resultsLimit, setResultsLimit } = useFunctionalityContext();
 
   useHotkeys(
     "shift+m",
@@ -53,10 +51,8 @@ const List = () => {
   return (
     <>
       {isLoading && <LoadingData />}
-      {error && <ErrorMessage error={error} />}
-      {!dictionaryData && !isLoading && !error && (
-        <Introduction fetchDictionaryRandom={fetchDictionaryRandom} />
-      )}
+      {error && <ErrorMessage />}
+      {!dictionaryData && !isLoading && !error && <Introduction />}
       {dictionaryData && (
         <Fragment>
           <div>
@@ -71,7 +67,7 @@ const List = () => {
             </div>
           </div>
           <div className="mb-4">
-            <FavoriteButton dictionaryData={dictionaryData} />
+            <FavoriteButton />
           </div>
           <div className="mb-2">
             {dictionaryData.results && dictionaryData.results.length ? (
@@ -93,12 +89,7 @@ const List = () => {
                   resultsLimit ? resultsLimit : dictionaryData.results.length
                 )
                 .map((item, i) => (
-                  <DefinitionCard
-                    key={i}
-                    item={item}
-                    setOnSynAntWords={setOnSynAntWords}
-                    isDetailsOpen={isDetailsOpen}
-                  />
+                  <DefinitionCard key={i} item={item} />
                 ))}
             </ul>
           )}

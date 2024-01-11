@@ -1,14 +1,11 @@
-import { DictionaryItem } from "../types";
 import { useFavoriteWords } from "../context/favoriteWords/useFavoriteWordsContext";
 import { FavoriteIcon } from "../icons/FavoriteIcon";
 import { NoFavoriteIcon } from "../icons/NoFavoriteIcon";
+import { useDictionaryContext } from "../context/api/useDictionaryContext";
 
-type Props = {
-  dictionaryData: DictionaryItem | null;
-};
-
-const FavoriteButton: React.FC<Props> = ({ dictionaryData }) => {
+const FavoriteButton = () => {
   const { favorites, addFavorite, removeFavorite } = useFavoriteWords();
+  const { dictionaryData } = useDictionaryContext()
 
   const isFavorite =
     dictionaryData?.word !== undefined &&

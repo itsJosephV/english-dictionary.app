@@ -1,16 +1,12 @@
+import { useFunctionalityContext } from "../context/functionalities/useFunctionalityContext";
 import { WordResults } from "../types";
 
 type Props = {
   item: WordResults;
-  setOnSynAntWords: (synOrAnt: string | null) => void;
-  isDetailsOpen: boolean;
 };
 
-const DefinitionCard: React.FC<Props> = ({
-  item,
-  setOnSynAntWords,
-  isDetailsOpen,
-}) => {
+const DefinitionCard: React.FC<Props> = ({ item }) => {
+  const { setOnSynAntWords, isDetailsOpen } = useFunctionalityContext();
   const handleSynAntButton = (synOrAnt: string) => {
     if (synOrAnt) {
       setOnSynAntWords(synOrAnt);
@@ -47,10 +43,10 @@ const DefinitionCard: React.FC<Props> = ({
             <div className="flex flex-col mt-3">
               <p className="text-sm text-neutral-400 mb-2">Synonyms</p>
               <ul className="flex flex-wrap gap-2">
-                {item.synonyms?.map((syn, i) => (
+                {item.synonyms?.map((syn, idx) => (
                   <li
                     className="px-1.5 py-0.5 bg-purple-500/10 text-sm text-purple-300 hover:text-purple-200 duration-200 rounded-md"
-                    key={i}
+                    key={idx}
                   >
                     <button onClick={() => handleSynAntButton(syn)}>
                       {syn}
@@ -64,10 +60,10 @@ const DefinitionCard: React.FC<Props> = ({
             <div className="flex flex-col mt-3">
               <p className="text-sm text-neutral-400 mb-2">Antonyms</p>
               <ul className="flex flex-wrap gap-2">
-                {item.antonyms?.map((ant, i) => (
+                {item.antonyms?.map((ant, idx) => (
                   <li
                     className="px-1.5 py-0.5 bg-orange-500/10 text-sm rounded-md text-orange-300 hover:text-orange-200 duration-200"
-                    key={i}
+                    key={idx}
                   >
                     <button onClick={() => handleSynAntButton(ant)}>
                       {ant}
