@@ -14,13 +14,11 @@ import SettNav from "./components/SettNav";
 const App = () => {
   const [word, setWord] = useState<string | null>(null);
   const [resultsLimit, setResultsLimit] = useState<number | null>(5);
+  const [isSimilarWordsActive, setIsSimilarWordsActive] = useState<boolean>(false);
   const [isAutoFocusEn, setIsAutoFocusEn] = useState<boolean>(true);
-  const [isSimilarWordsActive, setIsSimilarWordsActive] =
-    useState<boolean>(false);
   const [onSimilarToWords, setOnSimilarToWords] = useState<string | null>(null);
   const [onSynAntWords, setOnSynAntWords] = useState<string | null>(null);
   const [isClearEn, setIsClearEn] = useState<boolean>(false);
-
   const [isDetailsOpen, setIsDetailsOpen] = useState<boolean>(false);
 
   const form = useRef<HTMLFormElement>(null);
@@ -150,7 +148,7 @@ const App = () => {
       clearButtonRef.current?.click();
       console.log("data whiped");
     },
-    { enableOnFormTags: ["INPUT"] }
+    { enableOnFormTags: ["INPUT"] } 
   );
 
   return (
@@ -168,7 +166,7 @@ const App = () => {
         <section className="mb-7">
           <Form
             form={form}
-            cleaner={isClearEn}
+            isClearEn={isClearEn}
             clearButtonRef={clearButtonRef}
             handleFormSubmit={handleFormSubmit}
             handleCleanResults={handleCleanResults}

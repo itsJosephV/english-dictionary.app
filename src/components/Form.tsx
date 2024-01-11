@@ -5,7 +5,7 @@ import { BackIcon } from "../icons/BackIcon";
 type Props = {
   form: React.RefObject<HTMLFormElement>;
   word: string | null;
-  cleaner: boolean;
+  isClearEn: boolean;
   clearButtonRef: React.RefObject<HTMLButtonElement>;
   handleFormSubmit: (word: string) => Promise<void>;
   handleCleanResults: (e: React.FormEvent) => void;
@@ -17,7 +17,7 @@ type Props = {
 const Form: React.FC<Props> = ({
   form,
   word,
-  cleaner,
+  isClearEn,
   clearButtonRef,
   handleFormSubmit,
   handleCleanResults,
@@ -49,7 +49,7 @@ const Form: React.FC<Props> = ({
           onChange={(e) => setWord(e.target.value)}
           value={word || ""}
         />
-        {cleaner && (
+        {isClearEn && (
           <button
             type="button"
             ref={clearButtonRef}

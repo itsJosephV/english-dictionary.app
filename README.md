@@ -19,7 +19,7 @@ Todo List
 - [x] update to better API
 - [x] Random word
 - [x] Favorites words
-- [ ] Dropdown menu and tooltips (settings) - RadixUI
+- [x] Dropdown menu and tooltips (settings) - RadixUI
 - [ ] Meaning words into fetching buttons
 - [ ] Copy word/meanings
 - [ ] Search when user stops typing (debounce)
