@@ -18,6 +18,7 @@ const Form = () => {
     handleBackToFirst,
   } = useFunctionalityContext();
   const clearButtonRef = useRef<HTMLButtonElement>(null);
+  const resetButtonRef = useRef<HTMLButtonElement>(null);
   const formBool: boolean = Boolean(word?.length);
 
   const handleWordSubmit = (e: React.FormEvent) => {
@@ -34,7 +35,18 @@ const Form = () => {
         return;
       }
       clearButtonRef.current?.click();
-      console.log("data whiped");
+    },
+    { enableOnFormTags: ["INPUT"] }
+  );
+
+  useHotkeys(
+    "shift+r",
+    (e) => {
+      e.preventDefault();
+      if (!dictionaryData || !isReseteableEn) {
+        return;
+      }
+      resetButtonRef.current?.click();
     },
     { enableOnFormTags: ["INPUT"] }
   );
@@ -74,6 +86,7 @@ const Form = () => {
           className="bg-indigo-800/30 border border-indigo-300/30 duration-200 w-[32px] h-[30px] hover:text-indigo-200 text-indigo-300 rounded-md flex items-center justify-center"
           type="button"
           onClick={handleBackToFirst}
+          ref={resetButtonRef}
         >
           <BackIcon />
         </button>
