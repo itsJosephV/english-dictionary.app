@@ -37,12 +37,13 @@ const Introduction = () => {
           Some "Similar words" might not be available
         </p>
         <p className="text-neutral-500">
-          Lucia doesn't like the design of this app 🥹{" "}
+          Lucia doesn't like the design of this app {":("}{" "}
           <span>
             <a
               href="https://www.linkedin.com/in/lucia-tomondyova/"
               target="_blank"
               rel="noopener noreferrer"
+              className="text-red-500"
             >her profile</a>
           </span>
         </p>
