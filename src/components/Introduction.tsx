@@ -43,7 +43,7 @@ const Introduction = () => {
               href="https://www.linkedin.com/in/lucia-tomondyova/"
               target="_blank"
               rel="noopener noreferrer"
-            ></a>
+            >her profile</a>
           </span>
         </p>
       </div>
