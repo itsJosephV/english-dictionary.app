@@ -71,27 +71,16 @@ const FunctionalityProvider: React.FC<Props> = ({ children }) => {
     }
   };  
 
-  // TEST
   const handleFavoriteFetch = (favWord: string) => {
     setWord(favWord);
     setIsReseteableEn(false);
     fetchDictionary(favWord, true);
   };
 
-  const handleSimilarToFetch = (similarWord: string) => {
-    setWord(similarWord);
-    fetchDictionary(similarWord, false);
-  };
-
-  const handleSynAntFetch = (synAnt: string) => {
-    setWord(synAnt);
-    fetchDictionary(synAnt, false);
-  };
-
-  const handleDefinitionWordFetch = (defWord: string) => {
-    setWord(defWord);
-    fetchDictionary(defWord, false);
-  };
+  const handleWordDerivates = (word: string) => {
+    setWord(word);
+    fetchDictionary(word, false);
+  }
 
   /**
    * Clear button displays if word in input exist
@@ -145,9 +134,7 @@ const FunctionalityProvider: React.FC<Props> = ({ children }) => {
         handleCleanResults,
         handleBackToFirst,
         handleFavoriteFetch,
-        handleSimilarToFetch,
-        handleSynAntFetch,
-        handleDefinitionWordFetch,
+        handleWordDerivates
       }}
     >
       {children}

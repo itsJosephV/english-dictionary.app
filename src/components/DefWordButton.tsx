@@ -7,7 +7,7 @@ type Props = {
 
 const DefWordButton: React.FC<Props> = ({ text }) => {
   const wordsWithSymbols = text.split(/\b(\w*['-]*\w+)\b/);
-  const { handleDefinitionWordFetch } = useFunctionalityContext();
+  const { handleWordDerivates } = useFunctionalityContext();
 
   return (
     <div>
@@ -18,7 +18,7 @@ const DefWordButton: React.FC<Props> = ({ text }) => {
             <button
               className="cursor-pointer hover:underline underline-offset-[3px]"
               key={index}
-              onClick={() => handleDefinitionWordFetch(defWord)}
+              onClick={() => handleWordDerivates(defWord)}
             >
               {defWord}
             </button>

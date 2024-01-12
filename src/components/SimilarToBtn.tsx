@@ -5,10 +5,10 @@ type Props = {
 };
 
 const SimilarToBtn: React.FC<Props> = ({ simItem }) => {
-  const { handleSimilarToFetch } = useFunctionalityContext();
+  const { handleWordDerivates } = useFunctionalityContext();
 
   return (
-    <button onClick={() => handleSimilarToFetch(simItem)}>{simItem}</button>
+    <button onClick={() => handleWordDerivates(simItem)}>{simItem}</button>
   );
 };
 

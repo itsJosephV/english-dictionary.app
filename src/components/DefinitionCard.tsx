@@ -7,7 +7,7 @@ type Props = {
 };
 
 const DefinitionCard: React.FC<Props> = ({ item }) => {
-  const { handleSynAntFetch, isDetailsOpen } = useFunctionalityContext();
+  const { handleWordDerivates, isDetailsOpen } = useFunctionalityContext();
 
   return (
     <li className="mb-3 bg-neutral-800/50 p-3 rounded-md last:mb-0">
@@ -46,7 +46,7 @@ const DefinitionCard: React.FC<Props> = ({ item }) => {
                     className="px-1.5 py-0.5 bg-purple-500/10 text-sm text-purple-300 hover:text-purple-200 duration-200 rounded-md"
                     key={idx}
                   >
-                    <button onClick={() => handleSynAntFetch(syn)}>
+                    <button onClick={() => handleWordDerivates(syn)}>
                       {syn}
                     </button>
                   </li>
@@ -63,7 +63,7 @@ const DefinitionCard: React.FC<Props> = ({ item }) => {
                     className="px-1.5 py-0.5 bg-orange-500/10 text-sm rounded-md text-orange-300 hover:text-orange-200 duration-200"
                     key={idx}
                   >
-                    <button onClick={() => handleSynAntFetch(ant)}>
+                    <button onClick={() => handleWordDerivates(ant)}>
                       {ant}
                     </button>
                   </li>

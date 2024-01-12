@@ -60,8 +60,6 @@ export interface FunctionalityCtx {
   setIsDetailsOpen: React.Dispatch<React.SetStateAction<boolean>>;
   setResultsLimit: React.Dispatch<React.SetStateAction<number | null>>;
   handleFavoriteFetch: (favWord: string) => void
-  handleSimilarToFetch: (similarToWord: string) => void
-  handleSynAntFetch: (synAntWord: string) => void
-  handleDefinitionWordFetch: (defWord: string) => void
+  handleWordDerivates: (word: string) => void
 }
 
