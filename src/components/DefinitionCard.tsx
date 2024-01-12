@@ -1,28 +1,23 @@
 import { useFunctionalityContext } from "../context/functionalities/useFunctionalityContext";
 import { WordResults } from "../types";
+import DefWordButton from "./DefWordButton";
 
 type Props = {
   item: WordResults;
 };
 
 const DefinitionCard: React.FC<Props> = ({ item }) => {
-  const { isDetailsOpen, setOnSynAntWords, setOnFavorite, setOnSimilarToWords } =
-    useFunctionalityContext();
-  const handleSynAntButton = (synOrAnt: string) => {
-    if (synOrAnt) {
-      setOnSynAntWords(synOrAnt);
-      setOnFavorite(null);
-      setOnSimilarToWords(null)
-    }
-  };
+  const { handleSynAntFetch, isDetailsOpen } = useFunctionalityContext();
+
   return (
     <li className="mb-3 bg-neutral-800/50 p-3 rounded-md last:mb-0">
       {item.partOfSpeech && (
-        <p className="inline-flex mb-2 text-sm text-neutral-400 border border-neutral-700 py-0.5 px-1 rounded-md">
+        <h1 className="inline-flex mb-2 text-sm text-neutral-400 border border-neutral-700 py-0.5 px-1 rounded-md">
           {item.partOfSpeech}
-        </p>
+        </h1>
       )}
-      <p>{item.definition}</p>
+      {/* <p>{item.definition}</p> */}
+      <DefWordButton text={item.definition} />
       {(item.examples || item.synonyms || item.antonyms) && (
         <details open={isDetailsOpen}>
           <summary className="text-indigo-300 hover:text-indigo-200 duration-200">
@@ -51,7 +46,7 @@ const DefinitionCard: React.FC<Props> = ({ item }) => {
                     className="px-1.5 py-0.5 bg-purple-500/10 text-sm text-purple-300 hover:text-purple-200 duration-200 rounded-md"
                     key={idx}
                   >
-                    <button onClick={() => handleSynAntButton(syn)}>
+                    <button onClick={() => handleSynAntFetch(syn)}>
                       {syn}
                     </button>
                   </li>
@@ -68,7 +63,7 @@ const DefinitionCard: React.FC<Props> = ({ item }) => {
                     className="px-1.5 py-0.5 bg-orange-500/10 text-sm rounded-md text-orange-300 hover:text-orange-200 duration-200"
                     key={idx}
                   >
-                    <button onClick={() => handleSynAntButton(ant)}>
+                    <button onClick={() => handleSynAntFetch(ant)}>
                       {ant}
                     </button>
                   </li>

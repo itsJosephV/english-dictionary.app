@@ -56,11 +56,12 @@ export interface FunctionalityCtx {
   handleCleanResults: (e: React.FormEvent) => void;
   handleBackToFirst: () => void;
   setWord: React.Dispatch<React.SetStateAction<string | null>>;
-  setOnSimilarToWords: React.Dispatch<React.SetStateAction<string | null>>;
   setIsAutoFocusEn: React.Dispatch<React.SetStateAction<boolean>>;
-  setOnSynAntWords: React.Dispatch<React.SetStateAction<string | null>>;
   setIsDetailsOpen: React.Dispatch<React.SetStateAction<boolean>>;
   setResultsLimit: React.Dispatch<React.SetStateAction<number | null>>;
-  setOnFavorite: React.Dispatch<React.SetStateAction<string | null>>;
+  handleFavoriteFetch: (favWord: string) => void
+  handleSimilarToFetch: (similarToWord: string) => void
+  handleSynAntFetch: (synAntWord: string) => void
+  handleDefinitionWordFetch: (defWord: string) => void
 }
 

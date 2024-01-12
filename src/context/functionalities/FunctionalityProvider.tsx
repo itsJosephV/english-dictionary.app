@@ -16,9 +16,6 @@ const FunctionalityProvider: React.FC<Props> = ({ children }) => {
   const [isSimilarWordsActive, setIsSimilarWordsActive] =
     useState<boolean>(false);
   const [isAutoFocusEn, setIsAutoFocusEn] = useState<boolean>(true);
-  const [onFavorite, setOnFavorite] = useState<string | null>(null);
-  const [onSimilarToWords, setOnSimilarToWords] = useState<string | null>(null);
-  const [onSynAntWords, setOnSynAntWords] = useState<string | null>(null);
   const [isClearEn, setIsClearEn] = useState<boolean>(false);
   const [isDetailsOpen, setIsDetailsOpen] = useState<boolean>(false);
 
@@ -40,29 +37,22 @@ const FunctionalityProvider: React.FC<Props> = ({ children }) => {
       return;
     }
     await fetchDictionary(word, true);
-    setOnSimilarToWords(null);
-    setOnSynAntWords(null);
     setResultsLimit(5);
     setIsReseteableEn(false);
     setIsSimilarWordsActive(false);
   };
-
-  //? Helpers to avoid unnecessary shorcuts calls when no data
-  // const formBool: boolean = Boolean(word?.length);
 
   const handleCleanResults = (e: React.FormEvent) => {
     e.preventDefault();
     setWord(null);
     setDictionaryData(null);
     setSimilarToData(null);
-    setOnFavorite(null);
     setError("");
     setResultsLimit(null);
     setIsSimilarWordsActive(false);
     setIsClearEn(false);
     setIsReseteableEn(false);
-    setOnSynAntWords(null);
-    setStoredWords([])
+    setStoredWords([]);
   };
 
   const handleSimilarToButton = (e: React.ChangeEvent<HTMLDetailsElement>) => {
@@ -78,49 +68,30 @@ const FunctionalityProvider: React.FC<Props> = ({ children }) => {
       fetchDictionary(firstWordInArr, true);
       setWord(firstWordInArr);
       setIsReseteableEn(false);
-      setOnSynAntWords(null);
-      setOnFavorite(null)
-      setOnSimilarToWords(null)
     }
+  };  
+
+  // TEST
+  const handleFavoriteFetch = (favWord: string) => {
+    setWord(favWord);
+    setIsReseteableEn(false);
+    fetchDictionary(favWord, true);
   };
 
-  useEffect(() => {
-    if (!dictionaryData?.word) {
-      return;
-    }
-    setWord(dictionaryData.word);
-  }, [dictionaryData?.word]);
+  const handleSimilarToFetch = (similarWord: string) => {
+    setWord(similarWord);
+    fetchDictionary(similarWord, false);
+  };
 
-  useEffect(() => {
-    if (!onFavorite) {
-      return;
-    }
-    setWord(onFavorite);
-    setIsReseteableEn(false);
-    fetchDictionary(onFavorite, true);
+  const handleSynAntFetch = (synAnt: string) => {
+    setWord(synAnt);
+    fetchDictionary(synAnt, false);
+  };
 
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [onFavorite]);
-
-  //? Perf: better testing & improve — useCallback?
-  useEffect(() => {
-    if (!onSimilarToWords) {
-      return;
-    }
-    setWord(onSimilarToWords);
-    fetchDictionary(onSimilarToWords, false);
-
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [onSimilarToWords]);
-
-  useEffect(() => {
-    if (!onSynAntWords) {
-      return;
-    }
-    setWord(onSynAntWords);
-    fetchDictionary(onSynAntWords, false);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [onSynAntWords]);
+  const handleDefinitionWordFetch = (defWord: string) => {
+    setWord(defWord);
+    fetchDictionary(defWord, false);
+  };
 
   /**
    * Clear button displays if word in input exist
@@ -165,17 +136,18 @@ const FunctionalityProvider: React.FC<Props> = ({ children }) => {
         isClearEn,
         isDetailsOpen,
         isAutoFocusEn,
-        handleFormSubmit,
-        handleCleanResults,
-        handleSimilarToButton,
-        handleBackToFirst,
+        setWord,
         setIsAutoFocusEn,
         setIsDetailsOpen,
-        setWord,
         setResultsLimit,
-        setOnSynAntWords,
-        setOnSimilarToWords,
-        setOnFavorite,
+        handleFormSubmit,
+        handleSimilarToButton,
+        handleCleanResults,
+        handleBackToFirst,
+        handleFavoriteFetch,
+        handleSimilarToFetch,
+        handleSynAntFetch,
+        handleDefinitionWordFetch,
       }}
     >
       {children}

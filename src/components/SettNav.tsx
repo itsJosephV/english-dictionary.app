@@ -4,22 +4,31 @@ import { SettingsIcon } from "../icons/SettingsIcon";
 import { GitHubIcon } from "../icons/GithubIcon";
 import { useFavoriteWords } from "../context/favoriteWords/useFavoriteWordsContext";
 import { useFunctionalityContext } from "../context/functionalities/useFunctionalityContext";
+import { LinkedInIcon } from "../icons/LinkedInIcon";
 
 const SettNav = () => {
   const { cleanLocalStorage, favorites } = useFavoriteWords();
   const { isDetailsOpen, isAutoFocusEn, setIsDetailsOpen, setIsAutoFocusEn } =
     useFunctionalityContext();
 
+  const iconStyle =
+    "text-[1.3rem] text-neutral-400 hover:text-white duration-200";
+
   return (
     <nav className="border-b px-5 border-neutral-800 ">
       <div className="max-w-[1024px] mx-auto py-1.5 flex items-center">
         <p className="font-bold text-[1.2rem] flex-1">Dictionary</p>
-        <a className="mr-2" href="" target="_blank" rel="noopener noreferrer">
-          <GitHubIcon className="text-[1.3rem]" />
-        </a>
+        <div className="flex mr-4 gap-1.5">
+          <a href="https://github.com/itsJosephV/dictionary-app/tree/main" target="_blank" rel="noopener noreferrer">
+            <GitHubIcon className={iconStyle} />
+          </a>
+          <a href="https://www.linkedin.com/in/josephvp/" target="_blank" rel="noopener noreferrer">
+            <LinkedInIcon className={iconStyle} />
+          </a>
+        </div>
         <DropdownMenu.Root>
           <DropdownMenu.Trigger className="flex items-center outline-none">
-            <SettingsIcon className="text-[1.3rem]" />
+            <SettingsIcon className={iconStyle} />
           </DropdownMenu.Trigger>
           <DropdownMenu.Portal>
             <DropdownMenu.Content

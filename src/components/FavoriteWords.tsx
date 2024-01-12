@@ -4,16 +4,7 @@ import { useFunctionalityContext } from "../context/functionalities/useFunctiona
 
 const FavoriteWords = () => {
   const { favorites, removeFavorite } = useFavoriteWords();
-  const { setOnFavorite, setOnSimilarToWords, setOnSynAntWords } = useFunctionalityContext();
-
-  const handleFavorite = (item: string) => {
-    if(!item) {
-      return
-    }
-    setOnFavorite(item)
-    setOnSimilarToWords(null)
-    setOnSynAntWords(null)
-  }
+  const { handleFavoriteFetch } = useFunctionalityContext();
 
   return (
     <>
@@ -33,7 +24,7 @@ const FavoriteWords = () => {
                 <div className="flex gap-2">
                   <button
                     className="flex flex-grow text-neutral-300 hover:text-white duration-200"
-                    onClick={() => handleFavorite(item)}
+                    onClick={() => handleFavoriteFetch(item)}
                   >
                     {item}
                   </button>
