@@ -60,10 +60,10 @@ export const DictionaryProvider: React.FC<Props> = ({ children }) => {
         headers,
       });
       const data2 = await resTwo.json();
-
+      
+      updateFirstWords(data1.word, true);
       setDictionaryData(data1);
       setSimilarToData(data2);
-      updateFirstWords(data1.word, true);
     } catch (error) {
       handleErrors(error);
     } finally {
@@ -126,6 +126,7 @@ export const DictionaryProvider: React.FC<Props> = ({ children }) => {
         isReseteableEn,
         setDictionaryData,
         setSimilarToData,
+        setStoredWords,
         setError,
         setIsReseteableEn,
         fetchDictionary,

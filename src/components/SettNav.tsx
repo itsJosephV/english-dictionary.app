@@ -5,11 +5,10 @@ import { GitHubIcon } from "../icons/GithubIcon";
 import { useFavoriteWords } from "../context/favoriteWords/useFavoriteWordsContext";
 import { useFunctionalityContext } from "../context/functionalities/useFunctionalityContext";
 
-  const SettNav = (
-) => {
+const SettNav = () => {
   const { cleanLocalStorage, favorites } = useFavoriteWords();
-  const { isDetailsOpen, setIsDetailsOpen, isAutoFocusEn, setIsAutoFocusEn  } = useFunctionalityContext()
-  
+  const { isDetailsOpen, isAutoFocusEn, setIsDetailsOpen, setIsAutoFocusEn } =
+    useFunctionalityContext();
 
   return (
     <nav className="border-b px-5 border-neutral-800 ">

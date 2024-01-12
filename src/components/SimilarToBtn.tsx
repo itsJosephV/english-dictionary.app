@@ -5,10 +5,13 @@ type Props = {
 };
 
 const SimilarToBtn: React.FC<Props> = ({ simItem }) => {
-  const { setOnSimilarToWords } = useFunctionalityContext();
+  const { setOnSimilarToWords, setOnFavorite, setOnSynAntWords } =
+    useFunctionalityContext();
   const handleSimilarToButton = (synItem: string) => {
     if (synItem) {
       setOnSimilarToWords(synItem);
+      setOnSynAntWords(null);
+      setOnFavorite(null);
     }
   };
   return (

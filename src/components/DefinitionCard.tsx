@@ -6,10 +6,13 @@ type Props = {
 };
 
 const DefinitionCard: React.FC<Props> = ({ item }) => {
-  const { setOnSynAntWords, isDetailsOpen } = useFunctionalityContext();
+  const { isDetailsOpen, setOnSynAntWords, setOnFavorite, setOnSimilarToWords } =
+    useFunctionalityContext();
   const handleSynAntButton = (synOrAnt: string) => {
     if (synOrAnt) {
       setOnSynAntWords(synOrAnt);
+      setOnFavorite(null);
+      setOnSimilarToWords(null)
     }
   };
   return (

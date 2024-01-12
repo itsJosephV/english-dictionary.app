@@ -36,6 +36,7 @@ export interface DictionaryCtx {
   isReseteableEn: boolean;
   setDictionaryData: (data: DictionaryItem | null) => void;
   setSimilarToData: (data: WordSimilarTo | null) => void;
+  setStoredWords: React.Dispatch<React.SetStateAction<string[]>>
   setError: (error: string | null) => void;
   setIsReseteableEn: (value: boolean) => void;
   fetchDictionary: (word: string, cleanArray?: boolean) => Promise<void>;
@@ -60,5 +61,6 @@ export interface FunctionalityCtx {
   setOnSynAntWords: React.Dispatch<React.SetStateAction<string | null>>;
   setIsDetailsOpen: React.Dispatch<React.SetStateAction<boolean>>;
   setResultsLimit: React.Dispatch<React.SetStateAction<number | null>>;
+  setOnFavorite: React.Dispatch<React.SetStateAction<string | null>>;
 }
 

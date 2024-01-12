@@ -16,6 +16,7 @@ const FunctionalityProvider: React.FC<Props> = ({ children }) => {
   const [isSimilarWordsActive, setIsSimilarWordsActive] =
     useState<boolean>(false);
   const [isAutoFocusEn, setIsAutoFocusEn] = useState<boolean>(true);
+  const [onFavorite, setOnFavorite] = useState<string | null>(null);
   const [onSimilarToWords, setOnSimilarToWords] = useState<string | null>(null);
   const [onSynAntWords, setOnSynAntWords] = useState<string | null>(null);
   const [isClearEn, setIsClearEn] = useState<boolean>(false);
@@ -28,6 +29,7 @@ const FunctionalityProvider: React.FC<Props> = ({ children }) => {
     storedWords,
     setDictionaryData,
     setSimilarToData,
+    setStoredWords,
     setError,
     fetchDictionary,
     setIsReseteableEn,
@@ -53,11 +55,14 @@ const FunctionalityProvider: React.FC<Props> = ({ children }) => {
     setWord(null);
     setDictionaryData(null);
     setSimilarToData(null);
+    setOnFavorite(null);
     setError("");
     setResultsLimit(null);
     setIsSimilarWordsActive(false);
     setIsClearEn(false);
     setIsReseteableEn(false);
+    setOnSynAntWords(null);
+    setStoredWords([])
   };
 
   const handleSimilarToButton = (e: React.ChangeEvent<HTMLDetailsElement>) => {
@@ -73,8 +78,29 @@ const FunctionalityProvider: React.FC<Props> = ({ children }) => {
       fetchDictionary(firstWordInArr, true);
       setWord(firstWordInArr);
       setIsReseteableEn(false);
+      setOnSynAntWords(null);
+      setOnFavorite(null)
+      setOnSimilarToWords(null)
     }
   };
+
+  useEffect(() => {
+    if (!dictionaryData?.word) {
+      return;
+    }
+    setWord(dictionaryData.word);
+  }, [dictionaryData?.word]);
+
+  useEffect(() => {
+    if (!onFavorite) {
+      return;
+    }
+    setWord(onFavorite);
+    setIsReseteableEn(false);
+    fetchDictionary(onFavorite, true);
+
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [onFavorite]);
 
   //? Perf: better testing & improve — useCallback?
   useEffect(() => {
@@ -83,6 +109,7 @@ const FunctionalityProvider: React.FC<Props> = ({ children }) => {
     }
     setWord(onSimilarToWords);
     fetchDictionary(onSimilarToWords, false);
+
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [onSimilarToWords]);
 
@@ -94,13 +121,6 @@ const FunctionalityProvider: React.FC<Props> = ({ children }) => {
     fetchDictionary(onSynAntWords, false);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [onSynAntWords]);
-
-  useEffect(() => {
-    if (!dictionaryData?.word) {
-      return;
-    }
-    setWord(dictionaryData.word);
-  }, [dictionaryData?.word]);
 
   /**
    * Clear button displays if word in input exist
@@ -134,6 +154,7 @@ const FunctionalityProvider: React.FC<Props> = ({ children }) => {
     };
   }, [isAutoFocusEn, word]);
 
+  console.log(storedWords);
   return (
     <FunctionalityContext.Provider
       value={{
@@ -154,6 +175,7 @@ const FunctionalityProvider: React.FC<Props> = ({ children }) => {
         setResultsLimit,
         setOnSynAntWords,
         setOnSimilarToWords,
+        setOnFavorite,
       }}
     >
       {children}

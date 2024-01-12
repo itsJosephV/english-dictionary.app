@@ -1,6 +1,6 @@
 import { ReactNode } from "react";
 
-interface Props {
+type Props = {
   ctxComponents: Array<React.FC<{ children?: ReactNode }>>;
   children?: ReactNode;
 }

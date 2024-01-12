@@ -1,8 +1,19 @@
 import { RemoveFavorite } from "../icons/RemoveFavorite";
 import { useFavoriteWords } from "../context/favoriteWords/useFavoriteWordsContext";
+import { useFunctionalityContext } from "../context/functionalities/useFunctionalityContext";
 
 const FavoriteWords = () => {
   const { favorites, removeFavorite } = useFavoriteWords();
+  const { setOnFavorite, setOnSimilarToWords, setOnSynAntWords } = useFunctionalityContext();
+
+  const handleFavorite = (item: string) => {
+    if(!item) {
+      return
+    }
+    setOnFavorite(item)
+    setOnSimilarToWords(null)
+    setOnSynAntWords(null)
+  }
 
   return (
     <>
@@ -22,7 +33,7 @@ const FavoriteWords = () => {
                 <div className="flex gap-2">
                   <button
                     className="flex flex-grow text-neutral-300 hover:text-white duration-200"
-                    onClick={() => console.log("item clicked")}
+                    onClick={() => handleFavorite(item)}
                   >
                     {item}
                   </button>
