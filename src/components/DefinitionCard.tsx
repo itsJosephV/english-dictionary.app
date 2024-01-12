@@ -10,13 +10,17 @@ const DefinitionCard: React.FC<Props> = ({ item }) => {
   const { handleWordDerivates, isDetailsOpen } = useFunctionalityContext();
 
   return (
-    <li className="mb-3 bg-neutral-800/50 p-3 rounded-md last:mb-0">
+    <li className="mb-3 bg-neutral-800/50 p-3 rounded-md last:mb-0 relative">
+      {/* <div className="absolute top-2 right-2 border border-red-200">
+        <button className="px-1 border">
+          copy
+        </button>
+      </div> */}
       {item.partOfSpeech && (
         <h1 className="inline-flex mb-2 text-sm text-neutral-400 border border-neutral-700 py-0.5 px-1 rounded-md">
           {item.partOfSpeech}
         </h1>
       )}
-      {/* <p>{item.definition}</p> */}
       <DefWordButton text={item.definition} />
       {(item.examples || item.synonyms || item.antonyms) && (
         <details open={isDetailsOpen}>
