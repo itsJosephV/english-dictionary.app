@@ -14,7 +14,7 @@ const Introduction = () => {
           <p className="text-lg">or get a</p>
           <button
             onClick={() => {
-              fetchDictionaryRandom();
+              fetchDictionaryRandom()
               console.log("test");
             }}
             className=" px-1.5 rounded-md text-neutral-300 border border-neutral-700 hover:text-white duration-200 bg-neutral-800/50 flex items-center gap-1"

@@ -69,18 +69,14 @@ const FunctionalityProvider: React.FC<Props> = ({ children }) => {
       setWord(firstWordInArr);
       setIsReseteableEn(false);
     }
-  };  
-
-  const handleFavoriteFetch = (favWord: string) => {
-    setWord(favWord);
-    setIsReseteableEn(false);
-    fetchDictionary(favWord, true);
   };
 
-  const handleWordDerivates = (word: string) => {
-    setWord(word);
-    fetchDictionary(word, false);
-  }
+  useEffect(() => {
+    if (!dictionaryData?.word) {
+      return;
+    }
+    setWord(dictionaryData.word);
+  }, [dictionaryData?.word]);
 
   /**
    * Clear button displays if word in input exist
@@ -133,8 +129,6 @@ const FunctionalityProvider: React.FC<Props> = ({ children }) => {
         handleSimilarToButton,
         handleCleanResults,
         handleBackToFirst,
-        handleFavoriteFetch,
-        handleWordDerivates
       }}
     >
       {children}

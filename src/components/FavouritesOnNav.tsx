@@ -1,12 +1,12 @@
+import { useDictionaryContext } from "../context/api/useDictionaryContext";
 import { useFavoriteWords } from "../context/favoriteWords/useFavoriteWordsContext";
-import { useFunctionalityContext } from "../context/functionalities/useFunctionalityContext";
 import { FavoriteIcon } from "../icons/FavoriteIcon";
 import { RemoveFavorite } from "../icons/RemoveFavorite";
 import * as DropdownMenu from "@radix-ui/react-dropdown-menu";
 
-const FavoritesTest = ({ triggerClasses}: { triggerClasses: string}) => {
+const FavouritesOnNav = ({ triggerClasses}: { triggerClasses: string}) => {
   const { favorites, removeFavorite } = useFavoriteWords();
-  const { handleFavoriteFetch } = useFunctionalityContext();
+  const { fetchDictionary, setIsReseteableEn } = useDictionaryContext()
 
   const iconStyle =
     "text-[1.3rem] text-neutral-400 hover:text-white duration-200";
@@ -38,7 +38,8 @@ const FavoritesTest = ({ triggerClasses}: { triggerClasses: string}) => {
                   <button
                     onClick={(e) => {
                       e.preventDefault();
-                      handleFavoriteFetch(item);
+                      fetchDictionary(item, true);
+                      setIsReseteableEn(false)
                     }}
                     className="flex flex-grow  text-sm text-neutral-400 hover:text-white duration-200"
                   >
@@ -62,4 +63,4 @@ const FavoritesTest = ({ triggerClasses}: { triggerClasses: string}) => {
   );
 };
 
-export default FavoritesTest;
+export default FavouritesOnNav;

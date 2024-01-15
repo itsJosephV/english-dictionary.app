@@ -59,7 +59,5 @@ export interface FunctionalityCtx {
   setIsAutoFocusEn: React.Dispatch<React.SetStateAction<boolean>>;
   setIsDetailsOpen: React.Dispatch<React.SetStateAction<boolean>>;
   setResultsLimit: React.Dispatch<React.SetStateAction<number | null>>;
-  handleFavoriteFetch: (favWord: string) => void
-  handleWordDerivates: (word: string) => void
 }
 

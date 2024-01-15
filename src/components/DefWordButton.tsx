@@ -1,4 +1,4 @@
-import { useFunctionalityContext } from "../context/functionalities/useFunctionalityContext";
+import { useDictionaryContext } from "../context/api/useDictionaryContext";
 import React from "react";
 
 type Props = {
@@ -7,7 +7,7 @@ type Props = {
 
 const DefWordButton: React.FC<Props> = ({ text }) => {
   const wordsWithSymbols = text.split(/\b(\w*['-]*\w+)\b/);
-  const { handleWordDerivates } = useFunctionalityContext();
+  const { fetchDictionary } = useDictionaryContext()
 
   return (
     <div>
@@ -18,7 +18,7 @@ const DefWordButton: React.FC<Props> = ({ text }) => {
             <button
               className="cursor-pointer hover:underline underline-offset-[3px]"
               key={index}
-              onClick={() => handleWordDerivates(defWord)}
+              onClick={() => fetchDictionary(defWord, false)}
             >
               {defWord}
             </button>

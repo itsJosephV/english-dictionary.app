@@ -5,7 +5,7 @@ import { GitHubIcon } from "../icons/GithubIcon";
 import { useFavoriteWords } from "../context/favoriteWords/useFavoriteWordsContext";
 import { useFunctionalityContext } from "../context/functionalities/useFunctionalityContext";
 import { LinkedInIcon } from "../icons/LinkedInIcon";
-import FavoritesTest from "./FavoritesTest";
+import FavouritesOnNav from "./FavouritesOnNav";
 
 const SettNav = () => {
   const { cleanLocalStorage, favorites } = useFavoriteWords();
@@ -95,7 +95,7 @@ const SettNav = () => {
         {/**
          *
          */}
-        <FavoritesTest triggerClasses={"custom-media-nav"} />
+        <FavouritesOnNav triggerClasses={"custom-media-nav"} />
       </div>
     </nav>
   );

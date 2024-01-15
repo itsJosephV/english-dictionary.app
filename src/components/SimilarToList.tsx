@@ -5,8 +5,8 @@ import { useFunctionalityContext } from "../context/functionalities/useFunctiona
 
 const SimilarToList = () => {
   const similarToRef = useRef<HTMLDetailsElement>(null);
-  const { similarToData } = useDictionaryContext();
-  const { isSimilarWordsActive, handleSimilarToButton, handleWordDerivates } =
+  const { similarToData, fetchDictionary } = useDictionaryContext();
+  const { isSimilarWordsActive, handleSimilarToButton } =
     useFunctionalityContext();
   const similarToBool: boolean = Boolean(similarToData?.similarTo?.length);
 
@@ -43,7 +43,7 @@ const SimilarToList = () => {
             className="px-1.5 py-0.5 bg-neutral-800/50 border border-neutral-700 text-sm text-neutral-300 hover:text-white duration-200 rounded-md"
             key={simItem}
           >
-            <button onClick={() => handleWordDerivates(simItem)}>
+            <button onClick={() => fetchDictionary(simItem, false)}>
               {simItem}
             </button>
           </li>
