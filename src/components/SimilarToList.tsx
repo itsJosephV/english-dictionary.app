@@ -1,4 +1,3 @@
-import SimilarToBtn from "./SimilarToBtn";
 import { useRef } from "react";
 import { useHotkeys } from "react-hotkeys-hook";
 import { useDictionaryContext } from "../context/api/useDictionaryContext";
@@ -7,7 +6,7 @@ import { useFunctionalityContext } from "../context/functionalities/useFunctiona
 const SimilarToList = () => {
   const similarToRef = useRef<HTMLDetailsElement>(null);
   const { similarToData } = useDictionaryContext();
-  const { isSimilarWordsActive, handleSimilarToButton } =
+  const { isSimilarWordsActive, handleSimilarToButton, handleWordDerivates } =
     useFunctionalityContext();
   const similarToBool: boolean = Boolean(similarToData?.similarTo?.length);
 
@@ -44,7 +43,9 @@ const SimilarToList = () => {
             className="px-1.5 py-0.5 bg-neutral-800/50 border border-neutral-700 text-sm text-neutral-300 hover:text-white duration-200 rounded-md"
             key={simItem}
           >
-            <SimilarToBtn simItem={simItem} />
+            <button onClick={() => handleWordDerivates(simItem)}>
+              {simItem}
+            </button>
           </li>
         ))}
       </ul>

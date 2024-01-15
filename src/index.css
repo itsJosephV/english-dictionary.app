@@ -7,7 +7,7 @@
   line-height: 1.5;
   font-weight: 400;
 
-  --footer-height: 37px;
+  --nav-height: 41px;
 
   color-scheme: light dark;
   color: rgba(255, 255, 255, 0.87);
@@ -33,7 +33,7 @@ details > summary {
 }
 
 .min-h {
-  min-height: calc(100vh - var(--footer-height));
+  min-height: calc(100vh - var(--nav-height));
 }
 
 details > summary::-webkit-details-marker {
@@ -55,3 +55,16 @@ details[open] summary ~ * {
   0%    {opacity: 0; transform: translateX(-10px)}
   100%  {opacity: 1; transform: translateX(0)}
 }
+
+@media (min-width: 1120px) {
+  .custom-media {
+    display: block;
+  }
+}
+
+@media (min-width: 1120px) {
+  .custom-media-nav {
+    display: none;
+  }
+}
+

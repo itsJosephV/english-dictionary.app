@@ -5,6 +5,7 @@ import { GitHubIcon } from "../icons/GithubIcon";
 import { useFavoriteWords } from "../context/favoriteWords/useFavoriteWordsContext";
 import { useFunctionalityContext } from "../context/functionalities/useFunctionalityContext";
 import { LinkedInIcon } from "../icons/LinkedInIcon";
+import FavoritesTest from "./FavoritesTest";
 
 const SettNav = () => {
   const { cleanLocalStorage, favorites } = useFavoriteWords();
@@ -14,15 +15,26 @@ const SettNav = () => {
   const iconStyle =
     "text-[1.3rem] text-neutral-400 hover:text-white duration-200";
 
+  const itemStyle =
+    "p-1.5 text-sm h-[30px] flex items-center rounded-md data-[highlighted]:bg-neutral-700 outline-none";
+
   return (
     <nav className="border-b px-5 border-neutral-800 ">
       <div className="max-w-[1024px] mx-auto py-1.5 flex items-center">
         <p className="font-bold text-[1.2rem] flex-1">Dictionary</p>
         <div className="flex mr-4 gap-1.5">
-          <a href="https://github.com/itsJosephV/dictionary-app/tree/main" target="_blank" rel="noopener noreferrer">
+          <a
+            href="https://github.com/itsJosephV/dictionary-app/tree/main"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
             <GitHubIcon className={iconStyle} />
           </a>
-          <a href="https://www.linkedin.com/in/josephvp/" target="_blank" rel="noopener noreferrer">
+          <a
+            href="https://www.linkedin.com/in/josephvp/"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
             <LinkedInIcon className={iconStyle} />
           </a>
         </div>
@@ -38,7 +50,7 @@ const SettNav = () => {
             >
               <DropdownMenu.Item
                 onSelect={(e) => e.preventDefault()}
-                className="p-1.5 text-sm h-[30px] flex items-center rounded-md data-[highlighted]:bg-neutral-700  outline-none"
+                className={itemStyle}
               >
                 <label className="w-full flex justify-between items-center">
                   Autofocus
@@ -52,7 +64,7 @@ const SettNav = () => {
               </DropdownMenu.Item>
               <DropdownMenu.Item
                 onSelect={(e) => e.preventDefault()}
-                className="p-1.5 text-sm h-[30px] flex items-center rounded-md data-[highlighted]:bg-neutral-700 outline-none"
+                className={itemStyle}
               >
                 <label className="w-full flex justify-between items-center">
                   Details
@@ -80,6 +92,10 @@ const SettNav = () => {
             </DropdownMenu.Content>
           </DropdownMenu.Portal>
         </DropdownMenu.Root>
+        {/**
+         *
+         */}
+        <FavoritesTest triggerClasses={"custom-media-nav"} />
       </div>
     </nav>
   );
