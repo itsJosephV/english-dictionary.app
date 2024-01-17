@@ -55,16 +55,14 @@ const List = () => {
       {!dictionaryData && !isLoading && !error && <Introduction />}
       {dictionaryData && (
         <Fragment>
-          <div>
-            <div className="flex flex-wrap items-center gap-2">
-              <p className="text-4xl font-semibold">{dictionaryData.word}</p>
-              {dictionaryData.pronunciation &&
-                dictionaryData.pronunciation.all && (
-                  <span className="text-[1.2rem] text-neutral-400">{`—${" "}/${
-                    dictionaryData.pronunciation?.all
-                  }/`}</span>
-                )}
-            </div>
+          <div className="flex flex-wrap items-center gap-2 mb-1.5">
+            <p className="text-4xl font-semibold">{dictionaryData.word}</p>
+            {dictionaryData.pronunciation &&
+              dictionaryData.pronunciation.all && (
+                <span className="text-[1.2rem] text-neutral-400">{`—${" "}/${
+                  dictionaryData.pronunciation?.all
+                }/`}</span>
+              )}
           </div>
           <div className="mb-4">
             <FavoriteButton />

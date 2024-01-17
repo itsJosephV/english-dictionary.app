@@ -27,20 +27,23 @@ const SimilarToList = () => {
 
   return (
     <details
-      className={`text-xs flex items-center ${
-        similarToBool
-          ? "text-indigo-300 hover:text-indigo-200 duration-200"
-          : "text-neutral-500 select-none pointer-events-none"
-      }`}
       ref={similarToRef}
       open={isSimilarWordsActive}
       onToggle={handleSimilarToButton}
     >
-      <summary className="mt-1"> Similar words</summary>
+      <summary
+        className={`text-xs mt-1 ${
+          similarToBool
+            ? "text-indigo-400 hover:text-white duration-200"
+            : "text-neutral-500 select-none pointer-events-none"
+        }`}
+      >
+        Similar words
+      </summary>
       <ul className="flex flex-row mt-4 gap-2 flex-wrap">
         {similarToData?.similarTo?.map((simItem) => (
           <li
-            className="px-1.5 py-0.5 bg-neutral-800/50 border border-neutral-700 text-sm text-neutral-300 hover:text-white duration-200 rounded-md"
+            className="px-1.5 py-0.5 bg-indigo-500/10 text-sm text-indigo-300 hover:text-indigo-200 duration-200 rounded-sm"
             key={simItem}
           >
             <button onClick={() => fetchDictionary(simItem, false)}>

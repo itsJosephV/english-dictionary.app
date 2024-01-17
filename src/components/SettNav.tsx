@@ -20,7 +20,7 @@ const SettNav = () => {
 
   return (
     <nav className="border-b px-5 border-neutral-800 ">
-      <div className="max-w-[1024px] mx-auto py-1.5 flex items-center">
+      <div className="max-w-[1440px] py-1.5 flex items-center mx-auto">
         <p className="font-bold text-[1.2rem] flex-1">Dictionary</p>
         <div className="flex mr-4 gap-1.5">
           <a
@@ -39,7 +39,7 @@ const SettNav = () => {
           </a>
         </div>
         <DropdownMenu.Root>
-          <DropdownMenu.Trigger className="flex items-center outline-none">
+          <DropdownMenu.Trigger className="flex items-center outline-none mr-1">
             <SettingsIcon className={iconStyle} />
           </DropdownMenu.Trigger>
           <DropdownMenu.Portal>

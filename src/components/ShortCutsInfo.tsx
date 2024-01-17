@@ -6,7 +6,7 @@ const ShortCutsInfo = () => {
     { kbd: "⇧R", title: "Reset" },
   ];
   return (
-    <div className="flex flex-col md:flex-row justify-center md:gap-3 gap-2 mx-auto border p-2 rounded-md border-neutral-700">
+    <div className="flex flex-col justify-center md:gap-3 gap-2 mx-auto border p-2 rounded-md border-neutral-700">
       {items.map((item, idx) => (
         <ShortCutInfo kbd={item.kbd} title={item.title} key={idx} />
       ))}

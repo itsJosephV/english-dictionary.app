@@ -77,7 +77,6 @@ const FunctionalityProvider: React.FC<Props> = ({ children }) => {
     }
     setWord(dictionaryData.word);
   }, [dictionaryData?.word]);
-
   /**
    * Clear button displays if word in input exist
    * and persists if data exists & there's not word in input
@@ -110,7 +109,10 @@ const FunctionalityProvider: React.FC<Props> = ({ children }) => {
     };
   }, [isAutoFocusEn, word]);
 
-  console.log(storedWords);
+  useEffect(() => {
+    console.log(storedWords);
+  }, [storedWords])
+
   return (
     <FunctionalityContext.Provider
       value={{

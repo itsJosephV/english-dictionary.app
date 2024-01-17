@@ -6,11 +6,11 @@ type Props = {
 };
 
 const DefWordButton: React.FC<Props> = ({ text }) => {
-  const wordsWithSymbols = text.split(/\b(\w*['-]*\w+)\b/);
-  const { fetchDictionary } = useDictionaryContext()
+  const wordsWithSymbols = text.split(/\b(\w*['-]*\w+)\b/)
+  const { fetchDictionary } = useDictionaryContext();
 
   return (
-    <div>
+    <div className="select-none">
       {wordsWithSymbols.map((defWord, index) => {
         // Check if the word is a word character (\w+), then create a button
         if (/\w+/.test(defWord)) {
@@ -25,7 +25,11 @@ const DefWordButton: React.FC<Props> = ({ text }) => {
           );
         } else {
           // If it's not a word character, render it outside the button
-          return <span key={index}>{defWord}</span>;
+          return (
+            <span key={index}>
+              {defWord}
+            </span>
+          );
         }
       })}
     </div>

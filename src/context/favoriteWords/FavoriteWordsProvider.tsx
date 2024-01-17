@@ -18,10 +18,10 @@ export const FavoritesProvider: React.FC<Props> = ({ children }) => {
   }, [favorites]);
 
   const addFavorite = (word: string) => {
-    if (favorites.length < 20) {
+    if (favorites.length < 15) {
       setFavorites((prevFavs) => [...prevFavs, word]);
     } else {
-      alert("only 20 fav words allowed");
+      alert("only 15 favourites words allowed");
     }
   };
 

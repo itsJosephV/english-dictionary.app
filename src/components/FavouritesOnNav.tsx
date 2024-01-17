@@ -9,7 +9,7 @@ const FavouritesOnNav = ({ triggerClasses}: { triggerClasses: string}) => {
   const { fetchDictionary, setIsReseteableEn } = useDictionaryContext()
 
   const iconStyle =
-    "text-[1.3rem] text-neutral-400 hover:text-white duration-200";
+    "text-[1.3rem] text-indigo-400 hover:text-white duration-200";
   return (
     <DropdownMenu.Root>
       <DropdownMenu.Trigger
@@ -25,7 +25,7 @@ const FavouritesOnNav = ({ triggerClasses}: { triggerClasses: string}) => {
         >
           {!favorites.length && (
             <DropdownMenu.Item>
-              <p className="p-1.5 text-neutral-400 text-sm">Save up to 20 words</p>
+              <p className="p-1.5 text-neutral-400 text-sm">Save up to 15 words</p>
             </DropdownMenu.Item>
           )}
           {favorites &&

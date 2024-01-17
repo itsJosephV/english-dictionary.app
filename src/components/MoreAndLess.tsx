@@ -15,7 +15,7 @@ export const MoreAndLess: React.FC<Props> = ({
   return (
     <button
       ref={dataRef}
-      className="flex items-center text-xs text-neutral-300 hover:text-white duration-200 mt-2"
+      className="flex items-center text-xs text-indigo-400 hover:text-white duration-200 mt-2"
       onClick={() => setResultsLimit(dataValue)}
     >
       {!dataValue ? "More results" : "Less results"}

@@ -60,7 +60,7 @@ const Form = () => {
     >
       <div className="w-full relative">
         <input
-          className="border border-neutral-700 rounded-md bg-neutral-800/50 py-0.5 pl-1.5 pr-8 w-full"
+          className="border border-neutral-700 rounded-sm bg-transparent py-0.5 pl-1.5 pr-8 w-full"
           type="text"
           name="word"
           placeholder="Search..."
@@ -77,13 +77,13 @@ const Form = () => {
             className="absolute h-full right-2"
             onClick={handleCleanResults}
           >
-            <CleanIcon className="text-neutral-300 hover:text-white duration-200" />
+            <CleanIcon className="text-neutral-400 hover:text-white duration-200" />
           </button>
         )}
       </div>
       {isReseteableEn && (
         <button
-          className="bg-indigo-800/30 border border-indigo-300/30 duration-200 w-[32px] h-[30px] hover:text-indigo-200 text-indigo-300 rounded-md flex items-center justify-center"
+          className="flex items-center justify-center bg-transparent border border-neutral-700 duration-200 w-[32px] h-[30px] text-neutral-400 hover:text-white rounded-sm"
           type="button"
           onClick={handleBackToFirst}
           ref={resetButtonRef}
@@ -92,7 +92,7 @@ const Form = () => {
         </button>
       )}
       <button
-        className="flex items-center justify-center bg-neutral-800/50 border border-neutral-700 duration-200 w-[32px] h-[30px] hover:text-white rounded-md"
+        className="flex items-center justify-center border border-neutral-700 duration-200 w-[32px] h-[30px] hover:text-white text-neutral-400 rounded-sm bg-transparent" 
         type="submit"
       >
         <IcRoundSearch />
