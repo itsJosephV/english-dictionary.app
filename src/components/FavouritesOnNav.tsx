@@ -9,7 +9,7 @@ const FavouritesOnNav = ({ triggerClasses}: { triggerClasses: string}) => {
   const { fetchDictionary, setIsReseteableEn } = useDictionaryContext()
 
   const iconStyle =
-    "text-[1.3rem] text-indigo-400 hover:text-white duration-200";
+    "text-[1.3rem] text-indigo-400 hover:text-indigo-300 duration-200";
   return (
     <DropdownMenu.Root>
       <DropdownMenu.Trigger
@@ -21,7 +21,7 @@ const FavouritesOnNav = ({ triggerClasses}: { triggerClasses: string}) => {
         <DropdownMenu.Content
           sideOffset={10}
           side="bottom"
-          className="min-w-[180px] bg-neutral-950/50 backdrop-blur-md rounded-md p-1.5 border border-neutral-800"
+          className="w-[180px] bg-neutral-950/50 backdrop-blur-md rounded-md p-1.5 border border-neutral-800"
         >
           {!favorites.length && (
             <DropdownMenu.Item>
@@ -33,7 +33,7 @@ const FavouritesOnNav = ({ triggerClasses}: { triggerClasses: string}) => {
               return (
                 <DropdownMenu.Item
                   key={item}
-                  className="p-1.5 h-[30px] flex items-center rounded-md data-[highlighted]:bg-neutral-800 duration-200 outline-none"
+                  className="flex justify-between rounded-md data-[highlighted]:bg-neutral-800 duration-200 outline-none"
                 >
                   <button
                     onClick={(e) => {
@@ -41,12 +41,12 @@ const FavouritesOnNav = ({ triggerClasses}: { triggerClasses: string}) => {
                       fetchDictionary(item, true);
                       setIsReseteableEn(false)
                     }}
-                    className="flex flex-grow  text-sm text-neutral-400 hover:text-white duration-200"
+                    className="text-sm text-neutral-400 hover:text-white duration-200 overflow-hidden text-ellipsis whitespace-nowrap w-full text-start py-1 pl-1.5"
                   >
                     {item}
                   </button>
                   <button
-                    className=" p-0.5 text-neutral-500 hover:text-white duration-200"
+                    className="py-1 pr-1.5 text-neutral-500 hover:text-white duration-200 block"
                     onClick={(e) => {
                       e.preventDefault();
                       removeFavorite(item);

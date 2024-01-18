@@ -26,7 +26,7 @@ const DefinitionCard: React.FC<Props> = ({ item }) => {
       <DefWordButton text={item.definition} />
       {(item.examples || item.synonyms || item.antonyms) && (
         <details open={isDetailsOpen}>
-          <summary className="text-indigo-400 hover:text-indigo-200 duration-200">
+          <summary className="text-indigo-400 hover:text-indigo-300 duration-200">
             Details
           </summary>
           {item.examples && (

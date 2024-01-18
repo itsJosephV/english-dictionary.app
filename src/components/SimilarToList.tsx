@@ -34,7 +34,7 @@ const SimilarToList = () => {
       <summary
         className={`text-xs mt-1 ${
           similarToBool
-            ? "text-indigo-400 hover:text-white duration-200"
+            ? "text-indigo-400 hover:text-indigo-300 duration-200"
             : "text-neutral-500 select-none pointer-events-none"
         }`}
       >

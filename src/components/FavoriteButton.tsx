@@ -29,14 +29,14 @@ const FavoriteButton = () => {
       className="bg-neutral-800 rounded-sm px-1.5 py-0.5 cursor-pointer"
     >
       {isFavorite ? (
-        <p className="flex text-xs text-indigo-400 hover:text-white duration-200  gap-1 items-center">
+        <p className="flex text-xs text-indigo-400 hover:text-indigo-300 duration-200  gap-1 items-center">
           added
           <span>
             <FavoriteIcon />
           </span>
         </p>
       ) : (
-        <p className="flex text-xs text-indigo-400 hover:text-white duration-200 gap-1 items-center">
+        <p className="flex text-xs text-indigo-400 hover:text-indigo-300 duration-200 gap-1 items-center">
           add
           <span>
             <NoFavoriteIcon />

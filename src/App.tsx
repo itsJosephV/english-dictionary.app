@@ -4,6 +4,7 @@ import Form from "./components/Form";
 import SimilarToList from "./components/SimilarToList";
 import List from "./components/List";
 import FavouritesDesktop from "./components/FavouritesDesktop";
+// import ShortCutsInfo from "./components/ShortCutsInfo";
 
 const App = () => {
   return (
@@ -11,6 +12,9 @@ const App = () => {
       <SettNav />
       <div className="flex flex-row relative max-w-[1440px] mx-auto">
         <FavouritesDesktop />
+        {/* <div className="fixed right-0">
+        <ShortCutsInfo />
+        </div> */}
         <main className="pt-14 px-5 pb-6 min-h w-full">
           <section className="max-w-[640px] mx-auto">
             <div>

@@ -56,7 +56,9 @@ const List = () => {
       {dictionaryData && (
         <Fragment>
           <div className="flex flex-wrap items-center gap-2 mb-1.5">
-            <p className="text-4xl font-semibold">{dictionaryData.word}</p>
+            <p className="text-4xl font-semibold overflow-hidden break-words">
+              {dictionaryData.word}
+            </p>
             {dictionaryData.pronunciation &&
               dictionaryData.pronunciation.all && (
                 <span className="text-[1.2rem] text-neutral-400">{`—${" "}/${
@@ -76,7 +78,7 @@ const List = () => {
                 } found`}
               </p>
             ) : (
-              <p className="text-neutral-500 text-xs">{`Results for '${dictionaryData.word}' are not available due to API limitations.`}</p>
+              <p className="text-neutral-500 text-xs break-words">{`Results for '${dictionaryData.word}' are not available due to API limitations.`}</p>
             )}
           </div>
           {dictionaryData.results && (

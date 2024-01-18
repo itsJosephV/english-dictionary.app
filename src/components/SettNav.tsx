@@ -16,7 +16,7 @@ const SettNav = () => {
     "text-[1.3rem] text-neutral-400 hover:text-white duration-200";
 
   const itemStyle =
-    "p-1.5 text-sm h-[30px] flex items-center rounded-md data-[highlighted]:bg-neutral-700 outline-none";
+    "flex justify-between rounded-md data-[highlighted]:bg-neutral-800 duration-200 outline-none text-sm";
 
   return (
     <nav className="border-b px-5 border-neutral-800 ">
@@ -46,13 +46,13 @@ const SettNav = () => {
             <DropdownMenu.Content
               sideOffset={10}
               side="bottom"
-              className="min-w-[180px] bg-neutral-800 rounded-md p-1.5"
+              className="min-w-[180px] bg-neutral-950/50 backdrop-blur-md rounded-md p-1.5 border border-neutral-800"
             >
               <DropdownMenu.Item
                 onSelect={(e) => e.preventDefault()}
                 className={itemStyle}
               >
-                <label className="w-full flex justify-between items-center">
+                <label className="w-full flex justify-between items-center cursor-pointer py-1 px-1.5">
                   Autofocus
                   <input
                     readOnly
@@ -66,7 +66,7 @@ const SettNav = () => {
                 onSelect={(e) => e.preventDefault()}
                 className={itemStyle}
               >
-                <label className="w-full flex justify-between items-center">
+                <label className="w-full flex justify-between items-center py-1 px-1.5 cursor-pointer">
                   Details
                   <input
                     readOnly
@@ -79,12 +79,12 @@ const SettNav = () => {
               <DropdownMenu.Item
                 onClick={() => cleanLocalStorage()}
                 disabled={!favorites.length}
-                className="pl-1.5 pr-[3px] text-sm h-[30px] flex items-center justify-between rounded-md focus:bg-red-400/20 text-red-400 cursor-pointer outline-none
-               rdx-disabled:cursor-not-allowed rdx-disabled:opacity-50"
+                className="flex justify-between items-center rounded-md data-[highlighted]:bg-neutral-800 text-red-400 duration-200 outline-none text-sm
+               rdx-disabled:cursor-not-allowed rdx-disabled:opacity-50 py-1 px-1.5 cursor-pointer"
               >
-                Clean favorites
+                Clear favorites
                 {favorites.length ? (
-                  <span className="rounded-md w-[18px] h-[18px] flex items-center justify-center">
+                  <span className="rounded-md flex items-center justify-center ">
                     {favorites.length}
                   </span>
                 ) : null}
