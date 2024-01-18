@@ -8,14 +8,14 @@ const FavouritesDesktop = () => {
   const { fetchDictionary, setIsReseteableEn } = useDictionaryContext();
   const [hoveredIndex, setHoveredIndex] = useState<string | null>(null);
   return (
-    <section className="fixed pt-14 h-full w-[190px] z-10 custom-media hidden">
+    <section className="fixed h-full w-[190px] z-10 custom-media hidden">
       <div className="mb-4">
-        <h1 className="font-bold  pl-5 text-neutral-400">Favourites</h1>
-        <p className="text-neutral-500 text-sm pl-5">Save up to 15 words</p>
+        <h1 className="font-bold   text-neutral-400">Favourites</h1>
+        <p className="text-neutral-500 text-sm ">Save up to 15 words</p>
       </div>
       {!favorites.length && (
         <div>
-          <p className="text-sm text-neutral-600 pl-5">
+          <p className="text-sm text-neutral-600 ">
             {"{ "}No favourites found{" }"}
           </p>
         </div>
@@ -25,7 +25,7 @@ const FavouritesDesktop = () => {
           {favorites.map((item) => {
             return (
               <li
-                className="pl-5 flex mt-2 justify-between"
+                className=" flex mt-2 justify-between"
                 key={item}
                 onMouseEnter={() => setHoveredIndex(item)}
                 onMouseLeave={() => setHoveredIndex(null)}

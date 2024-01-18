@@ -13,7 +13,7 @@ const Introduction = () => {
   ];
 
   return (
-    <div className="grid place-content-center min-h-20 text-center text-neutral-400 mt-7">
+    <div className="flex flex-col min-h-20 text-center text-neutral-400 mt-7">
       <div className="mb-10">
         <p className="text-lg flex gap-1.5 justify-center">
           or get a

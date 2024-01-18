@@ -10,23 +10,18 @@ const App = () => {
   return (
     <>
       <SettNav />
-      <main className="flex flex-row relative max-w-[1440px] min-h mx-auto">
+      <main className="flex flex-row pt-14 px-5 pb-3 relative w-full max-w-[1440px] min-h mx-auto">
         <FavouritesDesktop />
-        {/* <div className="fixed right-0">
-        <ShortCutsInfo />
-        </div> */}
-        <section className="pt-14 px-5 pb-6 h-full w-full">
-          <div className="max-w-[640px] mx-auto">
-            <div>
-              <p className="text-neutral-400 mb-8 text-2xl text-center">
-                Type a word to look up in...
-              </p>
-              <Form />
-              <SimilarToList />
-            </div>
-            <div className="mt-7 mb-1">
-              <List />
-            </div>
+        <section className="w-full max-w-[640px] mx-auto">
+          <div>
+            <p className="text-neutral-400 mb-8 text-2xl text-center">
+              Type a word to look up in...
+            </p>
+            <Form />
+            <SimilarToList />
+          </div>
+          <div className="mt-7 mb-1">
+            <List />
           </div>
         </section>
       </main>
