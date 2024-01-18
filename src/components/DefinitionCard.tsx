@@ -34,7 +34,7 @@ const DefinitionCard: React.FC<Props> = ({ item }) => {
         </button>
       </div>
         <h1 className="inline-flex mb-2 text-sm text-neutral-400 border border-neutral-700 py-0.5 px-1 rounded-sm">
-          {item.partOfSpeech ? item.partOfSpeech : "General"}
+          {item.partOfSpeech ? item.partOfSpeech : "general"}
         </h1>
       <DefWordButton text={item.definition} />
       {(item.examples || item.synonyms || item.antonyms) && (
