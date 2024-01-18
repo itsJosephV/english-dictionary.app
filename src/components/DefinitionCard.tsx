@@ -33,11 +33,9 @@ const DefinitionCard: React.FC<Props> = ({ item }) => {
           {onCopy ? "copied!" : "copy definition"}
         </button>
       </div>
-      {item.partOfSpeech && (
         <h1 className="inline-flex mb-2 text-sm text-neutral-400 border border-neutral-700 py-0.5 px-1 rounded-sm">
-          {item.partOfSpeech}
+          {item.partOfSpeech ? item.partOfSpeech : "General"}
         </h1>
-      )}
       <DefWordButton text={item.definition} />
       {(item.examples || item.synonyms || item.antonyms) && (
         <details open={isDetailsOpen}>
