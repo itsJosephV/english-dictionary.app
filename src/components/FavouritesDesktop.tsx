@@ -8,10 +8,10 @@ const FavouritesDesktop = () => {
   const { fetchDictionary, setIsReseteableEn } = useDictionaryContext();
   const [hoveredIndex, setHoveredIndex] = useState<string | null>(null);
   return (
-    <section className="fixed h-full w-[190px] z-10 custom-media hidden">
+    <section className="fixed w-full max-w-[190px] z-10 custom-media hidden">
       <div className="mb-4">
         <h1 className="font-bold   text-neutral-400">Favourites</h1>
-        <p className="text-neutral-500 text-sm ">Save up to 15 words</p>
+        <p className="text-neutral-500 text-sm ">{""}Save up to 15 words</p>
       </div>
       {!favorites.length && (
         <div>
@@ -21,7 +21,7 @@ const FavouritesDesktop = () => {
         </div>
       )}
       {favorites && (
-        <ul className="">
+        <ul>
           {favorites.map((item) => {
             return (
               <li
