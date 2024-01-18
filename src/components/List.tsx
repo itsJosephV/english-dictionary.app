@@ -2,13 +2,14 @@ import { Fragment, useRef } from "react";
 import Introduction from "./Introduction";
 import ErrorMessage from "./ErrorMessage";
 import DefinitionCard from "./DefinitionCard";
-import { MoreAndLess } from "./MoreAndLess";
 import { useHotkeys } from "react-hotkeys-hook";
 import { LoadingData } from "../icons/LoadingData";
 import { WordResults } from "../types";
 import FavoriteButton from "./FavoriteButton";
 import { useDictionaryContext } from "../context/api/useDictionaryContext";
 import { useFunctionalityContext } from "../context/functionalities/useFunctionalityContext";
+import { CaretDown } from "../icons/CaretDown";
+import { CaretUp } from "../icons/CaretUp";
 
 const List = () => {
   const moreDataRef = useRef<HTMLButtonElement>(null);
@@ -115,3 +116,30 @@ const List = () => {
 };
 
 export default List;
+
+const MoreAndLess = ({
+  dataRef,
+  dataValue,
+  setResultsLimit,
+}: {
+  dataRef: React.RefObject<HTMLButtonElement>;
+  dataValue: number | null;
+  setResultsLimit: (dataValue: number | null) => void;
+}) => {
+  return (
+    <button
+      ref={dataRef}
+      className="flex items-center text-xs text-indigo-400 hover:text-white duration-200 mt-2"
+      onClick={() => setResultsLimit(dataValue)}
+    >
+      {!dataValue ? "More results" : "Less results"}
+      <span>
+        {!dataValue ? (
+          <CaretDown className="inline-flex" />
+        ) : (
+          <CaretUp className="inline-flex" />
+        )}
+      </span>
+    </button>
+  );
+};

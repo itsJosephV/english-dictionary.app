@@ -5,7 +5,7 @@ import { useDictionaryContext } from "../context/api/useDictionaryContext";
 
 const FavoriteButton = () => {
   const { favorites, addFavorite, removeFavorite } = useFavoriteWords();
-  const { dictionaryData } = useDictionaryContext()
+  const { dictionaryData } = useDictionaryContext();
 
   const isFavorite =
     dictionaryData?.word !== undefined &&
@@ -28,21 +28,10 @@ const FavoriteButton = () => {
       onClick={handleToggleFavorite}
       className="bg-neutral-800 rounded-sm px-1.5 py-0.5 cursor-pointer"
     >
-      {isFavorite ? (
-        <p className="flex text-xs text-indigo-400 hover:text-indigo-300 duration-200  gap-1 items-center">
-          added
-          <span>
-            <FavoriteIcon />
-          </span>
-        </p>
-      ) : (
-        <p className="flex text-xs text-indigo-400 hover:text-indigo-300 duration-200 gap-1 items-center">
-          add
-          <span>
-            <NoFavoriteIcon />
-          </span>
-        </p>
-      )}
+      <p className="flex text-xs text-indigo-400 hover:text-indigo-300 duration-200 gap-1 items-center">
+        {isFavorite ? "Added" : "Add"}{" "}
+        {isFavorite ? <FavoriteIcon /> : <NoFavoriteIcon />}
+      </p>
     </button>
   );
 };
