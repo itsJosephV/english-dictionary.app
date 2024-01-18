@@ -1,10 +1,8 @@
 import SettNav from "./components/SettNav";
-// import FavoriteWords from "./components/FavoriteWords";
 import Form from "./components/Form";
 import SimilarToList from "./components/SimilarToList";
 import List from "./components/List";
 import FavouritesDesktop from "./components/FavouritesDesktop";
-// import ShortCutsInfo from "./components/ShortCutsInfo";
 
 const App = () => {
   return (

@@ -2,6 +2,7 @@ import { useDictionaryContext } from "../context/api/useDictionaryContext";
 import { useFunctionalityContext } from "../context/functionalities/useFunctionalityContext";
 import { WordResults } from "../types";
 import DefWordButton from "./DefWordButton";
+import { useState } from "react";
 
 type Props = {
   item: WordResults;
@@ -9,15 +10,29 @@ type Props = {
 
 const DefinitionCard: React.FC<Props> = ({ item }) => {
   const { isDetailsOpen } = useFunctionalityContext();
-  const { fetchDictionary } = useDictionaryContext()
+  const { fetchDictionary } = useDictionaryContext();
+
+  const [onCopy, setOnCopy] = useState<boolean>(false);
+
+  const handleCopyBtn = () => {
+    setOnCopy(true);
+    navigator.clipboard.writeText(item.definition)
+
+    setTimeout(() => {
+      setOnCopy(false);
+    }, 2500);
+  };
 
   return (
     <li className="mb-3 bg-neutral-800/50 p-3 rounded-sm last:mb-0 relative">
-      {/* <div className="absolute top-2 right-2 border border-red-200">
-        <button className="px-1 border">
-          copy
+      <div className="absolute top-3 right-3 ">
+        <button
+          onClick={handleCopyBtn}
+          className="flex items-center gap-0.5 text-xs  text-indigo-400 hover:text-indigo-300 duration-200"
+        >
+          {onCopy ? "copied!" : "copy definition"}
         </button>
-      </div> */}
+      </div>
       {item.partOfSpeech && (
         <h1 className="inline-flex mb-2 text-sm text-neutral-400 border border-neutral-700 py-0.5 px-1 rounded-sm">
           {item.partOfSpeech}
