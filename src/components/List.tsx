@@ -57,7 +57,7 @@ const List = () => {
       {dictionaryData && (
         <Fragment>
           <div className="flex flex-wrap items-center gap-2 mb-1.5">
-            <p className="text-4xl font-semibold overflow-hidden break-words">
+            <p className="text-4xl font-medium overflow-hidden break-words">
               {dictionaryData.word}
             </p>
             {dictionaryData.pronunciation &&

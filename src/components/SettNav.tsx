@@ -21,7 +21,7 @@ const SettNav = () => {
   return (
     <nav className="border-b px-5 border-neutral-800 ">
       <div className="max-w-[1440px] py-1.5 flex items-center mx-auto">
-        <p className="font-bold text-[1.2rem] flex-1">Dictionary</p>
+        <p className="font-semibold text-[1.2rem] flex-1">Dictionary</p>
         <div className="flex mr-4 gap-1.5">
           <a
             href="https://github.com/itsJosephV/dictionary-app/tree/main"

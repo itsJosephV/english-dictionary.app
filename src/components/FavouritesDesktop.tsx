@@ -10,7 +10,7 @@ const FavouritesDesktop = () => {
   return (
     <section className="fixed w-full max-w-[160px] z-10 custom-media hidden">
       <div className="mb-5">
-        <h1 className="font-bold text-neutral-400 mb-1">Favourites</h1>
+        <h1 className="font-medium text-neutral-400 mb-1">Favourites</h1>
         <p className="text-neutral-500 text-sm font-serif">
           {""}Save up to 15 words
         </p>

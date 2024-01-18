@@ -63,7 +63,7 @@ const Form = () => {
           className="border border-neutral-700 rounded-sm bg-transparent py-0.5 pl-1.5 pr-8 w-full"
           type="text"
           name="word"
-          placeholder="Search..."
+          placeholder="Your word"
           required
           autoCapitalize="none"
           autoCorrect="none"

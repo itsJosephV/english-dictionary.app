@@ -22,5 +22,5 @@ Todo List
 - [x] Dropdown menu and tooltips (settings) - RadixUI
 - [x] Meaning words into fetching buttons
 - [x] rethink structure to display favorites
-- [ ] Copy word/meanings
+- [x] Copy word/meanings
 - [ ] Search when user stops typing (debounce)

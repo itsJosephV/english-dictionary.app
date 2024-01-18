@@ -12,8 +12,8 @@ const App = () => {
         <FavouritesDesktop />
         <section className="h-full w-full max-w-[640px] mx-auto pb-1.5">
           <div>
-            <p className="text-neutral-400 mb-8 text-2xl text-center">
-              Type a word to look up in...
+            <p className="text-neutral-400 font-medium mb-8 text-2xl text-center">
+              Type a word to look it up!
             </p>
             <Form />
             <SimilarToList />

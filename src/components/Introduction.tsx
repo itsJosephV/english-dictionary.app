@@ -34,13 +34,13 @@ const Introduction = () => {
       </div>
       <div className="flex flex-col gap-2 mb-10">
         <p className="text-neutral-500">
-          Most common use for the word might not appear first in results
+          Most common use for the word might not appear first in results.
         </p>
         <p className="text-neutral-500">
-          "Similar words" will enable if such data exists
+          "Similar words" will enable if such data exists.
         </p>
         <p className="text-neutral-500">
-          Some "Similar words" might not be available
+          Some "Similar words" might not be available.
         </p>
         {/* <p className="text-neutral-500">
           Lucia doesn't like the design of this app {":("}{" "}
