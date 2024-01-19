@@ -46,18 +46,24 @@ export interface DictionaryCtx {
 export interface FunctionalityCtx {
   word: string | null;
   form: React.RefObject<HTMLFormElement>;
-  isAutoFocusEn: boolean;
   isSimilarWordsActive: boolean;
   resultsLimit: number | null;
   isClearEn: boolean;
-  isDetailsOpen: boolean;
+  settings: {
+    autofocus: boolean;
+    details: boolean;
+  }
   handleFormSubmit: (word: string) => Promise<void>;
   handleSimilarToButton: (e: React.ChangeEvent<HTMLDetailsElement>) => void;
   handleCleanResults: (e: React.FormEvent) => void;
   handleBackToFirst: () => void;
   setWord: React.Dispatch<React.SetStateAction<string | null>>;
-  setIsAutoFocusEn: React.Dispatch<React.SetStateAction<boolean>>;
-  setIsDetailsOpen: React.Dispatch<React.SetStateAction<boolean>>;
+  setSettings: React.Dispatch<React.SetStateAction<{
+    autofocus: boolean;
+    details: boolean;
+  }>>
   setResultsLimit: React.Dispatch<React.SetStateAction<number | null>>;
 }
+
+
 

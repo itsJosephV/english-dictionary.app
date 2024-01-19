@@ -9,8 +9,7 @@ import FavouritesOnNav from "./FavouritesOnNav";
 
 const SettNav = () => {
   const { cleanLocalStorage, favorites } = useFavoriteWords();
-  const { isDetailsOpen, isAutoFocusEn, setIsDetailsOpen, setIsAutoFocusEn } =
-    useFunctionalityContext();
+  const { settings, setSettings } = useFunctionalityContext();
 
   const iconStyle =
     "text-[1.3rem] text-neutral-400 hover:text-white duration-200";
@@ -57,8 +56,13 @@ const SettNav = () => {
                   <input
                     readOnly
                     type="checkbox"
-                    onChange={() => setIsAutoFocusEn(!isAutoFocusEn)}
-                    checked={isAutoFocusEn}
+                    onChange={() =>
+                      setSettings((prevState) => ({
+                        ...prevState,
+                        autofocus: !prevState.autofocus,
+                      }))
+                    }
+                    checked={settings.autofocus}
                   />
                 </label>
               </DropdownMenu.Item>
@@ -71,8 +75,13 @@ const SettNav = () => {
                   <input
                     readOnly
                     type="checkbox"
-                    onClick={() => setIsDetailsOpen(!isDetailsOpen)}
-                    checked={isDetailsOpen}
+                    onChange={() =>
+                      setSettings((prevState) => ({
+                        ...prevState,
+                        details: !prevState.details,
+                      }))
+                    }
+                    checked={settings.details}
                   />
                 </label>
               </DropdownMenu.Item>

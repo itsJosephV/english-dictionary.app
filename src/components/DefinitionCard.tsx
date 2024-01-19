@@ -9,7 +9,7 @@ type Props = {
 };
 
 const DefinitionCard: React.FC<Props> = ({ item }) => {
-  const { isDetailsOpen } = useFunctionalityContext();
+  const { settings } = useFunctionalityContext();
   const { fetchDictionary, dictionaryData } = useDictionaryContext();
 
   const [onCopy, setOnCopy] = useState<boolean>(false);
@@ -42,7 +42,7 @@ const DefinitionCard: React.FC<Props> = ({ item }) => {
       </h1>
       <DefWordButton text={item.definition} />
       {(item.examples || item.synonyms || item.antonyms) && (
-        <details open={isDetailsOpen}>
+        <details open={settings.details}>
           <summary className="text-indigo-400 hover:text-indigo-300 duration-200">
             Details
           </summary>

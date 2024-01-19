@@ -15,9 +15,27 @@ const FunctionalityProvider: React.FC<Props> = ({ children }) => {
   const [resultsLimit, setResultsLimit] = useState<number | null>(5);
   const [isSimilarWordsActive, setIsSimilarWordsActive] =
     useState<boolean>(false);
-  const [isAutoFocusEn, setIsAutoFocusEn] = useState<boolean>(true);
   const [isClearEn, setIsClearEn] = useState<boolean>(false);
-  const [isDetailsOpen, setIsDetailsOpen] = useState<boolean>(false);
+  const [settings, setSettings] = useState<{
+    autofocus: boolean;
+    details: boolean;
+  }>({
+    autofocus: true,
+    details: false,
+  });
+
+  useEffect(() => {
+    const savedSettings = JSON.parse(
+      localStorage.getItem("settings") ?? "null"
+    );
+    if (savedSettings && typeof savedSettings === "object") {
+      setSettings(savedSettings);
+    }
+  }, []);
+
+  useEffect(() => {
+    localStorage.setItem("settings", JSON.stringify(settings));
+  }, [settings]);
 
   const form = useRef<HTMLFormElement>(null);
 
@@ -93,7 +111,7 @@ const FunctionalityProvider: React.FC<Props> = ({ children }) => {
         return;
       }
 
-      if (!isAutoFocusEn) {
+      if (!settings.autofocus) {
         return;
       }
 
@@ -107,11 +125,11 @@ const FunctionalityProvider: React.FC<Props> = ({ children }) => {
     return () => {
       document.removeEventListener("keydown", handleKeyDown);
     };
-  }, [isAutoFocusEn, word]);
+  }, [settings.autofocus, word]);
 
   useEffect(() => {
     console.log(storedWords);
-  }, [storedWords])
+  }, [storedWords]);
 
   return (
     <FunctionalityContext.Provider
@@ -121,11 +139,9 @@ const FunctionalityProvider: React.FC<Props> = ({ children }) => {
         resultsLimit,
         isSimilarWordsActive,
         isClearEn,
-        isDetailsOpen,
-        isAutoFocusEn,
+        settings,
+        setSettings,
         setWord,
-        setIsAutoFocusEn,
-        setIsDetailsOpen,
         setResultsLimit,
         handleFormSubmit,
         handleSimilarToButton,
