@@ -8,7 +8,7 @@ const App = () => {
   return (
     <>
       <SettNav />
-      <main className="min-h pt-14 px-5 pb-3 w-full max-w-[1440px] mx-auto relative">
+      <main className="min-h pt-14 px-5 pb-8 w-full max-w-[1440px] mx-auto relative">
         <FavouritesDesktop />
         <section className="h-full w-full max-w-[640px] mx-auto pb-1.5">
           <div>

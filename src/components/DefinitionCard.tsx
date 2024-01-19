@@ -10,13 +10,17 @@ type Props = {
 
 const DefinitionCard: React.FC<Props> = ({ item }) => {
   const { isDetailsOpen } = useFunctionalityContext();
-  const { fetchDictionary } = useDictionaryContext();
+  const { fetchDictionary, dictionaryData } = useDictionaryContext();
 
   const [onCopy, setOnCopy] = useState<boolean>(false);
 
   const handleCopyBtn = () => {
     setOnCopy(true);
-    navigator.clipboard.writeText(item.definition)
+    navigator.clipboard.writeText(
+      `${dictionaryData?.word}(${item.partOfSpeech || "general"}): ${
+        item.definition
+      }`
+    );
 
     setTimeout(() => {
       setOnCopy(false);
@@ -33,9 +37,9 @@ const DefinitionCard: React.FC<Props> = ({ item }) => {
           {onCopy ? "copied!" : "copy definition"}
         </button>
       </div>
-        <h1 className="inline-flex mb-2 text-sm text-neutral-400 border border-neutral-700 py-0.5 px-1 rounded-sm">
-          {item.partOfSpeech ? item.partOfSpeech : "general"}
-        </h1>
+      <h1 className="inline-flex mb-2 text-sm text-neutral-400 border border-neutral-700 py-0.5 px-1 rounded-sm">
+        {item.partOfSpeech || "general"}
+      </h1>
       <DefWordButton text={item.definition} />
       {(item.examples || item.synonyms || item.antonyms) && (
         <details open={isDetailsOpen}>

@@ -4,9 +4,9 @@ import { FavoriteIcon } from "../icons/FavoriteIcon";
 import { RemoveFavorite } from "../icons/RemoveFavorite";
 import * as DropdownMenu from "@radix-ui/react-dropdown-menu";
 
-const FavouritesOnNav = ({ triggerClasses}: { triggerClasses: string}) => {
+const FavouritesOnNav = ({ triggerClasses }: { triggerClasses: string }) => {
   const { favorites, removeFavorite } = useFavoriteWords();
-  const { fetchDictionary, setIsReseteableEn } = useDictionaryContext()
+  const { fetchDictionary, setIsReseteableEn } = useDictionaryContext();
 
   const iconStyle =
     "text-[1.3rem] text-indigo-400 hover:text-indigo-300 duration-200";
@@ -24,9 +24,18 @@ const FavouritesOnNav = ({ triggerClasses}: { triggerClasses: string}) => {
           className="w-[180px] bg-neutral-950/50 backdrop-blur-md rounded-md p-1.5 border border-neutral-800"
         >
           {!favorites.length && (
-            <DropdownMenu.Item>
-              <p className="p-1.5 text-neutral-400 text-sm">Save up to 15 words</p>
-            </DropdownMenu.Item>
+            <>
+              <DropdownMenu.Item className="p-1.5 ">
+                <p className="text-neutral-400 text-sm text-center font-serif">
+                  Save up to 15 words
+                </p>
+              </DropdownMenu.Item>
+              <DropdownMenu.Item className="p-1.5">
+                <p className="text-sm text-neutral-600 text-center ">
+                  {"{ "}No favourites found{" }"}
+                </p>
+              </DropdownMenu.Item>
+            </>
           )}
           {favorites &&
             favorites.map((item) => {
@@ -39,7 +48,7 @@ const FavouritesOnNav = ({ triggerClasses}: { triggerClasses: string}) => {
                     onClick={(e) => {
                       e.preventDefault();
                       fetchDictionary(item, true);
-                      setIsReseteableEn(false)
+                      setIsReseteableEn(false);
                     }}
                     className="text-sm text-neutral-400 hover:text-white duration-200 overflow-hidden text-ellipsis whitespace-nowrap w-full text-start py-1 pl-1.5"
                   >
