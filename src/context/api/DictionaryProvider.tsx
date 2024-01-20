@@ -3,8 +3,8 @@ import { DictionaryItem, WordSimilarTo } from "../../types";
 import { DictionaryCtx } from "../../types";
 
 type Props = {
-  children?: ReactNode
-}
+  children?: ReactNode;
+};
 
 export const DictionaryDataContext = createContext<DictionaryCtx | null>(null);
 
@@ -33,6 +33,10 @@ export const DictionaryProvider: React.FC<Props> = ({ children }) => {
   const [storedWords, setStoredWords] = useState<Array<string>>([]);
   const [isReseteableEn, setIsReseteableEn] = useState<boolean>(false);
 
+  // TESTING FLAGS
+
+  const [inputFlag, setInputFlag] = useState<boolean>(false);
+
   const handleErrors = (error: unknown) => {
     setError(error instanceof Error ? error.message : String(error));
   };
@@ -48,6 +52,7 @@ export const DictionaryProvider: React.FC<Props> = ({ children }) => {
 
   const fetchDictionaryRandom = async () => {
     setIsLoading(true);
+    setInputFlag(true);
     try {
       const resOne = await fetch(randomWordURL, { headers });
 
@@ -60,7 +65,7 @@ export const DictionaryProvider: React.FC<Props> = ({ children }) => {
         headers,
       });
       const data2 = await resTwo.json();
-      
+
       updateFirstWords(data1.word, true);
       setDictionaryData(data1);
       setSimilarToData(data2);
@@ -76,6 +81,7 @@ export const DictionaryProvider: React.FC<Props> = ({ children }) => {
     cleanArray: boolean = false
   ): Promise<void> => {
     setIsLoading(true);
+    setInputFlag(false);
     setDictionaryData(null);
     setSimilarToData(null);
     setError("");
@@ -124,6 +130,7 @@ export const DictionaryProvider: React.FC<Props> = ({ children }) => {
         isLoading,
         storedWords,
         isReseteableEn,
+        inputFlag,
         setDictionaryData,
         setSimilarToData,
         setStoredWords,

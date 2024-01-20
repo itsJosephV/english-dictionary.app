@@ -10,7 +10,6 @@ import { useDictionaryContext } from "../context/api/useDictionaryContext";
 import { useFunctionalityContext } from "../context/functionalities/useFunctionalityContext";
 import { CaretDown } from "../icons/CaretDown";
 import { CaretUp } from "../icons/CaretUp";
-import { RestartIcon } from "../icons/RestartIcon";
 
 const List = () => {
   const moreDataRef = useRef<HTMLButtonElement>(null);
@@ -21,9 +20,14 @@ const List = () => {
     error,
     isLoading,
     fetchDictionaryRandom,
+    fetchDictionary,
     setDictionaryData,
+    storedWords,
+    inputFlag,
   } = useDictionaryContext();
   const { resultsLimit, setResultsLimit } = useFunctionalityContext();
+
+  const lastWordSearched = storedWords[storedWords.length - 2];
 
   useHotkeys(
     "shift+m",
@@ -89,15 +93,27 @@ const List = () => {
               <>
                 <p className="text-neutral-500 text-xs break-words mb-6">{`Results for '${dictionaryData.word}' are not available due to API limitations.`}</p>
                 <div>
-                  <button
-                    className="text-sm text-indigo-400 hover:text-indigo-300 duration-200 flex items-center gap-1"
-                    onClick={() => {
-                      setDictionaryData(null);
-                      fetchDictionaryRandom();
-                    }}
-                  >
-                    <RestartIcon/><span>try 'random' again</span>
-                  </button>
+                  {storedWords.length === 1 && (
+                    <button
+                      className="text-sm text-indigo-400 hover:text-indigo-300 duration-200"
+                      onClick={() => {
+                        setDictionaryData(null);
+                        fetchDictionaryRandom();
+                      }}
+                    >
+                      {inputFlag ? "try 'random' again" : "get a random word?"}
+                    </button>
+                  )}
+                  {storedWords.length > 1 && (
+                    <button
+                      className="text-sm text-indigo-400 hover:text-indigo-300 duration-200"
+                      onClick={() => {
+                        fetchDictionary(lastWordSearched, false);
+                      }}
+                    >
+                      back to previous word
+                    </button>
+                  )}
                 </div>
               </>
             )}
@@ -163,3 +179,7 @@ const MoreAndLess = ({
     </button>
   );
 };
+
+// : (
+
+// )

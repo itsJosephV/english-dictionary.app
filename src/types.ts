@@ -41,6 +41,8 @@ export interface DictionaryCtx {
   setIsReseteableEn: (value: boolean) => void;
   fetchDictionary: (word: string, cleanArray?: boolean) => Promise<void>;
   fetchDictionaryRandom: () => Promise<void>;
+
+  inputFlag: boolean
 }
 
 export interface FunctionalityCtx {
