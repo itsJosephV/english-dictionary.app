@@ -32,9 +32,6 @@ export const DictionaryProvider: React.FC<Props> = ({ children }) => {
   const [error, setError] = useState<string | null>("");
   const [storedWords, setStoredWords] = useState<Array<string>>([]);
   const [isReseteableEn, setIsReseteableEn] = useState<boolean>(false);
-
-  // TESTING FLAGS
-
   const [inputFlag, setInputFlag] = useState<boolean>(false);
 
   const handleErrors = (error: unknown) => {

@@ -34,6 +34,7 @@ export interface DictionaryCtx {
   isLoading: boolean;
   storedWords: string[];
   isReseteableEn: boolean;
+  inputFlag: boolean
   setDictionaryData: (data: DictionaryItem | null) => void;
   setSimilarToData: (data: WordSimilarTo | null) => void;
   setStoredWords: React.Dispatch<React.SetStateAction<string[]>>
@@ -42,7 +43,6 @@ export interface DictionaryCtx {
   fetchDictionary: (word: string, cleanArray?: boolean) => Promise<void>;
   fetchDictionaryRandom: () => Promise<void>;
 
-  inputFlag: boolean
 }
 
 export interface FunctionalityCtx {
