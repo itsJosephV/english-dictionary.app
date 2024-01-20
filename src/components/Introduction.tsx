@@ -13,7 +13,7 @@ const Introduction = () => {
   ];
 
   return (
-    <div className="flex flex-col min-h-20 text-center text-neutral-400 mt-7">
+    <div className="flex flex-col min-h-20 text-center text-neutral-400">
       <div className="mb-10">
         <p className="text-lg flex gap-1.5 justify-center">
           or get a
@@ -61,7 +61,16 @@ const Introduction = () => {
       </div>
       <div className="flex flex-col gap-2">
         <p className="text-sm text-neutral-500">
-          by JosephV / {currentYear} - Present
+          built by{" "}
+          <a
+            className=" text-neutral-400 hover:text-white duration-300"
+            href="https://github.com/itsJosephV"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            @itsJosephV
+          </a>{" "}
+          / {currentYear} - Present
         </p>
         <p className="text-neutral-500 text-sm">
           Powered by{" "}

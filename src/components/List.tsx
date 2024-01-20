@@ -10,12 +10,19 @@ import { useDictionaryContext } from "../context/api/useDictionaryContext";
 import { useFunctionalityContext } from "../context/functionalities/useFunctionalityContext";
 import { CaretDown } from "../icons/CaretDown";
 import { CaretUp } from "../icons/CaretUp";
+import { RestartIcon } from "../icons/RestartIcon";
 
 const List = () => {
   const moreDataRef = useRef<HTMLButtonElement>(null);
   const lessDataRef = useRef<HTMLButtonElement>(null);
 
-  const { dictionaryData, error, isLoading } = useDictionaryContext();
+  const {
+    dictionaryData,
+    error,
+    isLoading,
+    fetchDictionaryRandom,
+    setDictionaryData,
+  } = useDictionaryContext();
   const { resultsLimit, setResultsLimit } = useFunctionalityContext();
 
   useHotkeys(
@@ -31,7 +38,7 @@ const List = () => {
       }
 
       moreDataRef.current?.click();
-      console.log("more data");
+      // console.log("more data");
     },
     { enableOnFormTags: ["INPUT"] }
   );
@@ -44,7 +51,7 @@ const List = () => {
         return;
       }
       lessDataRef.current?.click();
-      console.log("less data");
+      // console.log("less data");
     },
     { enableOnFormTags: ["INPUT"] }
   );
@@ -79,7 +86,20 @@ const List = () => {
                 } found`}
               </p>
             ) : (
-              <p className="text-neutral-500 text-xs break-words">{`Results for '${dictionaryData.word}' are not available due to API limitations.`}</p>
+              <>
+                <p className="text-neutral-500 text-xs break-words mb-6">{`Results for '${dictionaryData.word}' are not available due to API limitations.`}</p>
+                <div>
+                  <button
+                    className="text-sm text-indigo-400 hover:text-indigo-300 duration-200 flex items-center gap-1"
+                    onClick={() => {
+                      setDictionaryData(null);
+                      fetchDictionaryRandom();
+                    }}
+                  >
+                    <RestartIcon/><span>try 'random' again</span>
+                  </button>
+                </div>
+              </>
             )}
           </div>
           {dictionaryData.results && (

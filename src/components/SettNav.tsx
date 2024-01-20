@@ -91,7 +91,7 @@ const SettNav = () => {
                 className="flex justify-between items-center rounded-md data-[highlighted]:bg-neutral-800 text-red-400 duration-200 outline-none text-sm
                rdx-disabled:cursor-not-allowed rdx-disabled:opacity-50 py-1 px-1.5 cursor-pointer"
               >
-                Clear favorites
+                Clear favourites
                 {favorites.length ? (
                   <span className="rounded-md flex items-center justify-center ">
                     {favorites.length}
