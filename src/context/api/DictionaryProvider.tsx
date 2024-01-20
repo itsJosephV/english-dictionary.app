@@ -48,8 +48,8 @@ export const DictionaryProvider: React.FC<Props> = ({ children }) => {
   };
 
   const fetchDictionaryRandom = async () => {
+    setInputFlag(false);
     setIsLoading(true);
-    setInputFlag(true);
     try {
       const resOne = await fetch(randomWordURL, { headers });
 
@@ -77,8 +77,8 @@ export const DictionaryProvider: React.FC<Props> = ({ children }) => {
     word: string,
     cleanArray: boolean = false
   ): Promise<void> => {
+    setInputFlag(true);
     setIsLoading(true);
-    setInputFlag(false);
     setDictionaryData(null);
     setSimilarToData(null);
     setError("");

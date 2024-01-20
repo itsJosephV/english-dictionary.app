@@ -101,7 +101,7 @@ const List = () => {
                         fetchDictionaryRandom();
                       }}
                     >
-                      {inputFlag ? "try 'random' again" : "get a random word?"}
+                      {inputFlag ? "get a random word?" : "try random again"}
                     </button>
                   )}
                   {storedWords.length > 1 && (
