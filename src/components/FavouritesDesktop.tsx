@@ -7,11 +7,12 @@ const FavouritesDesktop = () => {
   const { favorites, removeFavorite } = useFavoriteWords();
   const { fetchDictionary, setIsReseteableEn } = useDictionaryContext();
   const [hoveredIndex, setHoveredIndex] = useState<string | null>(null);
+
   return (
-    <section className="fixed w-full max-w-[160px] z-10 custom-media hidden">
+    <section className="custom-media fixed z-10 hidden w-full max-w-[160px]">
       <div className="mb-5">
-        <h1 className="font-medium text-neutral-400 mb-1">Favourites</h1>
-        <p className="text-neutral-500 text-sm font-serif">
+        <h1 className="mb-1 font-medium text-neutral-400">Favourites</h1>
+        <p className="font-serif text-sm text-neutral-500">
           {""}Save up to 15 words
         </p>
       </div>
@@ -27,13 +28,13 @@ const FavouritesDesktop = () => {
           {favorites.map((item) => {
             return (
               <li
-                className="flex mt-2 justify-between"
+                className="mt-2 flex justify-between"
                 key={item}
                 onMouseEnter={() => setHoveredIndex(item)}
                 onMouseLeave={() => setHoveredIndex(null)}
               >
                 <button
-                  className="text-sm text-neutral-500 hover:text-white duration-200 outline-none overflow-hidden text-ellipsis whitespace-nowrap w-full text-start"
+                  className="w-full overflow-hidden text-ellipsis whitespace-nowrap text-start text-sm text-neutral-500 outline-none duration-200 hover:text-white"
                   onClick={(e) => {
                     e.preventDefault();
                     fetchDictionary(item, true);
@@ -44,7 +45,7 @@ const FavouritesDesktop = () => {
                 </button>
                 {hoveredIndex === item && (
                   <button
-                    className="p-0.5 text-neutral-500 hover:text-white duration-200"
+                    className="p-0.5 text-neutral-500 duration-200 hover:text-white"
                     onClick={() => removeFavorite(item)}
                   >
                     <RemoveFavorite />

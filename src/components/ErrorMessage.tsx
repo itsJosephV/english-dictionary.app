@@ -1,9 +1,9 @@
 import { useDictionaryContext } from "../context/api/useDictionaryContext";
 
 const ErrorMessage = () => {
-  const { error } = useDictionaryContext()
+  const { error } = useDictionaryContext();
   return (
-    <div className="flex justify-center flex-col text-center gap-2 mt-5">
+    <div className="mt-5 flex flex-col justify-center gap-2 text-center">
       <p className="text-red-400">{error}</p>
     </div>
   );

@@ -19,11 +19,11 @@ const List = () => {
     dictionaryData,
     error,
     isLoading,
+    storedWords,
+    inputFlag,
     fetchDictionaryRandom,
     fetchDictionary,
     setDictionaryData,
-    storedWords,
-    inputFlag,
   } = useDictionaryContext();
   const { resultsLimit, setResultsLimit } = useFunctionalityContext();
 
@@ -44,7 +44,7 @@ const List = () => {
       moreDataRef.current?.click();
       // console.log("more data");
     },
-    { enableOnFormTags: ["INPUT"] }
+    { enableOnFormTags: ["INPUT"] },
   );
 
   useHotkeys(
@@ -57,7 +57,7 @@ const List = () => {
       lessDataRef.current?.click();
       // console.log("less data");
     },
-    { enableOnFormTags: ["INPUT"] }
+    { enableOnFormTags: ["INPUT"] },
   );
 
   return (
@@ -67,15 +67,13 @@ const List = () => {
       {!dictionaryData && !isLoading && !error && <Introduction />}
       {dictionaryData && (
         <Fragment>
-          <div className="flex flex-wrap items-center gap-2 mb-1.5">
-            <p className="text-4xl font-medium overflow-hidden break-words">
+          <div className="mb-1.5 flex flex-wrap items-center gap-2">
+            <p className="overflow-hidden break-words text-4xl font-medium">
               {dictionaryData.word}
             </p>
             {dictionaryData.pronunciation &&
               dictionaryData.pronunciation.all && (
-                <span className="text-[1.2rem] text-neutral-400">{`—${" "}/${
-                  dictionaryData.pronunciation?.all
-                }/`}</span>
+                <span className="text-[1.2rem] text-neutral-400">{`—${" "}/${dictionaryData.pronunciation?.all}/`}</span>
               )}
           </div>
           <div className="mb-4">
@@ -83,7 +81,7 @@ const List = () => {
           </div>
           <div className="mb-2">
             {dictionaryData.results && dictionaryData.results.length ? (
-              <p className="text-neutral-500 text-xs ">
+              <p className="text-xs text-neutral-500 ">
                 {dictionaryData.results.length}{" "}
                 {`${
                   dictionaryData.results.length > 1 ? "Results" : "Result"
@@ -91,11 +89,11 @@ const List = () => {
               </p>
             ) : (
               <>
-                <p className="text-neutral-500 text-xs break-words mb-6">{`Results for '${dictionaryData.word}' are not available due to API limitations.`}</p>
+                <p className="mb-6 break-words text-xs text-neutral-500">{`Results for '${dictionaryData.word}' are not available due to API limitations.`}</p>
                 <div>
                   {storedWords.length === 1 && (
                     <button
-                      className="text-sm text-indigo-400 hover:text-indigo-300 duration-200"
+                      className="text-sm text-indigo-400 duration-200 hover:text-indigo-300"
                       onClick={() => {
                         setDictionaryData(null);
                         fetchDictionaryRandom();
@@ -106,7 +104,7 @@ const List = () => {
                   )}
                   {storedWords.length > 1 && (
                     <button
-                      className="text-sm text-indigo-400 hover:text-indigo-300 duration-200"
+                      className="text-sm text-indigo-400 duration-200 hover:text-indigo-300"
                       onClick={() => {
                         fetchDictionary(lastWordSearched, false);
                       }}
@@ -123,7 +121,7 @@ const List = () => {
               {dictionaryData.results
                 .slice(
                   0,
-                  resultsLimit ? resultsLimit : dictionaryData.results.length
+                  resultsLimit ? resultsLimit : dictionaryData.results.length,
                 )
                 .map((item, i) => (
                   <DefinitionCard key={i} item={item} />
@@ -165,7 +163,7 @@ const MoreAndLess = ({
   return (
     <button
       ref={dataRef}
-      className="flex items-center text-xs text-indigo-400 hover:text-white duration-200 mt-2"
+      className="mt-2 flex items-center text-xs text-indigo-400 duration-200 hover:text-white"
       onClick={() => setResultsLimit(dataValue)}
     >
       {!dataValue ? "More results" : "Less results"}
@@ -179,7 +177,3 @@ const MoreAndLess = ({
     </button>
   );
 };
-
-// : (
-
-// )

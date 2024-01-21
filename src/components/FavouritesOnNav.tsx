@@ -21,17 +21,17 @@ const FavouritesOnNav = ({ triggerClasses }: { triggerClasses: string }) => {
         <DropdownMenu.Content
           sideOffset={10}
           side="bottom"
-          className="w-[180px] bg-neutral-950/50 backdrop-blur-md rounded-md p-1.5 border border-neutral-800"
+          className="w-[180px] rounded-md border border-neutral-800 bg-neutral-950/50 p-1.5 backdrop-blur-md"
         >
           {!favorites.length && (
             <>
               <DropdownMenu.Item className="p-1.5 ">
-                <p className="text-neutral-400 text-sm text-center font-serif">
+                <p className="text-center font-serif text-sm text-neutral-400">
                   Save up to 15 words
                 </p>
               </DropdownMenu.Item>
               <DropdownMenu.Item className="p-1.5">
-                <p className="text-sm text-neutral-600 text-center ">
+                <p className="text-center text-sm text-neutral-600 ">
                   {"{ "}No favourites found{" }"}
                 </p>
               </DropdownMenu.Item>
@@ -42,7 +42,7 @@ const FavouritesOnNav = ({ triggerClasses }: { triggerClasses: string }) => {
               return (
                 <DropdownMenu.Item
                   key={item}
-                  className="flex justify-between rounded-md data-[highlighted]:bg-neutral-800 duration-200 outline-none"
+                  className="flex justify-between rounded-md outline-none duration-200 data-[highlighted]:bg-neutral-800"
                 >
                   <button
                     onClick={(e) => {
@@ -50,12 +50,12 @@ const FavouritesOnNav = ({ triggerClasses }: { triggerClasses: string }) => {
                       fetchDictionary(item, true);
                       setIsReseteableEn(false);
                     }}
-                    className="text-sm text-neutral-400 hover:text-white duration-200 overflow-hidden text-ellipsis whitespace-nowrap w-full text-start py-1 pl-1.5"
+                    className="w-full overflow-hidden text-ellipsis whitespace-nowrap py-1 pl-1.5 text-start text-sm text-neutral-400 duration-200 hover:text-white"
                   >
                     {item}
                   </button>
                   <button
-                    className="py-1 pr-1.5 text-neutral-500 hover:text-white duration-200 block"
+                    className="block py-1 pr-1.5 text-neutral-500 duration-200 hover:text-white"
                     onClick={(e) => {
                       e.preventDefault();
                       removeFavorite(item);

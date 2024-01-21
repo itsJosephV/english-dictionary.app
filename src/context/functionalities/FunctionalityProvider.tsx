@@ -3,7 +3,7 @@ import { useDictionaryContext } from "../api/useDictionaryContext";
 import { FunctionalityCtx } from "../../types";
 
 export const FunctionalityContext = createContext<FunctionalityCtx | null>(
-  null
+  null,
 );
 
 type Props = {
@@ -26,7 +26,7 @@ const FunctionalityProvider: React.FC<Props> = ({ children }) => {
 
   useEffect(() => {
     const savedSettings = JSON.parse(
-      localStorage.getItem("settings") ?? "null"
+      localStorage.getItem("settings") ?? "null",
     );
     if (savedSettings && typeof savedSettings === "object") {
       setSettings(savedSettings);
@@ -51,9 +51,6 @@ const FunctionalityProvider: React.FC<Props> = ({ children }) => {
   } = useDictionaryContext();
 
   const handleFormSubmit = async (word: string) => {
-    if (!word?.length) {
-      return;
-    }
     await fetchDictionary(word, true);
     setResultsLimit(5);
     setIsReseteableEn(false);
@@ -127,9 +124,9 @@ const FunctionalityProvider: React.FC<Props> = ({ children }) => {
     };
   }, [settings.autofocus, word]);
 
-  // useEffect(() => {
-  //   console.log(storedWords);
-  // }, [storedWords]);
+  useEffect(() => {
+    console.log(storedWords);
+  }, [storedWords]);
 
   return (
     <FunctionalityContext.Provider
@@ -147,6 +144,7 @@ const FunctionalityProvider: React.FC<Props> = ({ children }) => {
         handleSimilarToButton,
         handleCleanResults,
         handleBackToFirst,
+        // handleFavouritesFetch,
       }}
     >
       {children}
@@ -155,3 +153,29 @@ const FunctionalityProvider: React.FC<Props> = ({ children }) => {
 };
 
 export default FunctionalityProvider;
+
+// const handleFormSubmit = async (word: string) => {
+//   if (!word?.length) {
+//     return;
+//   }
+//   if (
+//     word === storedWords[0] ||
+//     word === storedWords[storedWords.length - 1]
+//   ) {
+//     console.log("same word, so not fetch");
+//     return;
+//   }
+//   await fetchDictionary(word, true);
+//   setResultsLimit(5);
+//   setIsReseteableEn(false);
+//   setIsSimilarWordsActive(false);
+// };
+
+// const handleFavouritesFetch = (item: string) => {
+//   if (item === word) {
+//     console.log("same word in input, so not fetch");
+//     return;
+//   }
+//   fetchDictionary(item, true);
+//   setIsReseteableEn(false);
+// };

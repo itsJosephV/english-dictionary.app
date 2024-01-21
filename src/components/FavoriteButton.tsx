@@ -26,9 +26,9 @@ const FavoriteButton = () => {
   return (
     <button
       onClick={handleToggleFavorite}
-      className="bg-neutral-800 rounded-sm px-1 py-0.5 cursor-pointer"
+      className="cursor-pointer rounded-sm bg-neutral-800 px-1 py-0.5"
     >
-      <p className="flex text-xs text-indigo-400 hover:text-indigo-300 duration-200 gap-0.5 items-center">
+      <p className="flex items-center gap-0.5 text-xs text-indigo-400 duration-200 hover:text-indigo-300">
         {isFavorite ? <FavoriteIcon /> : <NoFavoriteIcon />}
         {isFavorite ? <span>added</span> : <span>add</span>}
       </p>

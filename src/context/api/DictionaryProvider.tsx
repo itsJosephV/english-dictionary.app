@@ -23,10 +23,10 @@ const delay = (ms: number) => new Promise((resolve) => setTimeout(resolve, ms));
 
 export const DictionaryProvider: React.FC<Props> = ({ children }) => {
   const [dictionaryData, setDictionaryData] = useState<DictionaryItem | null>(
-    null
+    null,
   );
   const [similarToData, setSimilarToData] = useState<WordSimilarTo | null>(
-    null
+    null,
   );
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [error, setError] = useState<string | null>("");
@@ -75,7 +75,7 @@ export const DictionaryProvider: React.FC<Props> = ({ children }) => {
 
   const fetchDictionary = async (
     word: string,
-    cleanArray: boolean = false
+    cleanArray: boolean = false,
   ): Promise<void> => {
     setInputFlag(true);
     setIsLoading(true);
@@ -87,7 +87,7 @@ export const DictionaryProvider: React.FC<Props> = ({ children }) => {
       switch (true) {
         case spaceRegex.test(word):
           throw new Error(
-            "Spaces are allowed only in contexts like, e.g., 'look after', 'get out'."
+            "Spaces are allowed only in contexts like, e.g., 'look after', 'get out'.",
           );
         case !regex.test(word):
           throw new Error(`"${word}" contains invalid characters`);

@@ -22,7 +22,7 @@ const SimilarToList = () => {
         similarToRef.current.open = !similarToRef.current.open;
       }
     },
-    { enableOnFormTags: ["INPUT"] }
+    { enableOnFormTags: ["INPUT"] },
   );
 
   return (
@@ -32,18 +32,18 @@ const SimilarToList = () => {
       onToggle={handleSimilarToButton}
     >
       <summary
-        className={`text-xs mt-1 ${
+        className={`mt-1 text-xs ${
           similarToBool
-            ? "text-indigo-400 hover:text-indigo-300 duration-200"
-            : "text-neutral-500 select-none pointer-events-none"
+            ? "text-indigo-400 duration-200 hover:text-indigo-300"
+            : "pointer-events-none select-none text-neutral-500"
         }`}
       >
         Similar words
       </summary>
-      <ul className="flex flex-row mt-4 gap-2 flex-wrap">
+      <ul className="mt-4 flex flex-row flex-wrap gap-2">
         {similarToData?.similarTo?.map((simItem) => (
           <li
-            className="px-1.5 py-0.5 bg-indigo-500/10 text-sm text-indigo-300 hover:text-indigo-200 duration-200 rounded-sm"
+            className="rounded-sm bg-indigo-500/10 px-1.5 py-0.5 text-sm text-indigo-300 duration-200 hover:text-indigo-200"
             key={simItem}
           >
             <button onClick={() => fetchDictionary(simItem, false)}>

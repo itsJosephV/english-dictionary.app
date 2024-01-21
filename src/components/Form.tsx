@@ -36,7 +36,7 @@ const Form = () => {
       }
       clearButtonRef.current?.click();
     },
-    { enableOnFormTags: ["INPUT"] }
+    { enableOnFormTags: ["INPUT"] },
   );
 
   useHotkeys(
@@ -48,7 +48,7 @@ const Form = () => {
       }
       resetButtonRef.current?.click();
     },
-    { enableOnFormTags: ["INPUT"] }
+    { enableOnFormTags: ["INPUT"] },
   );
 
   return (
@@ -58,9 +58,9 @@ const Form = () => {
       className="flex justify-center gap-1"
       action=""
     >
-      <div className="w-full relative">
+      <div className="relative w-full">
         <input
-          className="border border-neutral-700 rounded-sm bg-transparent py-0.5 pl-1.5 pr-8 w-full"
+          className="w-full rounded-sm border border-neutral-700 bg-transparent py-0.5 pl-1.5 pr-8"
           type="text"
           name="word"
           placeholder="Search"
@@ -74,16 +74,16 @@ const Form = () => {
           <button
             type="button"
             ref={clearButtonRef}
-            className="absolute h-full right-2"
+            className="absolute right-2 h-full"
             onClick={handleCleanResults}
           >
-            <CleanIcon className="text-neutral-400 hover:text-white duration-200" />
+            <CleanIcon className="text-neutral-400 duration-200 hover:text-white" />
           </button>
         )}
       </div>
       {isReseteableEn && (
         <button
-          className="flex items-center justify-center bg-transparent border border-neutral-700 duration-200 w-[32px] h-[30px] text-neutral-400 hover:text-white rounded-sm"
+          className="flex h-[30px] w-[32px] items-center justify-center rounded-sm border border-neutral-700 bg-transparent text-neutral-400 duration-200 hover:text-white"
           type="button"
           onClick={handleBackToFirst}
           ref={resetButtonRef}
@@ -92,7 +92,7 @@ const Form = () => {
         </button>
       )}
       <button
-        className="flex items-center justify-center border border-neutral-700 duration-200 w-[32px] h-[30px] hover:text-white text-neutral-400 rounded-sm bg-transparent" 
+        className="flex h-[30px] w-[32px] items-center justify-center rounded-sm border border-neutral-700 bg-transparent text-neutral-400 duration-200 hover:text-white"
         type="submit"
       >
         <IcRoundSearch />

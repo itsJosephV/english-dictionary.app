@@ -8,11 +8,11 @@ const App = () => {
   return (
     <>
       <SettNav />
-      <main className="min-h pt-14 px-5 pb-6 w-full max-w-[1440px] mx-auto relative">
+      <main className="min-h relative mx-auto w-full max-w-[1440px] px-5 pb-6 pt-14">
         <FavouritesDesktop />
-        <section className="h-full w-full max-w-[640px] mx-auto">
+        <section className="mx-auto h-full w-full max-w-[640px]">
           <div>
-            <p className="text-neutral-400 font-medium mb-8 text-2xl text-center">
+            <p className="mb-8 text-center text-2xl font-medium text-neutral-400">
               Type a word to look it up!
             </p>
             <Form />

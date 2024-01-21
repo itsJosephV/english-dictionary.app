@@ -6,7 +6,7 @@ type Props = {
 };
 
 const DefWordButton: React.FC<Props> = ({ text }) => {
-  const wordsWithSymbols = text.split(/\b(\w*['-]*\w+)\b/)
+  const wordsWithSymbols = text.split(/\b(\w*['-]*\w+)\b/);
   const { fetchDictionary } = useDictionaryContext();
 
   return (
@@ -16,7 +16,7 @@ const DefWordButton: React.FC<Props> = ({ text }) => {
         if (/\w+/.test(defWord)) {
           return (
             <button
-              className="cursor-pointer hover:underline underline-offset-[3px]"
+              className="cursor-pointer underline-offset-[3px] hover:underline"
               key={index}
               onClick={() => fetchDictionary(defWord, false)}
             >
@@ -25,11 +25,7 @@ const DefWordButton: React.FC<Props> = ({ text }) => {
           );
         } else {
           // If it's not a word character, render it outside the button
-          return (
-            <span key={index}>
-              {defWord}
-            </span>
-          );
+          return <span key={index}>{defWord}</span>;
         }
       })}
     </div>

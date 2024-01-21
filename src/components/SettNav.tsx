@@ -18,10 +18,10 @@ const SettNav = () => {
     "flex justify-between rounded-md data-[highlighted]:bg-neutral-800 duration-200 outline-none text-sm";
 
   return (
-    <nav className="border-b px-5 border-neutral-800 ">
-      <div className="max-w-[1440px] py-1.5 flex items-center mx-auto">
-        <p className="font-semibold text-[1.2rem] flex-1">Dictionary</p>
-        <div className="flex mr-4 gap-1.5">
+    <nav className="border-b border-neutral-800 px-5 ">
+      <div className="mx-auto flex max-w-[1440px] items-center py-1.5">
+        <p className="flex-1 text-[1.2rem] font-semibold">Dictionary</p>
+        <div className="mr-4 flex gap-1.5">
           <a
             href="https://github.com/itsJosephV/dictionary-app/tree/main"
             target="_blank"
@@ -38,20 +38,20 @@ const SettNav = () => {
           </a>
         </div>
         <DropdownMenu.Root>
-          <DropdownMenu.Trigger className="flex items-center outline-none mr-1">
+          <DropdownMenu.Trigger className="mr-1 flex items-center outline-none">
             <SettingsIcon className={iconStyle} />
           </DropdownMenu.Trigger>
           <DropdownMenu.Portal>
             <DropdownMenu.Content
               sideOffset={10}
               side="bottom"
-              className="min-w-[180px] bg-neutral-950/50 backdrop-blur-md rounded-md p-1.5 border border-neutral-800"
+              className="min-w-[180px] rounded-md border border-neutral-800 bg-neutral-950/50 p-1.5 backdrop-blur-md"
             >
               <DropdownMenu.Item
                 onSelect={(e) => e.preventDefault()}
                 className={itemStyle}
               >
-                <label className="w-full flex justify-between items-center cursor-pointer py-1 px-1.5">
+                <label className="flex w-full cursor-pointer items-center justify-between px-1.5 py-1">
                   Autofocus
                   <input
                     readOnly
@@ -70,7 +70,7 @@ const SettNav = () => {
                 onSelect={(e) => e.preventDefault()}
                 className={itemStyle}
               >
-                <label className="w-full flex justify-between items-center py-1 px-1.5 cursor-pointer">
+                <label className="flex w-full cursor-pointer items-center justify-between px-1.5 py-1">
                   Details
                   <input
                     readOnly
@@ -88,12 +88,12 @@ const SettNav = () => {
               <DropdownMenu.Item
                 onClick={() => cleanLocalStorage()}
                 disabled={!favorites.length}
-                className="flex justify-between items-center rounded-md data-[highlighted]:bg-neutral-800 text-red-400 duration-200 outline-none text-sm
-               rdx-disabled:cursor-not-allowed rdx-disabled:opacity-50 py-1 px-1.5 cursor-pointer"
+                className="flex cursor-pointer items-center justify-between rounded-md px-1.5 py-1 text-sm text-red-400
+               outline-none duration-200 data-[highlighted]:bg-neutral-800 rdx-disabled:cursor-not-allowed rdx-disabled:opacity-50"
               >
                 Clear favourites
                 {favorites.length ? (
-                  <span className="rounded-md flex items-center justify-center ">
+                  <span className="flex items-center justify-center rounded-md ">
                     {favorites.length}
                   </span>
                 ) : null}

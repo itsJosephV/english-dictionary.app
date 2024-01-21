@@ -65,6 +65,7 @@ export interface FunctionalityCtx {
     details: boolean;
   }>>
   setResultsLimit: React.Dispatch<React.SetStateAction<number | null>>;
+  // handleFavouritesFetch: (word: string) => void;
 }
 
 
