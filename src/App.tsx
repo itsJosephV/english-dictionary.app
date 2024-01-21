@@ -12,9 +12,9 @@ const App = () => {
         <FavouritesDesktop />
         <section className="mx-auto h-full w-full max-w-[640px]">
           <div>
-            <p className="mb-8 text-center text-2xl font-medium text-neutral-400">
+            <h1 className="mb-8 text-center text-2xl font-medium text-neutral-400">
               Type a word to look it up!
-            </p>
+            </h1>
             <Form />
             <SimilarToList />
           </div>

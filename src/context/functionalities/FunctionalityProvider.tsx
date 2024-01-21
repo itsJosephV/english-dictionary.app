@@ -124,9 +124,9 @@ const FunctionalityProvider: React.FC<Props> = ({ children }) => {
     };
   }, [settings.autofocus, word]);
 
-  useEffect(() => {
-    console.log(storedWords);
-  }, [storedWords]);
+  // useEffect(() => {
+  //   console.log(storedWords);
+  // }, [storedWords]);
 
   return (
     <FunctionalityContext.Provider

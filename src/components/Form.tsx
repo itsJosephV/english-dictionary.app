@@ -21,11 +21,6 @@ const Form = () => {
   const resetButtonRef = useRef<HTMLButtonElement>(null);
   const formBool: boolean = Boolean(word?.length);
 
-  const handleWordSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-    handleFormSubmit(word || "");
-  };
-
   useHotkeys(
     "shift+c",
     (e) => {
@@ -54,9 +49,11 @@ const Form = () => {
   return (
     <form
       ref={form}
-      onSubmit={handleWordSubmit}
+      onSubmit={(e) => {
+        e.preventDefault();
+        handleFormSubmit(word!);
+      }}
       className="flex justify-center gap-1"
-      action=""
     >
       <div className="relative w-full">
         <input

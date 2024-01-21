@@ -37,9 +37,9 @@ const DefinitionCard: React.FC<Props> = ({ item }) => {
           {onCopy ? "copied!" : "copy definition"}
         </button>
       </div>
-      <h1 className="mb-2 inline-flex rounded-sm border border-neutral-700 px-1 py-0.5 text-sm text-neutral-400">
+      <p className="mb-2 inline-flex rounded-sm border border-neutral-700 px-1 py-0.5 text-sm text-neutral-400">
         {item.partOfSpeech || "general"}
-      </h1>
+      </p>
       <DefWordButton text={item.definition} />
       {(item.examples || item.synonyms || item.antonyms) && (
         <details open={settings.details}>
@@ -65,14 +65,13 @@ const DefinitionCard: React.FC<Props> = ({ item }) => {
               <p className="mb-2 text-sm text-neutral-400">Synonyms</p>
               <ul className="flex flex-wrap gap-2">
                 {item.synonyms?.map((syn, idx) => (
-                  <li
-                    className="rounded-sm bg-purple-500/10 px-1.5 py-0.5 text-sm text-purple-300 duration-200 hover:text-purple-200"
+                  <SynAntBtn
                     key={idx}
-                  >
-                    <button onClick={() => fetchDictionary(syn, false)}>
-                      {syn}
-                    </button>
-                  </li>
+                    color={"purple"}
+                    word={syn}
+                    clean={false}
+                    fetchDictionary={fetchDictionary}
+                  />
                 ))}
               </ul>
             </div>
@@ -82,14 +81,13 @@ const DefinitionCard: React.FC<Props> = ({ item }) => {
               <p className="mb-2 text-sm text-neutral-400">Antonyms</p>
               <ul className="flex flex-wrap gap-2">
                 {item.antonyms?.map((ant, idx) => (
-                  <li
-                    className="rounded-sm bg-orange-500/10 px-1.5 py-0.5 text-sm text-orange-300 duration-200 hover:text-orange-200"
+                  <SynAntBtn
                     key={idx}
-                  >
-                    <button onClick={() => fetchDictionary(ant, false)}>
-                      {ant}
-                    </button>
-                  </li>
+                    color={"orange"}
+                    word={ant}
+                    clean={false}
+                    fetchDictionary={fetchDictionary}
+                  />
                 ))}
               </ul>
             </div>
@@ -101,3 +99,23 @@ const DefinitionCard: React.FC<Props> = ({ item }) => {
 };
 
 export default DefinitionCard;
+
+const SynAntBtn = ({
+  color,
+  word,
+  clean,
+  fetchDictionary,
+}: {
+  color: string;
+  word: string;
+  clean: boolean;
+  fetchDictionary: (word: string, clean: boolean) => Promise<void>;
+}) => {
+  return (
+    <li
+      className={`rounded-sm bg-${color}-500/10 px-1.5 py-0.5 text-sm text-${color}-300 duration-200 hover:text-purple-200`}
+    >
+      <button onClick={() => fetchDictionary(word, clean)}>{word}</button>
+    </li>
+  );
+};
