@@ -19,6 +19,7 @@ const Introduction = () => {
           or get a
           <span>
             <button
+              tabIndex={0}
               onClick={() => {
                 fetchDictionaryRandom();
               }}

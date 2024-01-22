@@ -66,6 +66,7 @@ const Form = () => {
           autoCorrect="none"
           onChange={(e) => setWord(e.target.value)}
           value={word || ""}
+          tabIndex={0}
         />
         {isClearEn && (
           <button
@@ -73,6 +74,7 @@ const Form = () => {
             ref={clearButtonRef}
             className="absolute right-2 h-full"
             onClick={handleCleanResults}
+            tabIndex={0}
           >
             <CleanIcon className="text-neutral-400 duration-200 hover:text-white" />
           </button>
@@ -84,6 +86,7 @@ const Form = () => {
           type="button"
           onClick={handleBackToFirst}
           ref={resetButtonRef}
+          tabIndex={0}
         >
           <BackIcon />
         </button>
@@ -91,6 +94,7 @@ const Form = () => {
       <button
         className="flex h-[30px] w-[32px] items-center justify-center rounded-sm border border-neutral-700 bg-transparent text-neutral-400 duration-200 hover:text-white"
         type="submit"
+        tabIndex={0}
       >
         <IcRoundSearch />
       </button>

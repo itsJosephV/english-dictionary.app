@@ -18,7 +18,7 @@ const SettNav = () => {
     "flex justify-between rounded-md data-[highlighted]:bg-neutral-800 duration-200 outline-none text-sm";
 
   return (
-    <nav className="border-b border-neutral-800 px-5 ">
+    <nav className="border-b border-neutral-800 px-5">
       <div className="mx-auto flex max-w-[1440px] items-center py-1.5">
         <p className="flex-1 text-[1.2rem] font-semibold">Dictionary</p>
         <div className="mr-4 flex gap-1.5">

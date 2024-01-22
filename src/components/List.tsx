@@ -68,7 +68,7 @@ const List = () => {
       {dictionaryData && (
         <Fragment>
           <div className="mb-1.5 flex flex-wrap items-center gap-2">
-            <p className="overflow-hidden break-words text-4xl font-medium">
+            <p className="min-w-0 break-words text-4xl font-medium">
               {dictionaryData.word}
             </p>
             {dictionaryData.pronunciation &&
@@ -165,6 +165,7 @@ const MoreAndLess = ({
       ref={dataRef}
       className="mt-2 flex items-center text-xs text-indigo-400 duration-200 hover:text-white"
       onClick={() => setResultsLimit(dataValue)}
+      tabIndex={0}
     >
       {!dataValue ? "More results" : "Less results"}
       <span>

@@ -34,7 +34,8 @@ const FavouritesDesktop = () => {
                 onMouseLeave={() => setHoveredIndex(null)}
               >
                 <button
-                  className="w-full overflow-hidden text-ellipsis whitespace-nowrap text-start text-sm text-neutral-500 outline-none duration-200 hover:text-white"
+                  className="w-full overflow-hidden text-ellipsis whitespace-nowrap text-start text-sm text-neutral-500 outline-none duration-200 focus-within:text-white hover:text-white"
+                  tabIndex={0}
                   onClick={(e) => {
                     e.preventDefault();
                     fetchDictionary(item, true);

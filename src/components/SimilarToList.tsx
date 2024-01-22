@@ -37,6 +37,7 @@ const SimilarToList = () => {
             ? "text-indigo-400 duration-200 hover:text-indigo-300"
             : "pointer-events-none select-none text-neutral-500"
         }`}
+        tabIndex={similarToData ? 0 : -1}
       >
         Similar words
       </summary>

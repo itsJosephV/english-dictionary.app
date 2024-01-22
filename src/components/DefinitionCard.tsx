@@ -33,6 +33,7 @@ const DefinitionCard: React.FC<Props> = ({ item }) => {
         <button
           onClick={handleCopyBtn}
           className="flex items-center gap-0.5 text-xs  text-indigo-400 duration-200 hover:text-indigo-300"
+          tabIndex={0}
         >
           {onCopy ? "copied!" : "copy definition"}
         </button>
